@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+/* ── Global resets ──────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #03010a; /* Deep space black */
+  color: #e2e8f0;
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    sans-serif;
+}

@@ -1,0 +1,17 @@
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+// https://vitejs.dev/config/
+export default defineConfig({
+    plugins: [
+        vue({
+            template: {
+                compilerOptions: {
+                    isCustomElement: function (tag) { return tag.startsWith('Tres') && tag !== 'TresCanvas'; },
+                },
+            },
+        }),
+    ],
+    server: {
+        port: 3333,
+    },
+});

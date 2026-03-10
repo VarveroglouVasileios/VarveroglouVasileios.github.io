@@ -13,6 +13,17 @@ app.use(Tres)
 app.use(router)
 app.mount('#app')
 
+// GitHub Pages SPA: restore route from 404 redirect
+const redirect = sessionStorage.redirect
+if (redirect) {
+  delete sessionStorage.redirect
+  const path = redirect.replace(window.location.origin, '')
+  if (path !== window.location.pathname) {
+    window.history.replaceState(null, '', redirect)
+    router.replace(path)
+  }
+}
+
 function scrollToTop(): void {
   if (!window.location.hash) {
     window.scrollTo(0, 0)

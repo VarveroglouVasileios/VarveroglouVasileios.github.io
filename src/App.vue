@@ -33,7 +33,7 @@ const onLeave = (element: Element, done: () => void): void => {
   <div class="relative min-h-screen text-slate-100">
     <Background3D />
     <TopNav />
-    <main class="relative z-[5] pt-40 sm:snap-y sm:snap-proximity sm:pt-36 md:pt-40">
+    <main class="relative z-[5] pt-40 sm:pt-36 md:pt-40">
       <RouterView v-slot="{ Component, route }">
         <Transition mode="out-in" @before-enter="onBeforeEnter" @enter="onEnter" @leave="onLeave">
           <component :is="Component" :key="route.fullPath" />

@@ -121,6 +121,15 @@ watch(
           >
             {{ item.label }}
           </RouterLink>
+          <a
+            href="/VarveroglouCV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            download="VarveroglouCV.pdf"
+            class="whitespace-nowrap rounded-full border border-emerald-400/50 px-3 py-2 text-[11px] uppercase tracking-[0.14em] text-emerald-300 transition hover:border-emerald-300/70 hover:bg-emerald-400/15 hover:text-emerald-200 sm:px-4 sm:text-xs"
+          >
+            Download CV
+          </a>
           <RouterLink
             v-if="!isHome"
             to="/"
@@ -132,6 +141,15 @@ watch(
       </div>
 
       <nav v-if="isMenuOpen" class="mt-3 grid gap-2 sm:hidden">
+        <a
+          href="/VarveroglouCV.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          download="VarveroglouCV.pdf"
+          class="rounded-xl border border-emerald-400/50 px-3 py-2 text-[11px] uppercase tracking-[0.14em] text-emerald-300"
+        >
+          Download CV
+        </a>
         <RouterLink
           v-for="item in navItems"
           :key="`mobile-${item.label}`"

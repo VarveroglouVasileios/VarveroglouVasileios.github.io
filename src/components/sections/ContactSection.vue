@@ -107,7 +107,7 @@ onMounted(() => {
     const trigger = sectionRef.value
     if (!trigger) return
 
-    // Intro card: scrub-in
+    // Intro card: scrub-in (clamped to section bounds)
     if (introCardRef.value) {
       gsap.fromTo(
         introCardRef.value,
@@ -120,14 +120,15 @@ onMounted(() => {
           scrollTrigger: {
             trigger,
             start: 'top 90%',
-            end: 'top 40%',
+            end: 'bottom 80%',
             scrub: 1.2,
+            invalidateOnRefresh: true,
           },
         },
       )
     }
 
-    // Form card: scrub-in with delay
+    // Form card: scrub-in with delay (clamped to section bounds)
     if (formCardRef.value) {
       gsap.fromTo(
         formCardRef.value,
@@ -140,8 +141,9 @@ onMounted(() => {
           scrollTrigger: {
             trigger,
             start: 'top 85%',
-            end: 'top 35%',
+            end: 'bottom 75%',
             scrub: 1.4,
+            invalidateOnRefresh: true,
           },
         },
       )

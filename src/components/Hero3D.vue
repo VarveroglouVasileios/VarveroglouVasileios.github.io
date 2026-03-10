@@ -115,6 +115,15 @@ onBeforeUnmount(() => {
           >
             Hire Me
           </a>
+          <a
+            href="/VarveroglouCV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            download="VarveroglouCV.pdf"
+            class="rounded-full border border-emerald-400/50 px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-300 transition hover:-translate-y-0.5 hover:border-emerald-300/70 hover:bg-emerald-400/15 sm:px-7 sm:text-sm sm:tracking-[0.16em]"
+          >
+            Download CV
+          </a>
         </div>
       </div>
     </div>

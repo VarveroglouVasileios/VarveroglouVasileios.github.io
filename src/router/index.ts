@@ -20,7 +20,7 @@ const router = createRouter({
     },
   ],
   async scrollBehavior(to) {
-    const navOffset = window.innerWidth < 640 ? 156 : 112
+    const navOffset = window.innerWidth < 640 ? 180 : 140
 
     if (to.hash) {
       await new Promise((resolve) => {

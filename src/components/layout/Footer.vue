@@ -10,7 +10,7 @@ const scrollToTop = (): void => {
 <template>
   <footer
   id="footer"
-  class="border-t border-white/10 bg-slate-950/80 py-10 backdrop-blur-sm sm:snap-start"
+  class="border-t border-white/10 bg-slate-950/80 py-10 backdrop-blur-sm"
 >
     <div class="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-6 px-4 sm:px-6">
       <div class="flex items-center gap-4">

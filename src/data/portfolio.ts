@@ -27,22 +27,13 @@ export const projects: Project[] = [
 
 export const experience: ExperienceItem[] = [
   {
-    id: 1,
-    period: 'October 2024 – November 2026',
-    title: 'MSc in Cybersecurity',
-    organization: 'International Hellenic University',
+    id: 4,
+    period: 'September 2017 – April 2022',
+    title: 'BSc in Computer Science and Engineering',
+    organization: 'University of Thessaly',
     description:
-      'Postgraduate studies focused on cybersecurity, secure software development, and application security, with an emphasis on secure-by-design systems.',
+      'Undergraduate studies in computer science and engineering, covering algorithms, software engineering, networks, and distributed systems.',
     type: 'education',
-  },
-  {
-    id: 2,
-    period: 'April 2023 – Present',
-    title: 'Full Stack Developer',
-    organization: 'FactSet',
-    description:
-      'Building and maintaining enterprise-scale web applications in a global environment using Vue.js, Node.js, TypeScript, PHP (Symfony), SQL, and Pinia with a strong focus on clean architecture, performance, and reliability.',
-    type: 'work',
   },
   {
     id: 3,
@@ -54,12 +45,21 @@ export const experience: ExperienceItem[] = [
     type: 'work',
   },
   {
-    id: 4,
-    period: 'September 2017 – April 2022',
-    title: 'BSc in Computer Science and Engineering',
-    organization: 'University of Thessaly',
+    id: 2,
+    period: 'April 2023 – Present',
+    title: 'Full Stack Developer',
+    organization: 'FactSet',
     description:
-      'Undergraduate studies in computer science and engineering, covering algorithms, software engineering, networks, and distributed systems.',
+      'Building and maintaining enterprise-scale web applications in a global environment using Vue.js, Node.js, TypeScript, PHP (Symfony), SQL, and Pinia with a strong focus on clean architecture, performance, and reliability.',
+    type: 'work',
+  },
+  {
+    id: 1,
+    period: 'October 2024 – November 2026',
+    title: 'MSc in Cybersecurity',
+    organization: 'International Hellenic University',
+    description:
+      'Postgraduate studies focused on cybersecurity, secure software development, and application security, with an emphasis on secure-by-design systems.',
     type: 'education',
   },
 ]

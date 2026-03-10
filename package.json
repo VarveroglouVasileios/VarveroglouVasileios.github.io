@@ -1,0 +1,30 @@
+{
+  "name": "orbitfolio",
+  "description": "Portfolio site with Vue 3, TresJS 3D, and GSAP scroll animations",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tresjs/cientos": "^3.0.0",
+    "@tresjs/core": "^3.0.0",
+    "gsap": "^3.12.5",
+    "three": "^0.169.0",
+    "tweakpane": "^4.0.0",
+    "vue": "^3.5.13",
+    "vue-router": "^5.0.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.16",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.1",
+    "vue-tsc": "^2.2.0"
+  }
+}

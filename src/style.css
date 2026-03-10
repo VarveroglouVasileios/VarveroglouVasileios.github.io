@@ -1,13 +1,70 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-orbit-dark: #050511; /* Deepest space navy */
+  --color-orbit-core: #0f1228; /* Base space blue */
+  --color-orbit-glow: #3b82f6; /* Electric blue */
+  --color-orbit-sun: #f97316; /* Sunburst orange */
+  --color-orbit-text: #e2e8f0;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+}
+
+@layer utilities {
+  .clip-text {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hologram-card {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-[0_0_30px_rgba(59,130,246,0.1)];
+  }
+  .orbit-glow-text {
+    text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  }
+  .orbit-sun-glow {
+    box-shadow: 0 0 40px rgba(249, 115, 22, 0.3);
+  }
+}
+
+:root {
+  color-scheme: dark;
+}
 
 body {
+  @apply bg-orbit-dark text-orbit-text font-sans antialiased overflow-x-hidden;
   margin: 0;
   padding: 0;
-  width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  cursor: none; /* Keep custom cursor */
+  background: radial-gradient(circle at 50% 0%, #0f1228 0%, #050511 100%);
+}
+
+::selection {
+  @apply bg-orbit-glow/30 text-white;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+html {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Lenis recommended CSS */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
   overflow: hidden;
-  font-family: 'Inter', sans-serif;
-  background-color: #0f172a; /* Tailwind gray-900 as fallback */
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }

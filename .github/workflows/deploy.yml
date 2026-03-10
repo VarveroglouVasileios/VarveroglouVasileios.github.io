@@ -30,8 +30,8 @@ jobs:
       - name: Build
         run: yarn build
         env:
-          # Set base path for GitHub Pages (change to your repo name)
-          VITE_BASE: '/${{ github.event.repository.name }}/'
+          # Root deployment for username.github.io (repo must be named username.github.io)
+          VITE_BASE: '/'
 
   deploy:
     environment:

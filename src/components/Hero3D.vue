@@ -1,70 +1,86 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, shallowRef } from 'vue'
+import { onMounted, onUnmounted, shallowRef } from 'vue'
 import { TresCanvas } from '@tresjs/core'
-import { Stars } from '@tresjs/cientos'
+import { OrbitControls } from '@tresjs/cientos'
 import * as THREE from 'three'
 import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
-
-const heroSection = ref<HTMLElement | null>(null)
-const headline = ref<HTMLElement | null>(null)
-
-// 3D Specific Refs
-const sunRef = shallowRef<THREE.Mesh | null>(null)
-const planet1Ref = shallowRef<THREE.Group | null>(null)
-const planet2Ref = shallowRef<THREE.Group | null>(null)
-const cameraGroupRef = shallowRef<THREE.Group | null>(null)
-
-// Animation loops
-let animationFrameId: number;
 
 onMounted(() => {
-  // 1. Text Entrance
-  if (headline.value) {
-    gsap.fromTo(headline.value, 
-      { opacity: 0, scale: 0.9, y: 50 },
-      { opacity: 1, scale: 1, y: 0, duration: 2, ease: 'expo.out', delay: 0.5 }
-    )
-  }
-
-  // 2. Camera Scroll Sequence (Fly through the system)
-  if (heroSection.value && cameraGroupRef.value) {
-    gsap.to(cameraGroupRef.value.position, {
-      z: -10, // Fly forward past the sun
-      y: 5,   // Rise up
-      ease: "none",
-      scrollTrigger: {
-        trigger: heroSection.value,
-        start: "top top",
-        end: "bottom top", // 150vh from App.vue gives us lot of scrub room
-        scrub: 1
-      }
+  
+  // Staggered Kinetic Typography Reveal
+  const lines = document.querySelectorAll('.kinetic-line')
+  
+  lines.forEach((line) => {
+    const text = (line as HTMLElement).innerText
+    line.innerHTML = ''
+    
+    const chars = text.split('')
+    chars.forEach((char) => {
+      const charSpan = document.createElement('span')
+      charSpan.innerText = char === ' ' ? '\u00A0' : char
+      charSpan.style.display = 'inline-block'
+      charSpan.style.transform = 'translateY(110%) rotate(5deg)'
+      charSpan.style.opacity = '0'
+      charSpan.style.transformOrigin = 'bottom left'
+      
+      const wrapperSpan = document.createElement('span')
+      wrapperSpan.style.display = 'inline-block'
+      wrapperSpan.style.overflow = 'hidden'
+      wrapperSpan.appendChild(charSpan)
+      
+      line.appendChild(wrapperSpan)
     })
-  }
+  })
 
-  // 3. Orbital Mechanics (Continuous rotation)
+  // Animate all characters in the layout
+  gsap.to('.kinetic-line span > span', {
+    y: '0%',
+    rotate: 0,
+    opacity: 1,
+    duration: 1.2,
+    stagger: 0.02,
+    ease: 'power4.out',
+    delay: 0.2
+  })
+})
+
+// WebGL Liquid/Silk Background Geometry
+const planeRef = shallowRef<THREE.Mesh | null>(null)
+let animationFrameId: number
+
+onMounted(() => {
   const startTime = Date.now()
+  
   const loop = () => {
     const elapsed = (Date.now() - startTime) / 1000
+    
+    if (planeRef.value && planeRef.value.geometry) {
+      const position = planeRef.value.geometry.attributes.position
+      
+      if (!position) return
 
-    if (sunRef.value) {
-      sunRef.value.rotation.y = elapsed * 0.1
+      const vertex = new THREE.Vector3()
+      
+      for (let i = 0; i < position.count; i++) {
+        vertex.fromBufferAttribute(position, i)
+        
+        // Complex sine wave math for silky liquid motion
+        vertex.z = Math.sin(vertex.x * 2 + elapsed) * 0.5 
+                 + Math.cos(vertex.y * 1.5 + elapsed * 0.8) * 0.5
+                 
+        position.setZ(i, vertex.z)
+      }
+      
+      position.needsUpdate = true
+      
+      // Gently tilt the entire plane
+      planeRef.value.rotation.x = -Math.PI / 4 + Math.sin(elapsed * 0.2) * 0.1
+      planeRef.value.rotation.y = Math.sin(elapsed * 0.1) * 0.1
     }
-    if (planet1Ref.value) {
-      planet1Ref.value.rotation.y = elapsed * 0.5 // Orbit speed
-      const mesh = planet1Ref.value.children[0]
-      if (mesh) mesh.rotation.x = elapsed * 2 // Self rotation
-    }
-    if (planet2Ref.value) {
-      planet2Ref.value.rotation.y = elapsed * 0.3
-      const mesh = planet2Ref.value.children[0]
-      if (mesh) mesh.rotation.z = elapsed // Self rotation
-    }
-
+    
     animationFrameId = requestAnimationFrame(loop)
   }
+  
   loop()
 })
 
@@ -74,75 +90,50 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="heroSection" class="relative w-full h-full overflow-hidden bg-transparent">
+  <div class="relative w-full h-full overflow-hidden bg-[var(--color-studio-bg)] select-none">
     
-    <!-- 3D Orbit Layer -->
-    <div class="fixed inset-0 z-0 h-screen pointer-events-none">
+    <!-- Fluid WebGL Background -->
+    <div class="absolute inset-0 z-0 opacity-80 mix-blend-multiply filter blur-sm">
       <TresCanvas clear-color="transparent" window-size alpha>
+        <TresPerspectiveCamera :position="[0, 0, 15]" :fov="45" />
         
-        <TresGroup ref="cameraGroupRef">
-          <TresPerspectiveCamera :position="[0, 2, 12]" :fov="45" />
-        </TresGroup>
-
-        <Stars :radius="100" :depth="50" :count="5000" :size="0.1" :size-attenuation="true" />
+        <OrbitControls 
+          :enable-zoom="false"
+          :enable-pan="false"
+          :auto-rotate="false"
+        />
         
-        <TresAmbientLight :intensity="0.1" color="#ffffff" />
-        <TresPointLight :position="[0, 0, 0]" :intensity="2" color="#f97316" :distance="50" /> <!-- Sun light source -->
+        <TresAmbientLight :intensity="2" color="#ffffff" />
+        <TresDirectionalLight :position="[5, 5, 5]" :intensity="3" color="#f4f4f0" />
 
-        <!-- Central Body (The Sun/Core) -->
-        <TresMesh ref="sunRef" :position="[0, 0, 0]">
-          <TresIcosahedronGeometry :args="[2.5, 2]" />
+        <TresMesh ref="planeRef" :position="[0, 0, 0]">
+          <!-- High segment count for smooth waving -->
+          <TresPlaneGeometry :args="[40, 40, 64, 64]" />
           <TresMeshStandardMaterial 
-            color="#f97316" 
-            emissive="#ea580c"
-            :emissiveIntensity="2"
-            :wireframe="true"
+            color="#dcdbcf" 
+            :roughness="0.2"
+            :metalness="0.1"
+            :flatShading="false"
+            :side="2"
           />
         </TresMesh>
-
-        <!-- Orbit 1 (Inner) -->
-        <TresGroup ref="planet1Ref">
-          <!-- The actual planet shifted out on X to create orbit radius -->
-          <TresMesh :position="[5, 0, 0]">
-            <TresOctahedronGeometry :args="[0.5, 0]" />
-            <TresMeshStandardMaterial color="#3b82f6" emissive="#2563eb" :emissiveIntensity="1" :wireframe="true" />
-          </TresMesh>
-          <!-- Orbital Ring -->
-          <TresMesh :rotation="[Math.PI / 2, 0, 0]">
-            <TresRingGeometry :args="[4.98, 5.02, 64]" />
-            <TresMeshBasicMaterial color="#ffffff" :transparent="true" :opacity="0.1" :side="2" />
-          </TresMesh>
-        </TresGroup>
-
-        <!-- Orbit 2 (Outer) -->
-        <TresGroup ref="planet2Ref" :rotation="[0.2, 0, 0.4]"> <!-- Inclined orbit -->
-          <TresMesh :position="[-8, 0, 0]">
-            <TresDodecahedronGeometry :args="[0.8, 0]" />
-            <TresMeshStandardMaterial color="#8b5cf6" emissive="#7c3aed" :emissiveIntensity="0.5" :wireframe="true" />
-          </TresMesh>
-          <!-- Orbital Ring -->
-          <TresMesh :rotation="[Math.PI / 2, 0, 0]">
-            <TresRingGeometry :args="[7.95, 8.05, 64]" />
-            <TresMeshBasicMaterial color="#ffffff" :transparent="true" :opacity="0.05" :side="2" />
-          </TresMesh>
-        </TresGroup>
-
       </TresCanvas>
     </div>
 
-    <!-- UI Overlay Layer -->
-    <div class="relative z-10 w-full h-screen flex flex-col justify-center items-center pointer-events-none">
-      <div class="text-center mix-blend-screen">
-        <h1 
-          ref="headline"
-          class="text-6xl md:text-[8vw] font-display font-black text-white tracking-tighter uppercase leading-[0.85] orbit-glow-text"
-        >
-          Orbit<br/>Folio.
-        </h1>
-        <p class="mt-8 text-orbit-text tracking-[0.4em] uppercase text-xs md:text-sm font-bold opacity-80 shadow-black drop-shadow-lg">
-          Full-Stack Web Ecosystems
+    <!-- Foreground Content (Kinetic Typography) -->
+    <div class="relative z-10 w-full h-screen flex flex-col justify-center items-center md:items-start px-4 md:px-12 lg:px-24 pointer-events-none mt-16 md:mt-0">
+      
+      <div class="mb-4">
+        <p class="text-[var(--color-studio-accent)] font-sans font-bold uppercase tracking-[0.2em] text-sm md:text-base">
+          Vasileios Varveroglou
         </p>
       </div>
+
+      <div class="flex flex-col text-[12vw] md:text-[9vw] font-display font-black uppercase tracking-tighter leading-[0.85] text-[var(--color-studio-text)] mix-blend-darken">
+        <h1 class="kinetic-line m-0 p-0 text-left w-full relative">Creative</h1>
+        <h1 class="kinetic-line m-0 p-0 text-left w-full ml-0 md:ml-32">Developer</h1>
+      </div>
+      
     </div>
     
   </div>

@@ -1,29 +1,65 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import gsap from 'gsap'
-import { Rocket } from 'lucide-vue-next'
 
-const formOverlay = ref<HTMLElement | null>(null)
+import gsap from 'gsap'
+
 const isSubmitting = ref(false)
 const isSubmitted = ref(false)
+const magneticBtnRef = ref<HTMLElement | null>(null)
+const magneticTextRef = ref<HTMLElement | null>(null)
+
+const handleMagneticMove = (e: MouseEvent) => {
+  if (!magneticBtnRef.value || !magneticTextRef.value) return
+  
+  const rect = magneticBtnRef.value.getBoundingClientRect()
+  const x = e.clientX - rect.left - rect.width / 2
+  const y = e.clientY - rect.top - rect.height / 2
+  
+  // Pull button towards mouse
+  gsap.to(magneticBtnRef.value, {
+    x: x * 0.4,
+    y: y * 0.4,
+    duration: 0.6,
+    ease: 'power3.out'
+  })
+  
+  // Parallax text inside button slightly more
+  gsap.to(magneticTextRef.value, {
+    x: x * 0.2,
+    y: y * 0.2,
+    duration: 0.6,
+    ease: 'power3.out'
+  })
+}
+
+const handleMagneticLeave = () => {
+  if (!magneticBtnRef.value || !magneticTextRef.value) return
+  
+  // Snap back to origin
+  gsap.to(magneticBtnRef.value, {
+    x: 0,
+    y: 0,
+    duration: 0.8,
+    ease: 'elastic.out(1, 0.3)'
+  })
+  
+  gsap.to(magneticTextRef.value, {
+    x: 0,
+    y: 0,
+    duration: 0.8,
+    ease: 'elastic.out(1, 0.3)'
+  })
+}
 
 const handleTransmission = async (e: Event) => {
   e.preventDefault()
   isSubmitting.value = true
   
-  // Fake deep space transmission
-  await new Promise(resolve => setTimeout(resolve, 2000))
+  await new Promise(resolve => setTimeout(resolve, 1500))
   
   isSubmitting.value = false
   isSubmitted.value = true
   
-  if (formOverlay.value) {
-    gsap.fromTo(formOverlay.value, 
-      { opacity: 0, scale: 0.9, backdropFilter: 'blur(0px)' },
-      { opacity: 1, scale: 1, backdropFilter: 'blur(20px)', duration: 0.8, ease: 'expo.out' }
-    )
-  }
-
   setTimeout(() => {
     isSubmitted.value = false
   }, 4000)
@@ -31,109 +67,96 @@ const handleTransmission = async (e: Event) => {
 </script>
 
 <template>
-  <div class="w-full flex justify-center py-20 relative overflow-hidden">
+  <div class="w-full min-h-[80vh] flex flex-col justify-center items-center relative z-10 px-4 pt-16 pb-32">
     
-    <!-- Background Grid glow -->
-    <div class="absolute inset-0 z-0 bg-gradient-radial from-orbit-glow/10 to-transparent opacity-50 pointer-events-none"></div>
-
-    <div class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-16 relative z-10 p-8 md:p-16 hologram-card rounded-[3rem] border-white/20">
+    <div class="w-full max-w-3xl glass-card rounded-md p-8 md:p-16 border-t-2 border-t-[var(--color-quantum-neon)] relative overflow-hidden group">
       
-      <!-- Text side -->
-      <div class="flex flex-col justify-center">
-        <h2 class="text-[10px] uppercase tracking-[0.4em] text-orbit-glow font-bold mb-6">
-          [ Comm Channel Open ]
-        </h2>
-        <h3 class="text-4xl md:text-6xl font-display uppercase font-bold text-white tracking-tight leading-none mb-6 drop-shadow-2xl">
-          Transmit <br/>
-          <span class="text-orbit-sun">Coordinates.</span>
-        </h3>
-        <p class="text-orbit-text/60 font-light text-lg mb-12 max-w-sm leading-relaxed">
-          Seeking a robust full-stack architect for your next major orbital deployment? Send the details through the secure channel.
-        </p>
-
-        <div class="flex gap-6">
-          <a href="#" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-xs font-bold hover:bg-white hover:text-black transition-all hover:scale-110 hoverable">
-            GH
-          </a>
-          <a href="#" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-xs font-bold hover:bg-white hover:text-black transition-all hover:scale-110 hoverable">
-            IN
-          </a>
-          <a href="#" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-xs font-bold hover:bg-white hover:text-black transition-all hover:scale-110 hoverable">
-            X
-          </a>
-        </div>
+      <!-- Submission overlay -->
+      <div v-if="isSubmitted" class="absolute inset-0 bg-black/80 backdrop-blur-xl z-20 flex flex-col items-center justify-center text-center">
+        <h4 class="text-4xl font-display font-black text-[var(--color-quantum-neon)] uppercase tracking-tighter mb-4 animate-pulse">
+          Connection Established
+        </h4>
+        <p class="text-[var(--color-quantum-muted)] text-sm tracking-widest uppercase">Target server synchronizing data...</p>
       </div>
 
-      <!-- Form Side -->
-      <div class="relative w-full">
+      <div class="mb-12 text-center">
+        <h2 class="text-[var(--color-quantum-neon)] font-bold tracking-[0.4em] uppercase text-xs mb-4">
+          [ Terminate Sequence ]
+        </h2>
+        <h3 class="text-5xl md:text-7xl font-display uppercase font-black text-white tracking-tighter drop-shadow-[0_0_20px_rgba(0,0,0,1)]">
+          Initiate Contact.
+        </h3>
+      </div>
+
+      <form @submit="handleTransmission" class="flex flex-col gap-8 w-full">
         
-        <!-- Transmission Success Overlay -->
-        <div 
-          v-if="isSubmitted"
-          ref="formOverlay"
-          class="absolute inset-0 z-20 flex flex-col items-center justify-center text-center bg-orbit-core/80 rounded-2xl border border-orbit-glow/50 shadow-[0_0_40px_rgba(59,130,246,0.3)]"
-        >
-          <div class="w-16 h-16 rounded-full bg-orbit-glow/20 flex items-center justify-center mb-6 border border-orbit-glow orbit-glow-text">
-            <svg class="w-8 h-8 text-orbit-glow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <h4 class="text-2xl font-display font-bold text-white uppercase tracking-tight mb-2">Signal Received</h4>
-          <p class="text-orbit-text/70 text-sm">Transmission reached central command.</p>
+        <div class="relative bg-black/80 backdrop-blur-md border border-white/20 focus-within:border-[var(--color-quantum-neon)] transition-colors p-4">
+          <label class="absolute -top-3 left-4 bg-black px-2 text-[8px] font-bold uppercase tracking-widest text-[var(--color-quantum-muted)]">
+            Ident
+          </label>
+          <input 
+            type="text" 
+            placeholder="ENTER NAME"
+            required
+            class="w-full bg-transparent text-white font-display text-xl uppercase tracking-widest outline-none placeholder-white/20 hoverable"
+          />
         </div>
 
-        <form @submit="handleTransmission" class="flex flex-col gap-6 w-full">
-          <div class="group relative bg-white/5 border border-white/10 rounded-2xl overflow-hidden focus-within:border-orbit-glow focus-within:bg-white/10 transition-colors">
-            <label class="block text-[9px] uppercase tracking-widest text-orbit-glow font-bold pt-4 px-6 opacity-80">Callsign / Name</label>
-            <input 
-              type="text" 
-              required
-              class="w-full bg-transparent px-6 pb-4 pt-1 text-white font-bold tracking-wider outline-none hoverable"
-            />
-          </div>
+        <div class="relative bg-black/80 backdrop-blur-md border border-white/20 focus-within:border-[var(--color-quantum-magenta)] transition-colors p-4">
+          <label class="absolute -top-3 left-4 bg-black px-2 text-[8px] font-bold uppercase tracking-widest text-[var(--color-quantum-muted)]">
+            Routing
+          </label>
+          <input 
+            type="email" 
+            placeholder="ENTER ADDRESS"
+            required
+            class="w-full bg-transparent text-white font-display text-xl uppercase tracking-widest outline-none placeholder-white/20 hoverable"
+          />
+        </div>
 
-          <div class="group relative bg-white/5 border border-white/10 rounded-2xl overflow-hidden focus-within:border-orbit-glow focus-within:bg-white/10 transition-colors">
-            <label class="block text-[9px] uppercase tracking-widest text-orbit-glow font-bold pt-4 px-6 opacity-80">Frequency / Email</label>
-            <input 
-              type="email" 
-              required
-              class="w-full bg-transparent px-6 pb-4 pt-1 text-white font-bold tracking-wider outline-none hoverable"
-            />
-          </div>
+        <div class="relative bg-black/80 backdrop-blur-md border border-white/20 focus-within:border-[var(--color-quantum-neon)] transition-colors p-4">
+          <label class="absolute -top-3 left-4 bg-black px-2 text-[8px] font-bold uppercase tracking-widest text-[var(--color-quantum-muted)]">
+            Payload
+          </label>
+          <textarea 
+            placeholder="ENTER ENCRYPTED MESSAGE..."
+            required
+            rows="3"
+            class="w-full bg-transparent text-[var(--color-quantum-muted)] font-sans text-sm md:text-base outline-none resize-none placeholder-white/20 hoverable"
+          ></textarea>
+        </div>
 
-          <div class="group relative bg-white/5 border border-white/10 rounded-2xl overflow-hidden focus-within:border-orbit-glow focus-within:bg-white/10 transition-colors">
-            <label class="block text-[9px] uppercase tracking-widest text-orbit-glow font-bold pt-4 px-6 opacity-80">Encrypted Message</label>
-            <textarea 
-              required
-              rows="3"
-              class="w-full bg-transparent px-6 pb-4 pt-1 text-white font-bold tracking-wider outline-none resize-none hoverable"
-            ></textarea>
-          </div>
-
+        <!-- Magnetic Button Wrapper -->
+        <div 
+          class="w-full h-24 mt-4 relative flex justify-center items-center cursor-pointer"
+          @mousemove="handleMagneticMove"
+          @mouseleave="handleMagneticLeave"
+        >
           <button 
             type="submit"
+            ref="magneticBtnRef"
             :disabled="isSubmitting"
-            class="relative w-full h-16 rounded-2xl bg-orbit-sun text-white font-display font-black text-lg uppercase tracking-widest overflow-hidden group hoverable disabled:opacity-50 disabled:cursor-not-allowed border outline-none"
-            :class="isSubmitting ? 'border-orbit-sun/50' : 'border-orbit-sun shadow-[0_0_30px_rgba(249,115,22,0.4)] hover:shadow-[0_0_40px_rgba(249,115,22,0.6)]'"
+            class="w-64 h-16 rounded-full bg-white text-black font-display font-black text-xl uppercase tracking-widest hover:bg-[var(--color-quantum-neon)] hover:scale-110 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed outline-none hoverable flex justify-center items-center shadow-[0_0_20px_rgba(255,255,255,0.8)]"
           >
-            <div class="absolute inset-0 bg-white/20 transform -translate-x-full skew-x-12 group-hover:animate-[shimmer_1.5s_infinite]"></div>
-            <span v-if="isSubmitting" class="animate-pulse">Transmitting...</span>
-            <span v-else class="flex items-center justify-center gap-3">
-              Engage Thrusters
-              <Rocket class="w-5 h-5" />
+            <span ref="magneticTextRef" class="inline-block pointer-events-none">
+              {{ isSubmitting ? 'UPLOADING...' : 'TRANSMIT' }}
             </span>
           </button>
-        </form>
+        </div>
 
+      </form>
+    </div>
+
+    <!-- Footer base -->
+    <div class="absolute bottom-8 w-full px-12 flex flex-col md:flex-row justify-between items-center text-[var(--color-quantum-muted)] text-[10px] font-bold tracking-[0.2em] uppercase gap-4 z-10">
+      <span>© {{ new Date().getFullYear() }} V. Varveroglou. Protocol V.4</span>
+      
+      <div class="flex gap-8">
+        <a href="#" class="hoverable hover:text-[var(--color-quantum-neon)] transition-colors">LINKEDIN</a>
+        <a href="#" class="hoverable hover:text-[var(--color-quantum-neon)] transition-colors">GITHUB</a>
+        <a href="#" class="hoverable hover:text-[var(--color-quantum-neon)] transition-colors">TWITTER</a>
       </div>
     </div>
+
   </div>
 </template>
-
-<style scoped>
-@keyframes shimmer {
-  100% {
-    transform: translateX(150%) skewX(12deg);
-  }
-}
-</style>

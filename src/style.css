@@ -1,29 +1,28 @@
 @import "tailwindcss";
 
 @theme {
-  --color-orbit-dark: #050511; /* Deepest space navy */
-  --color-orbit-core: #0f1228; /* Base space blue */
-  --color-orbit-glow: #3b82f6; /* Electric blue */
-  --color-orbit-sun: #f97316; /* Sunburst orange */
-  --color-orbit-text: #e2e8f0;
+  --color-quantum-bg: #000000;
+  --color-quantum-text: #ffffff;
+  --color-quantum-muted: #888888;
+  --color-quantum-neon: #00f3ff; /* Electric Cyan */
+  --color-quantum-magenta: #ff00ff;
 
   --font-sans: 'Inter', system-ui, sans-serif;
-  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
 }
 
 @layer utilities {
   .clip-text {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
-  .hologram-card {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-[0_0_30px_rgba(59,130,246,0.1)];
-  }
-  .orbit-glow-text {
-    text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-  }
-  .orbit-sun-glow {
-    box-shadow: 0 0 40px rgba(249, 115, 22, 0.3);
+  .glass-card {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -32,16 +31,21 @@
 }
 
 body {
-  @apply bg-orbit-dark text-orbit-text font-sans antialiased overflow-x-hidden;
+  background-color: var(--color-quantum-bg);
+  color: var(--color-quantum-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  cursor: none; /* Keep custom cursor */
-  background: radial-gradient(circle at 50% 0%, #0f1228 0%, #050511 100%);
+  cursor: none; 
 }
 
 ::selection {
-  @apply bg-orbit-glow/30 text-white;
+  background-color: var(--color-quantum-neon);
+  color: var(--color-quantum-bg);
 }
 
 ::-webkit-scrollbar {

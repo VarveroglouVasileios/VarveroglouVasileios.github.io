@@ -5,9 +5,9 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 import gsap from 'gsap'
 
 import CustomCursor from './components/CustomCursor.vue'
-import Hero3D from './components/Hero3D.vue'
+import Background3D from './components/Background3D.vue'
+import Hero from './components/Hero.vue'
 import AboutMe from './components/AboutMe.vue'
-import SkillsEcosystem from './components/SkillsEcosystem.vue'
 import ProjectsGrid from './components/ProjectsGrid.vue'
 import Timeline from './components/Timeline.vue'
 import ContactForm from './components/ContactForm.vue'
@@ -19,7 +19,7 @@ let lenis: Lenis
 onMounted(() => {
   lenis = new Lenis({
     lerp: 0.1,
-    wheelMultiplier: 1,
+    wheelMultiplier: 1.2,
     smoothWheel: true,
   })
 
@@ -28,7 +28,6 @@ onMounted(() => {
   gsap.ticker.add((time) => {
     lenis.raf(time * 1000)
   })
-
   gsap.ticker.lagSmoothing(0)
 })
 
@@ -40,36 +39,33 @@ onUnmounted(() => {
 
 <template>
   <CustomCursor />
+
+  <!-- Fixed Global WebGL Canvas Background -->
+  <div class="fixed inset-0 z-0 pointer-events-auto">
+    <Background3D />
+    <!-- Global Vignette for Readability -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.8)_100%),rgba(0,0,0,0.4)] pointer-events-none"></div>
+  </div>
   
-  <main class="relative w-full overflow-hidden">
+  <main class="relative w-full overflow-hidden bg-transparent z-10 selection:bg-[var(--color-quantum-neon)] selection:text-[var(--color-quantum-bg)] text-[var(--color-quantum-text)]">
     
-    <!-- Hero / Orbit System -->
-    <section id="hero" class="relative w-full h-[150vh]"> <!-- Extra height for scroll scrub -->
-      <Hero3D />
+    <section id="hero" class="relative w-full h-[120vh]">
+      <Hero />
     </section>
 
-    <!-- Floating About Cards -->
-    <section id="about" class="relative w-full py-32 px-4 md:px-12 lg:px-24">
+    <section id="about" class="relative w-full py-32 md:py-64 px-4 md:px-12 lg:px-24">
       <AboutMe />
     </section>
 
-    <!-- NEW: Orbital Skills Marquee -->
-    <section id="skills" class="relative w-full py-24 overflow-hidden border-y border-white/5 bg-orbit-core/30">
-      <SkillsEcosystem />
-    </section>
-
-    <!-- Overlapping Project Cards -->
     <section id="projects" class="relative w-full py-32 px-4 md:px-12 lg:px-24">
       <ProjectsGrid />
     </section>
 
-    <!-- Launch Sequence CV -->
     <section id="experience" class="relative w-full py-32 px-4 md:px-12 lg:px-24 pb-64">
       <Timeline />
     </section>
 
-    <!-- Command Center Contact -->
-    <section id="contact" class="relative w-full bg-orbit-core/50 pt-32 pb-12 px-4 md:px-12 lg:px-24 border-t border-white/5">
+    <section id="contact" class="relative w-full pt-32 pb-12 px-4 md:px-12 lg:px-24">
       <ContactForm />
     </section>
 

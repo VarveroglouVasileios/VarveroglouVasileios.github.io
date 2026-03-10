@@ -16,6 +16,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: formspree
     steps:
       - uses: actions/checkout@v4
 
@@ -31,6 +32,7 @@ jobs:
         run: yarn build
         env:
           VITE_BASE: '/'
+          VITE_FORMSPREE_ID: ${{ vars.VITE_FORMSPREE_ID || secrets.VITE_FORMSPREE_ID }}
 
       - uses: actions/upload-artifact@v4
         with:

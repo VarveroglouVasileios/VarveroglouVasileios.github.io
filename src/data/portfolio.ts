@@ -19,6 +19,7 @@ export const projects: Project[] = [
       'Marketing and admin experience for Shadow AI: a security layer between teams and AI tools — zero-knowledge inspection, DLP-style policies, secret redaction, and live session visibility without storing prompts.',
     stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'Vercel'],
     imageLabel: 'Shadow AI admin dashboard and product landing',
+    imageUrl: '/shadow-ai-preview.png',
     githubUrl: 'https://github.com/varveroglouvasileios',
     liveUrl: 'https://shadow-ai-dashboard-topaz.vercel.app/',
   },

@@ -13,6 +13,17 @@ export const techSkills: Skill[] = [
 
 export const projects: Project[] = [
   {
+    id: 3,
+    title: 'VibeBites',
+    description:
+      'Greek-first social cooking platform: recipe discovery, shopping lists, meal planning, AI fridge assistant (ingredients to recipes with macros), cooking mode, and PWA install — built for sharing across social.',
+    stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'Groq', 'Vercel'],
+    imageLabel: 'VibeBites landing — recipes, planner, and AI fridge assistant',
+    imageUrl: '/VibeBites.png',
+    githubUrl: 'https://github.com/varveroglouvasileios',
+    liveUrl: 'https://vibe-bites.vercel.app/',
+  },
+  {
     id: 2,
     title: 'Shadow AI — Admin Dashboard',
     description:

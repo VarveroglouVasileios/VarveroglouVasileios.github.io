@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import Tres from '@tresjs/core'
 import App from './App.vue'
 import router from './router'
+import { i18n } from './i18n'
 import './style.css'
 
 if ('scrollRestoration' in history) {
@@ -9,7 +10,13 @@ if ('scrollRestoration' in history) {
 }
 
 const app = createApp(App)
+
+if (import.meta.env.PROD) {
+  app.config.warnHandler = (): void => {}
+}
+
 app.use(Tres)
+app.use(i18n)
 app.use(router)
 app.mount('#app')
 

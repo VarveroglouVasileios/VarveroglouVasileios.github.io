@@ -1,83 +1,53 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { experience } from '@/data/portfolio'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const { t } = useI18n()
 const sectionRef = ref<HTMLElement | null>(null)
-const headingRef = ref<HTMLElement | null>(null)
-const timelineLineRef = ref<HTMLElement | null>(null)
-const itemElements = ref<HTMLElement[]>([])
 let context: gsap.Context | undefined
 
-const setItemRef = (element: unknown): void => {
-  if (element instanceof HTMLElement && !itemElements.value.includes(element)) {
-    itemElements.value.push(element)
+// Map experience data IDs to i18n keys
+const getExperienceData = (id: number) => {
+  const mapping: Record<number, string> = {
+    4: 'bsc',
+    3: 'junior',
+    2: 'fullstack',
+    5: 'structwise',
+    1: 'msc'
+  }
+  const key = mapping[id]
+  return {
+    title: t(`experience.items.${key}.title`),
+    organization: t(`experience.items.${key}.org`),
+    description: t(`experience.items.${key}.desc`)
   }
 }
 
 onMounted(() => {
-  context = gsap.context(() => {
-    const trigger = sectionRef.value
-    if (!trigger) return
+  nextTick(() => {
+    context = gsap.context(() => {
+      const trigger = sectionRef.value
+      if (!trigger) return
 
-    // Heading: scrub slide from left
-    if (headingRef.value) {
-      gsap.fromTo(
-        headingRef.value,
-        { x: -100, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger,
-            start: 'top 88%',
-            end: 'top 55%',
-            scrub: 1,
-          },
-        },
-      )
-    }
-
-    // Timeline line: scrub draw
-    if (timelineLineRef.value) {
-      gsap.set(timelineLineRef.value, { scaleY: 0, transformOrigin: 'top center' })
-      gsap.to(timelineLineRef.value, {
-        scaleY: 1,
-        ease: 'none',
+      gsap.from('.timeline-item', {
+        x: (i) => (i % 2 === 0 ? -60 : 60),
+        opacity: 0,
+        stagger: 0.2,
+        duration: 1,
+        ease: 'power3.out',
         scrollTrigger: {
-          trigger,
-          start: 'top 75%',
-          end: 'bottom 50%',
-          scrub: 1,
+          trigger: '.timeline-container',
+          start: 'top 80%',
+          end: 'bottom 20%',
+          toggleActions: 'play none none reverse',
         },
       })
-    }
-
-    // Timeline items: scrub slide from sides
-    itemElements.value.forEach((el: HTMLElement, i: number) => {
-      const fromX = i % 2 === 0 ? -120 : 120
-      gsap.fromTo(
-        el,
-        { x: fromX, y: 60, opacity: 0, scale: 0.95 },
-        {
-          x: 0,
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 92%',
-            end: 'top 48%',
-            scrub: 1.2,
-          },
-        },
-      )
-    })
+    }, sectionRef.value || undefined)
   })
 })
 
@@ -87,32 +57,40 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section id="experience" ref="sectionRef" class="relative mx-auto w-full max-w-6xl px-4 py-20 sm:snap-start sm:px-6 md:py-28">
-    <div ref="headingRef" class="mb-10">
-      <p class="mb-3 text-sm uppercase tracking-[0.18em] text-cyan-300">CV / Experience</p>
-      <h2 class="text-2xl font-semibold text-white sm:text-3xl md:text-4xl">Interactive Career Timeline</h2>
+  <section id="experience" ref="sectionRef" class="relative mx-auto max-w-5xl px-4 py-24 sm:snap-start sm:px-6 md:py-32">
+    <div class="mb-16 text-center">
+      <p class="mb-4 text-sm uppercase tracking-[0.25em] text-cyan-400">{{ t('experience.tag') }}</p>
+      <h2 class="text-3xl font-bold text-white sm:text-4xl md:text-5xl">{{ t('experience.title') }}</h2>
     </div>
 
-    <div class="relative pl-7 sm:pl-8 md:pl-12">
-      <div
-        ref="timelineLineRef"
-        class="absolute left-2 top-0 h-full w-px bg-gradient-to-b from-cyan-300 via-cyan-500/40 to-transparent md:left-4"
-      />
-      <article
-        v-for="item in experience"
-        :key="item.id"
-        :ref="setItemRef"
-        class="relative mb-8 rounded-3xl border border-white/10 bg-slate-900/55 p-5 backdrop-blur-xl sm:p-6"
-      >
-        <span
-          class="absolute -left-[1.6rem] top-8 block size-3 rounded-full border-2 border-slate-950 sm:-left-[1.85rem] md:-left-[2.35rem]"
-          :class="item.type === 'work' ? 'bg-cyan-300' : 'bg-violet-300'"
-        />
-        <p class="mb-2 text-xs uppercase tracking-[0.16em] text-slate-400">{{ item.period }}</p>
-        <h3 class="text-xl font-semibold text-white">{{ item.title }}</h3>
-        <p class="mb-3 text-sm text-cyan-200">{{ item.organization }}</p>
-        <p class="text-sm leading-relaxed text-slate-300">{{ item.description }}</p>
-      </article>
+    <div class="timeline-container relative">
+      <!-- Vertical Line -->
+      <div class="absolute left-0 h-full w-px bg-gradient-to-b from-transparent via-white/10 to-transparent md:left-1/2" />
+
+      <div class="space-y-12 md:space-y-24">
+        <div
+          v-for="(item, i) in experience"
+          :key="item.id"
+          class="timeline-item relative flex flex-col md:flex-row md:items-center md:justify-between"
+          :class="{ 'md:flex-row-reverse': i % 2 !== 0 }"
+        >
+          <!-- Point -->
+          <div class="absolute left-0 top-2 z-10 h-3 w-3 -translate-x-[5.5px] rounded-full border border-cyan-400 bg-slate-950 md:left-1/2 md:-translate-x-1.5" />
+
+          <!-- Content Wrapper -->
+          <div class="w-full md:w-[45%]">
+            <div class="rounded-3xl border border-white/10 bg-slate-900/40 p-6 backdrop-blur-xl transition hover:border-cyan-400/30 hover:bg-slate-900/60 md:p-8">
+              <span class="mb-4 block text-xs font-bold tracking-widest text-cyan-400">{{ item.period }}</span>
+              <h3 class="mb-2 text-xl font-bold text-white md:text-2xl">{{ getExperienceData(item.id).title }}</h3>
+              <p class="mb-4 text-sm font-medium text-slate-400">{{ getExperienceData(item.id).organization }}</p>
+              <p class="text-sm leading-relaxed text-slate-300">{{ getExperienceData(item.id).description }}</p>
+            </div>
+          </div>
+
+          <!-- Empty spacer for desktop -->
+          <div class="hidden w-[45%] md:block" />
+        </div>
+      </div>
     </div>
   </section>
 </template>

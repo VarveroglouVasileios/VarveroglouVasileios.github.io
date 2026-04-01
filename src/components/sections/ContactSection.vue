@@ -1,253 +1,135 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger);
 
-interface ContactForm {
-  name: string
-  email: string
-  message: string
-}
-
-interface ContactErrors {
-  name?: string
-  email?: string
-  message?: string
-}
-
-const form = reactive<ContactForm>({
-  name: '',
-  email: '',
-  message: '',
-})
-
-const errors = reactive<ContactErrors>({})
-const isSubmitted = ref<boolean>(false)
-const isSubmitting = ref<boolean>(false)
-const submitError = ref<string | null>(null)
-const sectionRef = ref<HTMLElement | null>(null)
-const introCardRef = ref<HTMLElement | null>(null)
-const formCardRef = ref<HTMLElement | null>(null)
-let context: gsap.Context | undefined
-
-/** Extract Formspree form ID; supports both "xyknebdj" and full URL "https://formspree.io/f/xyknebdj" */
-const FORMSPREE_ID = (() => {
-  const raw = import.meta.env.VITE_FORMSPREE_ID as string | undefined
-  if (!raw?.trim()) return undefined
-  const match = raw.trim().match(/formspree\.io\/f\/([a-zA-Z0-9]+)/)
-  return match ? match[1] : raw.trim()
-})()
-
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-const hasValue = computed(() => ({
-  name: form.name.length > 0,
-  email: form.email.length > 0,
-  message: form.message.length > 0,
-}))
-
-const validate = (): boolean => {
-  errors.name = form.name.trim().length < 2 ? 'Please enter your name.' : undefined
-  errors.email = emailRegex.test(form.email) ? undefined : 'Please enter a valid email.'
-  errors.message = form.message.trim().length < 12 ? 'Message must be at least 12 characters.' : undefined
-
-  return !errors.name && !errors.email && !errors.message
-}
-
-const onSubmit = async (): Promise<void> => {
-  if (!validate()) {
-    return
-  }
-
-  submitError.value = null
-  isSubmitting.value = true
-
-  if (FORMSPREE_ID) {
-    try {
-      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          message: form.message,
-        }),
-      })
-      if (res.ok) {
-        isSubmitted.value = true
-        form.name = ''
-        form.email = ''
-        form.message = ''
-      } else {
-        submitError.value = 'Something went wrong. Please try again or email me directly.'
-      }
-    } catch {
-      submitError.value = 'Network error. Please try again or email me directly.'
-    } finally {
-      isSubmitting.value = false
-    }
-  } else {
-    const subject = encodeURIComponent(`Portfolio contact from ${form.name}`)
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`,
-    )
-    window.location.href = `mailto:varveroglou@hotmail.gr?subject=${subject}&body=${body}`
-    isSubmitted.value = true
-    form.name = ''
-    form.email = ''
-    form.message = ''
-    isSubmitting.value = false
-  }
-}
+const { t } = useI18n();
+const sectionRef = ref<HTMLElement | null>(null);
+let context: gsap.Context | undefined;
 
 onMounted(() => {
-  context = gsap.context(() => {
-    const trigger = sectionRef.value
-    if (!trigger) return
+  nextTick(() => {
+    context = gsap.context(() => {
+      const trigger = sectionRef.value;
+      if (!trigger) return;
 
-    // Intro card: scrub-in (clamped to section bounds)
-    if (introCardRef.value) {
-      gsap.fromTo(
-        introCardRef.value,
-        { y: 160, opacity: 0, scale: 0.92 },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger,
-            start: 'top 90%',
-            end: 'bottom 80%',
-            scrub: 1.2,
-            invalidateOnRefresh: true,
-          },
+      gsap.from(".contact-card", {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger,
+          start: "top 85%",
         },
-      )
-    }
-
-    // Form card: scrub-in with delay (clamped to section bounds)
-    if (formCardRef.value) {
-      gsap.fromTo(
-        formCardRef.value,
-        { y: 180, opacity: 0, scale: 0.9 },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger,
-            start: 'top 85%',
-            end: 'bottom 75%',
-            scrub: 1.4,
-            invalidateOnRefresh: true,
-          },
-        },
-      )
-    }
-  })
-})
+      });
+    }, sectionRef.value || undefined);
+  });
+});
 
 onBeforeUnmount(() => {
-  context?.revert()
-})
+  context?.revert();
+});
 </script>
 
 <template>
-  <section id="contact" ref="sectionRef" class="relative mx-auto w-full max-w-6xl px-4 pb-20 pt-20 sm:snap-start sm:px-6 md:pt-28">
-    <div class="grid gap-8 md:grid-cols-[1.1fr_0.9fr]">
-      <article ref="introCardRef" class="rounded-3xl border border-white/10 bg-slate-900/55 p-6 backdrop-blur-xl sm:p-8">
-        <p class="mb-3 text-sm uppercase tracking-[0.18em] text-cyan-300">Contact</p>
-        <h2 class="mb-4 text-2xl font-semibold text-white sm:text-3xl md:text-4xl">Let’s Build Something Remarkable</h2>
-        <p class="max-w-lg text-sm leading-relaxed text-slate-300">
-          Have a product idea, a scaling challenge, or a frontend overhaul in mind? Share a few details
-          and I will get back with a focused plan.
+  <section
+    id="contact"
+    ref="sectionRef"
+    class="relative mx-auto max-w-7xl px-4 py-24 sm:snap-start sm:px-6 md:py-32"
+  >
+    <div
+      class="contact-card grid gap-12 overflow-hidden rounded-[2.5rem] border border-white/10 bg-slate-900/40 p-8 backdrop-blur-2xl md:grid-cols-2 md:p-16"
+    >
+      <div>
+        <p class="mb-4 text-sm uppercase tracking-[0.25em] text-cyan-400">
+          {{ t("contact.tag") }}
         </p>
-      </article>
+        <h2
+          class="mb-6 text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl"
+        >
+          {{ t("contact.title") }}
+        </h2>
+        <p class="mb-10 text-lg text-slate-300">
+          {{ t("contact.description") }}
+        </p>
 
-      <form
-        ref="formCardRef"
-        class="rounded-3xl border border-white/10 bg-slate-900/55 p-6 backdrop-blur-xl sm:p-8"
-        novalidate
-        @submit.prevent="onSubmit"
-      >
-        <div class="mb-6">
-          <div class="group relative">
-            <input
-              id="name"
-              v-model="form.name"
-              type="text"
-              class="peer w-full rounded-xl border border-white/15 bg-slate-900/80 px-4 pb-3 pt-6 text-sm text-slate-100 outline-none transition focus:border-cyan-300/60"
-              placeholder=" "
+        <div class="space-y-4">
+          <div class="flex items-center gap-4 text-slate-300">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-400/10 text-cyan-400"
             >
-            <label
-              for="name"
-              class="pointer-events-none absolute left-4 top-4 text-xs text-slate-400 transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-cyan-300"
-              :class="hasValue.name ? 'top-2 text-xs' : ''"
-            >
-              Full Name
-            </label>
+              📧
+            </div>
+            <span>varveroglouvas@gmail.com</span>
           </div>
-          <p v-if="errors.name" class="mt-2 text-xs text-rose-300">{{ errors.name }}</p>
+          <div class="flex items-center gap-4 text-slate-300">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-full bg-violet-400/10 text-violet-400"
+            >
+              📍
+            </div>
+            <span>Kavala, Greece</span>
+          </div>
+        </div>
+      </div>
+
+      <form class="space-y-6" @submit.prevent>
+        <div class="group relative">
+          <input
+            type="text"
+            id="name"
+            autocomplete="name"
+            placeholder=" "
+            class="peer w-full rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-white outline-none transition focus:border-cyan-400/50 focus:bg-white/10"
+          />
+          <label
+            for="name"
+            class="absolute left-6 top-4 origin-left -translate-y-1/2 scale-75 text-xs text-slate-500 transition-all peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:text-slate-400 peer-focus:-translate-y-8 peer-focus:scale-75 peer-focus:text-cyan-400"
+          >
+            {{ t("contact.fullName") }}
+          </label>
         </div>
 
-        <div class="mb-6">
-          <div class="group relative">
-            <input
-              id="email"
-              v-model="form.email"
-              type="email"
-              class="peer w-full rounded-xl border border-white/15 bg-slate-900/80 px-4 pb-3 pt-6 text-sm text-slate-100 outline-none transition focus:border-cyan-300/60"
-              placeholder=" "
-            >
-            <label
-              for="email"
-              class="pointer-events-none absolute left-4 top-4 text-xs text-slate-400 transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-cyan-300"
-              :class="hasValue.email ? 'top-2 text-xs' : ''"
-            >
-              Email Address
-            </label>
-          </div>
-          <p v-if="errors.email" class="mt-2 text-xs text-rose-300">{{ errors.email }}</p>
+        <div class="group relative">
+          <input
+            type="email"
+            id="email"
+            autocomplete="email"
+            placeholder=" "
+            class="peer w-full rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-white outline-none transition focus:border-cyan-400/50 focus:bg-white/10"
+          />
+          <label
+            for="email"
+            class="absolute left-6 top-4 origin-left -translate-y-1/2 scale-75 text-xs text-slate-500 transition-all peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:text-slate-400 peer-focus:-translate-y-8 peer-focus:scale-75 peer-focus:text-cyan-400"
+          >
+            {{ t("contact.email") }}
+          </label>
         </div>
 
-        <div class="mb-6">
-          <div class="group relative">
-            <textarea
-              id="message"
-              v-model="form.message"
-              rows="4"
-              class="peer w-full resize-none rounded-xl border border-white/15 bg-slate-900/80 px-4 pb-3 pt-6 text-sm text-slate-100 outline-none transition focus:border-cyan-300/60"
-              placeholder=" "
-            />
-            <label
-              for="message"
-              class="pointer-events-none absolute left-4 top-4 text-xs text-slate-400 transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-cyan-300"
-              :class="hasValue.message ? 'top-2 text-xs' : ''"
-            >
-              Project Details
-            </label>
-          </div>
-          <p v-if="errors.message" class="mt-2 text-xs text-rose-300">{{ errors.message }}</p>
+        <div class="group relative">
+          <textarea
+            id="message"
+            rows="4"
+            placeholder=" "
+            class="peer w-full resize-none rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-white outline-none transition focus:border-cyan-400/50 focus:bg-white/10"
+          ></textarea>
+          <label
+            for="message"
+            class="absolute left-6 top-4 origin-left -translate-y-1/2 scale-75 text-xs text-slate-500 transition-all peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:text-slate-400 peer-focus:-translate-y-8 peer-focus:scale-75 peer-focus:text-cyan-400"
+          >
+            {{ t("contact.details") }}
+          </label>
         </div>
 
         <button
-          type="submit"
-          :disabled="isSubmitting"
-          class="w-full rounded-xl border border-cyan-300/40 bg-cyan-500/15 px-5 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-cyan-200 transition hover:bg-cyan-400/25 disabled:opacity-60 disabled:cursor-not-allowed"
+          class="w-full rounded-2xl bg-cyan-400 py-4 font-bold uppercase tracking-widest text-slate-950 transition hover:bg-cyan-300 active:scale-[0.98]"
         >
-          {{ isSubmitting ? 'Sending…' : 'Send Message' }}
+          {{ t("contact.send") }}
         </button>
-
-        <p v-if="isSubmitted" class="mt-4 text-sm text-emerald-300">
-          Message sent successfully. Thanks for reaching out.
-        </p>
-        <p v-if="submitError" class="mt-4 text-sm text-rose-300">
-          {{ submitError }}
-        </p>
       </form>
     </div>
   </section>

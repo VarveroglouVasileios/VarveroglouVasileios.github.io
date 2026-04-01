@@ -1,71 +1,61 @@
 @tailwind base;
+@autoprefixer;
 @tailwind components;
 @tailwind utilities;
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 140px;
-  scroll-snap-type: none;
-  overscroll-behavior-y: contain;
+:root {
+  color-scheme: dark;
 }
 
-body {
-  margin: 0;
-  overflow-x: hidden;
-  background: radial-gradient(circle at 20% 20%, #0f172a, #020617 48%, #020617 100%);
-  color: #e2e8f0;
-  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+/* Optimization: Prevent FOUT and layout shifts */
+@layer base {
+  html {
+    @apply scroll-smooth antialiased;
+    -webkit-tap-highlight-color: transparent;
+    background-color: #020617;
+  }
+
+  body {
+    @apply selection:bg-cyan-500/30 selection:text-cyan-200 overflow-x-hidden;
+    font-display: swap;
+  }
 }
 
-* {
-  box-sizing: border-box;
+/* Performance: Fixed dimensions for potential layout shifters */
+canvas {
+  display: block;
+  touch-action: none;
 }
 
-section {
-  scroll-margin-top: 140px;
+/* Custom selection */
+::selection {
+  background: rgba(34, 211, 238, 0.2);
+  color: #22d3ee;
 }
 
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.hide-scrollbar::-webkit-scrollbar {
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
-@media (max-width: 640px) {
-  html {
-    scroll-padding-top: 180px;
-    scroll-snap-type: none;
-  }
-
-  section {
-    scroll-margin-top: 180px;
-  }
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
-@media (min-width: 640px) {
-  html {
-    scroll-snap-type: none;
-  }
+/* Optimize animations */
+.will-change-transform {
+  will-change: transform;
 }
 
-::selection {
-  background: rgba(34, 211, 238, 0.35);
-  color: #f8fafc;
+.will-change-opacity {
+  will-change: opacity;
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #020617;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(#155e75, #4f46e5);
-  border-radius: 999px;
+/* Hardware acceleration for smooth transitions */
+.gpu {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }

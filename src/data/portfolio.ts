@@ -2,8 +2,10 @@ import type { ExperienceItem, Project, Skill, SocialLink } from '@/types/portfol
 
 export const techSkills: Skill[] = [
   { name: 'Vue 3', accent: 'from-emerald-400 to-emerald-300' },
+  { name: 'Angular.js', accent: 'from-rose-400 to-red-300' },
   { name: 'Node.js', accent: 'from-lime-400 to-green-300' },
   { name: 'TypeScript', accent: 'from-blue-400 to-cyan-300' },
+  { name: 'Tailwind CSS', accent: 'from-teal-400 to-cyan-300' },
   { name: 'Express', accent: 'from-indigo-400 to-violet-300' },
   { name: 'Pinia', accent: 'from-yellow-300 to-amber-300' },
   { name: 'MongoDB', accent: 'from-sky-400 to-blue-300' },
@@ -73,6 +75,15 @@ export const experience: ExperienceItem[] = [
     organization: 'FactSet',
     description:
       'Building and maintaining enterprise-scale web applications in a global environment using Vue.js, Node.js, TypeScript, PHP (Symfony), SQL, and Pinia with a strong focus on clean architecture, performance, and reliability.',
+    type: 'work',
+  },
+  {
+    id: 5,
+    period: 'October 2023 – April 2024 · 7 mos · Remote',
+    title: 'Front-end Developer',
+    organization: 'StructWise',
+    description:
+      'Delivered front-end features and UI for web products in a fully remote engagement, working with AngularJS and Tailwind CSS alongside designers and backend engineers.',
     type: 'work',
   },
   {

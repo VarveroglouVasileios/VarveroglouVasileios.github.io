@@ -9,43 +9,50 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var _a;
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { templateCompilerOptions } from '@tresjs/core';
 import { fileURLToPath, URL } from 'node:url';
-export default defineConfig({
-    base: (_a = process.env.VITE_BASE) !== null && _a !== void 0 ? _a : '/',
-    server: {
-        port: 8989,
-    },
-    plugins: [
-        vue(__assign({}, templateCompilerOptions)),
-    ],
-    resolve: {
-        alias: {
-            '@': fileURLToPath(new URL('./src', import.meta.url)),
+export default defineConfig(function (_a) {
+    var _b;
+    var mode = _a.mode;
+    return ({
+        base: (_b = process.env.VITE_BASE) !== null && _b !== void 0 ? _b : '/',
+        server: {
+            port: 8989,
         },
-    },
-    build: {
-        rollupOptions: {
-            output: {
-                manualChunks: function (id) {
-                    if (!id.includes('node_modules')) {
-                        return;
-                    }
-                    if (id.includes('three') || id.includes('@tresjs')) {
-                        return 'vendor-3d';
-                    }
-                    if (id.includes('gsap')) {
-                        return 'vendor-motion';
-                    }
-                    if (id.includes('vue-router')) {
-                        return 'vendor-router';
-                    }
-                    return 'vendor';
+        plugins: [
+            vue(__assign({}, templateCompilerOptions)),
+        ],
+        resolve: {
+            alias: {
+                '@': fileURLToPath(new URL('./src', import.meta.url)),
+            },
+        },
+        esbuild: {
+            drop: mode === 'production' ? ['console', 'debugger'] : [],
+        },
+        build: {
+            chunkSizeWarningLimit: 750,
+            rollupOptions: {
+                output: {
+                    manualChunks: function (id) {
+                        if (!id.includes('node_modules')) {
+                            return;
+                        }
+                        if (id.includes('three') || id.includes('@tresjs')) {
+                            return 'vendor-3d';
+                        }
+                        if (id.includes('gsap')) {
+                            return 'vendor-motion';
+                        }
+                        if (id.includes('vue-router')) {
+                            return 'vendor-router';
+                        }
+                        return 'vendor';
+                    },
                 },
             },
         },
-    },
+    });
 });

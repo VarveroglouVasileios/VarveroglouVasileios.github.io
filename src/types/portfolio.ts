@@ -1,7 +1,9 @@
 export type TechName =
   | 'Vue 3'
+  | 'Angular.js'
   | 'Node.js'
   | 'TypeScript'
+  | 'Tailwind CSS'
   | 'Express'
   | 'Pinia'
   | 'MongoDB'

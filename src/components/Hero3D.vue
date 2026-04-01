@@ -1,20 +1,22 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const fullHeadline = 'Shipping secure, scalable web platforms with Vue & Node.'
+const { t, locale } = useI18n()
 const typedHeadline = ref<string>('')
 const heroRoot = ref<HTMLElement | null>(null)
-const ctaButton = ref<HTMLElement | null>(null)
 
 let typingIntervalId: number | undefined
 let context: gsap.Context | undefined
 
 const startTypingEffect = (): void => {
+  if (typingIntervalId !== undefined) window.clearInterval(typingIntervalId)
   let index = 0
+  const fullHeadline = t('hero.headline')
   typingIntervalId = window.setInterval(() => {
     typedHeadline.value = fullHeadline.slice(0, index)
     index += 1
@@ -24,12 +26,18 @@ const startTypingEffect = (): void => {
   }, 35)
 }
 
-onMounted(() => {
+watch(locale, () => {
   startTypingEffect()
+})
 
-  context = gsap.context(() => {
-    if (heroRoot.value) {
-      gsap.from(heroRoot.value.querySelectorAll('[data-hero-item]'), {
+onMounted(() => {
+  nextTick(() => {
+    startTypingEffect()
+
+    context = gsap.context((self) => {
+      if (!self.selector) return
+      
+      gsap.from(self.selector('[data-hero-item]'), {
         y: 48,
         opacity: 0,
         stagger: 0.14,
@@ -37,7 +45,7 @@ onMounted(() => {
         ease: 'power3.out',
       })
 
-      gsap.to(heroRoot.value.querySelector('[data-hero-shell]'), {
+      gsap.to(self.selector('[data-hero-shell]'), {
         y: 24,
         ease: 'none',
         scrollTrigger: {
@@ -47,18 +55,8 @@ onMounted(() => {
           scrub: 0.8,
         },
       })
-    }
-
-    if (ctaButton.value) {
-      gsap.to(ctaButton.value, {
-        boxShadow: '0 0 48px rgba(34, 211, 238, 0.45)',
-        repeat: -1,
-        yoyo: true,
-        duration: 1.5,
-        ease: 'sine.inOut',
-      })
-    }
-  }, heroRoot)
+    }, heroRoot.value || undefined)
+  })
 })
 
 onBeforeUnmount(() => {
@@ -68,6 +66,23 @@ onBeforeUnmount(() => {
   }
 })
 </script>
+
+<style scoped>
+@media (prefers-reduced-motion: no-preference) {
+  .hero-cta-pulse {
+    animation: hero-cta-glow 2.4s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes hero-cta-glow {
+  from {
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.12);
+  }
+  to {
+    box-shadow: 0 0 28px rgba(34, 211, 238, 0.32);
+  }
+}
+</style>
 
 <template>
   <section
@@ -83,11 +98,11 @@ onBeforeUnmount(() => {
           data-hero-item
           class="mb-4 inline-flex rounded-full border border-cyan-300/30 bg-cyan-400/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300"
         >
-          Vue & Node.js Engineer
+          {{ t('hero.title') }}
         </p>
         <h1
           data-hero-item
-          class="mb-6 text-balance text-3xl font-bold leading-tight text-white sm:text-4xl md:text-6xl"
+          class="mb-6 min-h-[4.5rem] text-balance text-3xl font-bold leading-tight text-white sm:min-h-[6rem] sm:text-4xl md:min-h-[8rem] md:text-6xl"
         >
           {{ typedHeadline }}
           <span class="animate-pulse text-cyan-300">|</span>
@@ -96,33 +111,30 @@ onBeforeUnmount(() => {
           data-hero-item
           class="mb-8 max-w-2xl text-base text-slate-300 sm:text-lg"
         >
-          Full Stack Developer (FactSet) with a background in Computer Science
-          and an MSc in Cybersecurity in progress—combining Vue.js, Node.js, and
-          secure-by-design thinking to build reliable products.
+          {{ t('hero.description') }}
         </p>
 
         <div data-hero-item class="flex flex-wrap items-center gap-3 sm:gap-4">
           <a
-            ref="ctaButton"
             href="#projects"
-            class="rounded-full border border-cyan-300/60 bg-cyan-400/20 px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-cyan-200 transition hover:-translate-y-0.5 hover:bg-cyan-300/30 sm:px-7 sm:text-sm sm:tracking-[0.16em]"
+            class="hero-cta-pulse rounded-full border border-cyan-300/60 bg-cyan-400/20 px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-cyan-200 transition hover:-translate-y-0.5 hover:bg-cyan-300/30 sm:px-7 sm:text-sm sm:tracking-[0.16em]"
           >
-            View Projects
+            {{ t('hero.viewProjects') }}
           </a>
           <a
             href="#contact"
             class="rounded-full border border-white/20 px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-slate-200 transition hover:border-cyan-300/60 hover:text-cyan-200 sm:px-7 sm:text-sm sm:tracking-[0.16em]"
           >
-            Hire Me
+            {{ t('hero.hireMe') }}
           </a>
           <a
-            href="/VarveroglouCV.pdf"
+            href="/VasileiosVarveroglouCV.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            download="VarveroglouCV.pdf"
+            download="VasileiosVarveroglouCV.pdf"
             class="rounded-full border border-emerald-400/50 px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-300 transition hover:-translate-y-0.5 hover:border-emerald-300/70 hover:bg-emerald-400/15 sm:px-7 sm:text-sm sm:tracking-[0.16em]"
           >
-            Download CV
+            {{ t('hero.downloadCv') }}
           </a>
         </div>
       </div>

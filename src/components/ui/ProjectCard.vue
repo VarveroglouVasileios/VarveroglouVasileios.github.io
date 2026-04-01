@@ -1,125 +1,82 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import gsap from "gsap";
-import type { Project } from "@/types/portfolio";
+import { useI18n } from 'vue-i18n'
 
-const props = defineProps<{
-  project: Project;
-}>();
+const { t } = useI18n()
 
-const cardRef = ref<HTMLElement | null>(null);
-const imageError = ref(false);
-const supportsHover = window.matchMedia(
-  "(hover: hover) and (pointer: fine)",
-).matches;
-
-const onImageError = (): void => {
-  imageError.value = true;
-};
-
-const handleMove = (event: PointerEvent): void => {
-  if (!supportsHover) {
-    return;
+defineProps<{
+  project: {
+    id: number
+    title: string
+    description: string
+    stack: string[]
+    imageUrl?: string
+    githubUrl: string
+    liveUrl: string
   }
-  const card = cardRef.value;
-  if (!card) {
-    return;
-  }
-  const bounds = card.getBoundingClientRect();
-  const x = event.clientX - bounds.left;
-  const y = event.clientY - bounds.top;
-  const rotateY = (x / bounds.width - 0.5) * 10;
-  const rotateX = (0.5 - y / bounds.height) * 10;
-
-  gsap.to(card, {
-    rotateX,
-    rotateY,
-    transformPerspective: 900,
-    duration: 0.22,
-    ease: "power2.out",
-  });
-};
-
-const resetTilt = (): void => {
-  if (!supportsHover) {
-    return;
-  }
-  if (!cardRef.value) {
-    return;
-  }
-  gsap.to(cardRef.value, {
-    rotateX: 0,
-    rotateY: 0,
-    duration: 0.35,
-    ease: "power3.out",
-  });
-};
+}>()
 </script>
 
 <template>
   <article
-    ref="cardRef"
-    class="group relative flex h-full flex-col rounded-3xl border border-white/10 bg-slate-900/55 p-5 backdrop-blur-xl transition will-change-transform hover:border-cyan-300/45"
-    @pointermove="handleMove"
-    @pointerleave="resetTilt"
+    class="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-slate-900/40 backdrop-blur-xl transition-all duration-500 hover:border-cyan-300/40 hover:bg-slate-900/60"
   >
-    <div
-      class="mb-4 overflow-hidden rounded-2xl border border-white/10 bg-slate-800/80"
-    >
-      <div class="relative aspect-[16/10] w-full min-h-[180px]">
-        <img
-          v-if="props.project.imageUrl && !imageError"
-          :src="props.project.imageUrl"
-          :alt="props.project.imageLabel"
-          class="h-full w-full object-cover object-top"
-          loading="lazy"
-          @error="onImageError"
-        />
-        <div
-          v-else
-          class="flex h-full min-h-[180px] items-center justify-center rounded-xl border border-dashed border-cyan-300/30 p-8"
-        >
-          <span class="text-center text-sm text-slate-400">{{
-            props.project.imageLabel
-          }}</span>
-        </div>
+    <!-- Image Wrapper with optimized loading -->
+    <div class="relative aspect-video overflow-hidden">
+      <img
+        v-if="project.imageUrl"
+        :src="project.imageUrl"
+        :alt="project.title"
+        loading="lazy"
+        decoding="async"
+        fetchpriority="low"
+        width="1920"
+        height="1080"
+        class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+      />
+      <div v-else class="flex h-full w-full items-center justify-center bg-slate-800">
+        <span class="text-4xl">🚀</span>
       </div>
+      <!-- Overlay Gradient -->
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60"
+      />
     </div>
 
-    <h3 class="mb-2 text-xl font-semibold text-white">
-      {{ props.project.title }}
-    </h3>
-    <p class="mb-4 text-sm leading-relaxed text-slate-300">
-      {{ props.project.description }}
-    </p>
+    <!-- Content -->
+    <div class="flex flex-1 flex-col p-6 sm:p-8">
+      <div class="mb-4 flex flex-wrap gap-2">
+        <span
+          v-for="tech in project.stack"
+          :key="tech"
+          class="rounded-full border border-white/5 bg-white/5 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-400"
+        >
+          {{ tech }}
+        </span>
+      </div>
 
-    <div class="mb-5 flex flex-wrap gap-2">
-      <span
-        v-for="tag in props.project.stack"
-        :key="tag"
-        class="rounded-full border border-cyan-300/30 bg-cyan-500/10 px-3 py-1 text-xs text-cyan-200"
-      >
-        {{ tag }}
-      </span>
-    </div>
+      <h3 class="mb-3 text-xl font-bold text-white sm:text-2xl">{{ project.title }}</h3>
+      <p class="mb-8 line-clamp-3 text-sm leading-relaxed text-slate-400">
+        {{ project.description }}
+      </p>
 
-    <div class="mt-auto flex flex-wrap items-center gap-3 text-sm">
-      <a
-        :href="props.project.githubUrl"
-        target="_blank"
-        rel="noreferrer"
-        class="rounded-full border border-white/20 px-4 py-2 text-slate-200 transition hover:border-cyan-300/60 hover:text-cyan-200"
-      >
-        GitHub
-      </a>
-      <a
-        :href="props.project.liveUrl"
-        target="_blank"
-        rel="noreferrer"
-        class="rounded-full border border-cyan-300/40 bg-cyan-500/15 px-4 py-2 text-cyan-200 transition hover:bg-cyan-400/25"
-      >
-        Live Demo
-      </a>
+      <!-- Links -->
+      <div class="mt-auto flex items-center gap-6">
+        <a
+          :href="project.githubUrl"
+          target="_blank"
+          class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 transition hover:text-white"
+        >
+          {{ t('projects.github') }}
+        </a>
+        <a
+          :href="project.liveUrl"
+          target="_blank"
+          class="group flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-cyan-400 transition hover:text-cyan-300"
+        >
+          {{ t('projects.live') }}
+          <span class="transition-transform group-hover:translate-x-1">→</span>
+        </a>
+      </div>
     </div>
   </article>
 </template>

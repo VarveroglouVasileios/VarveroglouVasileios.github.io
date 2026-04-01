@@ -8,7 +8,9 @@ import TopNav from '@/components/layout/TopNav.vue'
   <div class="relative min-h-screen text-slate-100 bg-slate-950">
     <DeferredBackground3D />
     <TopNav />
-    <main class="relative z-[5] pt-40 sm:pt-36 md:pt-40">
+    <main
+      class="relative z-[5] pt-[calc(10rem+env(safe-area-inset-top,0px))] sm:pt-[calc(9rem+env(safe-area-inset-top,0px))] md:pt-[calc(10rem+env(safe-area-inset-top,0px))]"
+    >
       <RouterView v-slot="{ Component, route }">
         <Transition name="page" mode="out-in">
           <component :is="Component" :key="route.fullPath" />

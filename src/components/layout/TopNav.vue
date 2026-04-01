@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 
@@ -7,6 +7,8 @@ const { t, locale } = useI18n();
 const route = useRoute();
 const isScrolled = ref(false);
 const isMobileMenuOpen = ref(false);
+/** Scroll read progress (0–100), όπως το παλιό “status” bar κάτω από το nav */
+const scrollProgress = ref(0);
 
 const navLinks = [
   { name: "nav.home", href: "/", hash: "#hero" },
@@ -19,25 +21,47 @@ const toggleLocale = () => {
   locale.value = locale.value === "en" ? "el" : "en";
 };
 
-const handleScroll = () => {
+const updateScrollState = () => {
   isScrolled.value = window.scrollY > 20;
+  const scrollTop = window.scrollY;
+  const docHeight =
+    document.documentElement.scrollHeight - window.innerHeight;
+  if (docHeight <= 0) {
+    scrollProgress.value = 0;
+    return;
+  }
+  scrollProgress.value = Math.min(
+    100,
+    Math.max(0, (scrollTop / docHeight) * 100)
+  );
 };
 
 onMounted(() => {
-  window.addEventListener("scroll", handleScroll, { passive: true });
+  updateScrollState();
+  window.addEventListener("scroll", updateScrollState, { passive: true });
+  window.addEventListener("resize", updateScrollState);
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener("scroll", handleScroll);
+  window.removeEventListener("scroll", updateScrollState);
+  window.removeEventListener("resize", updateScrollState);
 });
+
+watch(
+  () => route.fullPath,
+  () => {
+    isMobileMenuOpen.value = false;
+    requestAnimationFrame(updateScrollState);
+  }
+);
 </script>
 
 <template>
   <nav
-    class="fixed left-0 right-0 top-0 z-[100] transition-all duration-300"
+    class="fixed left-0 right-0 top-0 z-[100] border-b border-white/10 transition-all duration-300 pt-[env(safe-area-inset-top,0px)]"
     :class="[
       isScrolled
-        ? 'bg-slate-950/80 py-4 backdrop-blur-lg border-b border-white/5'
+        ? 'bg-slate-950/80 py-4 backdrop-blur-lg'
         : 'bg-transparent py-6',
     ]"
   >
@@ -106,6 +130,18 @@ onBeforeUnmount(() => {
           :class="{ '-translate-y-2 -rotate-45': isMobileMenuOpen }"
         />
       </button>
+    </div>
+
+    <div
+      class="mx-auto mt-3 max-w-7xl px-4 sm:px-6"
+      aria-hidden="true"
+    >
+      <div class="h-1.5 overflow-hidden rounded-full bg-slate-800/90">
+        <div
+          class="h-full rounded-full bg-gradient-to-r from-cyan-400 to-violet-400 transition-[width] duration-150 ease-out"
+          :style="{ width: `${scrollProgress}%` }"
+        />
+      </div>
     </div>
 
     <!-- Mobile Menu -->

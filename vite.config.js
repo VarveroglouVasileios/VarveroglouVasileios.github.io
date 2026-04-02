@@ -40,7 +40,13 @@ export default defineConfig(function (_a) {
                         if (!id.includes('node_modules')) {
                             return;
                         }
-                        if (id.includes('three') || id.includes('@tresjs')) {
+                        // Keep all modules that import `three` in this chunk; otherwise they land in
+                        // `vendor` and Rollup emits vendor-3d ↔ vendor circular chunks (runtime TDZ).
+                        if (id.includes('three') ||
+                            id.includes('@tresjs') ||
+                            id.includes('@pmndrs') ||
+                            id.includes('camera-controls') ||
+                            id.includes('stats-gl')) {
                             return 'vendor-3d';
                         }
                         if (id.includes('gsap')) {

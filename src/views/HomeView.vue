@@ -9,6 +9,7 @@ const Hero3D = defineAsyncComponent(() => import('@/components/Hero3D.vue'))
 const AboutSection = defineAsyncComponent(() => import('@/components/sections/AboutSection.vue'))
 const ProjectsSection = defineAsyncComponent(() => import('@/components/sections/ProjectsSection.vue'))
 const ExperienceSection = defineAsyncComponent(() => import('@/components/sections/ExperienceSection.vue'))
+const InsightsSection = defineAsyncComponent(() => import('@/components/sections/InsightsSection.vue'))
 const ContactSection = defineAsyncComponent(() => import('@/components/sections/ContactSection.vue'))
 
 const refreshScroll = (): void => {
@@ -36,6 +37,7 @@ onBeforeUnmount(() => {
     <Hero3D />
     <AboutSection />
     <ProjectsSection />
+    <InsightsSection />
     <ExperienceSection />
     <ContactSection />
   </div>

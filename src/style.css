@@ -21,6 +21,22 @@
   }
 }
 
+/* Custom cursor (md+): κρύβει το native arrow ώστε να μην φαίνεται «από πάνω» */
+@media (min-width: 768px) {
+  html.custom-cursor-desktop,
+  html.custom-cursor-desktop body,
+  html.custom-cursor-desktop body * {
+    cursor: none !important;
+  }
+
+  html.custom-cursor-desktop input,
+  html.custom-cursor-desktop textarea,
+  html.custom-cursor-desktop select,
+  html.custom-cursor-desktop [contenteditable='true'] {
+    cursor: text !important;
+  }
+}
+
 /* Performance: Fixed dimensions for potential layout shifters */
 canvas {
   display: block;

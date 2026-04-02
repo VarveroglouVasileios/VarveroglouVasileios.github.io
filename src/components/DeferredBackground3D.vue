@@ -1,21 +1,11 @@
 <script setup lang="ts">
-import { defineAsyncComponent, onMounted, ref } from 'vue'
+import Background3D from '@/components/Background3D.vue'
+import { useScrollSectionTheme } from '@/composables/useScrollSectionTheme'
 
-const show = ref(false)
-
-const Background3D = defineAsyncComponent(() => import('@/components/Background3D.vue'))
-
-onMounted(() => {
-  const enable = (): void => {
-    show.value = true
-  }
-  // Two rAFs: μετά το πρώτο paint, όχι μπλοκάρισμα από idle / reduced-motion
-  requestAnimationFrame(() => {
-    requestAnimationFrame(enable)
-  })
-})
+const { activeSection } = useScrollSectionTheme()
 </script>
 
 <template>
-  <Background3D v-if="show" />
+  <!-- Background renders immediately; Tres 5 + Vue 3.5.x align provide/inject with TresCanvas. -->
+  <Background3D :section-key="activeSection" />
 </template>

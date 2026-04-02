@@ -4,10 +4,11 @@ import { useI18n } from 'vue-i18n'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { experience } from '@/data/portfolio'
+import DecodingText from '@/components/ui/DecodingText.vue'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const sectionRef = ref<HTMLElement | null>(null)
 let context: gsap.Context | undefined
 
@@ -60,7 +61,13 @@ onBeforeUnmount(() => {
   <section id="experience" ref="sectionRef" class="relative mx-auto max-w-5xl px-4 py-24 sm:snap-start sm:px-6 md:py-32">
     <div class="mb-16 text-center">
       <p class="mb-4 text-sm uppercase tracking-[0.25em] text-cyan-400">{{ t('experience.tag') }}</p>
-      <h2 class="text-3xl font-bold text-white sm:text-4xl md:text-5xl">{{ t('experience.title') }}</h2>
+      <DecodingText
+        :key="locale"
+        as="h2"
+        :text="t('experience.title')"
+        :duration="1500"
+        content-class="text-3xl font-bold text-white sm:text-4xl md:text-5xl"
+      />
     </div>
 
     <div class="timeline-container relative">

@@ -3,10 +3,11 @@ import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import DecodingText from "@/components/ui/DecodingText.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const sectionRef = ref<HTMLElement | null>(null);
 let context: gsap.Context | undefined;
 
@@ -48,11 +49,13 @@ onBeforeUnmount(() => {
         <p class="mb-4 text-sm uppercase tracking-[0.25em] text-cyan-400">
           {{ t("contact.tag") }}
         </p>
-        <h2
-          class="mb-6 text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl"
-        >
-          {{ t("contact.title") }}
-        </h2>
+        <DecodingText
+          :key="locale"
+          as="h2"
+          :text="t('contact.title')"
+          :duration="1600"
+          content-class="mb-6 text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl"
+        />
         <p class="mb-10 text-lg text-slate-300">
           {{ t("contact.description") }}
         </p>

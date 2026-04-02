@@ -4,11 +4,12 @@ import { useI18n } from 'vue-i18n'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ProjectCard from '@/components/ui/ProjectCard.vue'
+import DecodingText from '@/components/ui/DecodingText.vue'
 import { projects } from '@/data/portfolio'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const sectionRef = ref<HTMLElement | null>(null)
 const headingRef = ref<HTMLElement | null>(null)
 const gridRef = ref<HTMLElement | null>(null)
@@ -116,7 +117,13 @@ onBeforeUnmount(() => {
     <div ref="headingRef" class="mb-10 flex items-end justify-between gap-4">
       <div>
         <p class="mb-3 text-sm uppercase tracking-[0.18em] text-cyan-300">{{ t('projects.tag') }}</p>
-        <h2 class="text-2xl font-semibold text-white sm:text-3xl md:text-4xl">{{ t('projects.title') }}</h2>
+        <DecodingText
+          :key="locale"
+          as="h2"
+          :text="t('projects.title')"
+          :duration="1400"
+          content-class="text-2xl font-semibold text-white sm:text-3xl md:text-4xl"
+        />
       </div>
     </div>
 

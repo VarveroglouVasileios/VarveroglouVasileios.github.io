@@ -4,11 +4,12 @@ import { useI18n } from 'vue-i18n'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TechIcon from '@/components/ui/TechIcon.vue'
+import DecodingText from '@/components/ui/DecodingText.vue'
 import { techSkills } from '@/data/portfolio'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const sectionRef = ref<HTMLElement | null>(null)
 const headingRef = ref<HTMLElement | null>(null)
 const textRef = ref<HTMLElement | null>(null)
@@ -90,9 +91,15 @@ onBeforeUnmount(() => {
     <div class="grid gap-16 lg:grid-cols-2 lg:gap-24">
       <div ref="textRef">
         <p class="mb-4 text-sm uppercase tracking-[0.2em] text-cyan-400">{{ t('about.tag') }}</p>
-        <h2 ref="headingRef" class="mb-8 text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">
-          {{ t('about.title') }}
-        </h2>
+        <div ref="headingRef">
+          <DecodingText
+            :key="locale"
+            as="h2"
+            :text="t('about.title')"
+            :duration="1600"
+            content-class="mb-8 text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl"
+          />
+        </div>
         <div class="space-y-6 text-base text-slate-300 sm:text-lg">
           <p>{{ t('about.p1') }}</p>
           <p>{{ t('about.p2') }}</p>

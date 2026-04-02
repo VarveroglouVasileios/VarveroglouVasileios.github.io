@@ -24,6 +24,11 @@ export interface Project {
   imageUrl?: string
   githubUrl: string
   liveUrl: string
+  breakdown?: {
+    architecture: string
+    security: string
+    challenges: string
+  }
 }
 
 export interface ExperienceItem {
@@ -38,4 +43,12 @@ export interface ExperienceItem {
 export interface SocialLink {
   label: string
   url: string
+}
+
+export interface Insight {
+  id: number
+  title: string
+  category: string
+  content: string
+  date: string
 }

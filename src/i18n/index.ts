@@ -5,6 +5,7 @@ const messages = {
     nav: {
       home: 'HOME',
       work: 'WORK',
+      insights: 'INSIGHTS',
       experience: 'EXPERIENCE',
       contact: 'CONTACT',
       downloadCv: 'DOWNLOAD CV'
@@ -24,11 +25,23 @@ const messages = {
       p2: 'I work across the full stack with Vue.js, Node.js, TypeScript, PHP (Symfony), SQL, and Pinia, focusing on clean architecture, performance, and reliability—while applying secure-by-design principles from my cybersecurity studies.',
       techStack: 'TECH STACK'
     },
+    insights: {
+      tag: 'FIELD NOTES',
+      title: 'Security & engineering thoughts',
+    },
     projects: {
       tag: 'PORTFOLIO',
       title: 'Selected Projects',
       github: 'GitHub',
       live: 'Live Demo',
+      breakdown: {
+        cta: 'Technical breakdown',
+        title: 'Case study',
+        architecture: 'Architecture',
+        security: 'Security & trust',
+        challenges: 'Hard problems',
+        close: 'Close',
+      },
       items: {
         vibebites: {
           title: 'VibeBites',
@@ -93,6 +106,7 @@ const messages = {
     nav: {
       home: 'ΑΡΧΙΚΗ',
       work: 'PROJECTS',
+      insights: 'INSIGHTS',
       experience: 'ΕΜΠΕΙΡΙΑ',
       contact: 'ΕΠΙΚΟΙΝΩΝΙΑ',
       downloadCv: 'DOWNLOAD CV'
@@ -112,11 +126,23 @@ const messages = {
       p2: 'Εξειδικεύομαι σε Vue.js, Node.js, TypeScript και PHP (Symfony), εστιάζοντας στην καθαρή δομή κώδικα και το performance, εφαρμόζοντας στην πράξη αρχές ασφαλούς ανάπτυξης λογισμικού.',
       techStack: 'TECH STACK'
     },
+    insights: {
+      tag: 'ΣΗΜΕΙΩΣΕΙΣ',
+      title: 'Σκέψεις για ασφάλεια & engineering',
+    },
     projects: {
       tag: 'PORTFOLIO',
       title: 'Επιλεγμένα Projects',
       github: 'GitHub',
       live: 'Live Demo',
+      breakdown: {
+        cta: 'Τεχνική ανάλυση',
+        title: 'Case study',
+        architecture: 'Αρχιτεκτονική',
+        security: 'Ασφάλεια & εμπιστοσύνη',
+        challenges: 'Δύσκολα σημεία',
+        close: 'Κλείσιμο',
+      },
       items: {
         vibebites: {
           title: 'VibeBites',

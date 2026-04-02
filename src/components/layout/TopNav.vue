@@ -13,6 +13,7 @@ const scrollProgress = ref(0);
 const navLinks = [
   { name: "nav.home", href: "/", hash: "#hero" },
   { name: "nav.work", href: "/#projects", hash: "#projects" },
+  { name: "nav.insights", href: "/#insights", hash: "#insights" },
   { name: "nav.experience", href: "/#experience", hash: "#experience" },
   { name: "nav.contact", href: "/#contact", hash: "#contact" },
 ];
@@ -175,9 +176,9 @@ watch(
               {{ locale === "en" ? "ΕΛΛΗΝΙΚΑ" : "ENGLISH" }}
             </button>
             <a
-              href="/VarveroglouVasileiosCV.pdf"
+              href="/VasileiosVarveroglouCV.pdf"
               target="_blank"
-              download="VarveroglouVasileiosCV.pdf"
+              download="VasileiosVarveroglouCV.pdf"
               class="rounded-xl bg-cyan-500/10 py-4 text-center text-xs font-bold tracking-widest text-cyan-400"
             >
               {{ t("nav.downloadCv") }}

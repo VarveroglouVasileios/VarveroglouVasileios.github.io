@@ -76,8 +76,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <!-- Πάνω από modal του terminal (z-10000) ώστε να φαίνεται το custom pointer -->
-  <div class="pointer-events-none fixed inset-0 z-[10100] hidden md:block">
+  <!-- Above SecurityTerminal (z-10000) and project breakdown dialog (z-20000); keep native cursor hidden site-wide. -->
+  <div class="pointer-events-none fixed inset-0 z-[30000] hidden md:block">
     <div
       ref="cursor"
       class="fixed left-0 top-0 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)]"

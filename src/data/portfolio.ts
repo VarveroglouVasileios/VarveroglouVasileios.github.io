@@ -15,6 +15,26 @@ export const techSkills: Skill[] = [
 
 export const projects: Project[] = [
   {
+    id: 4,
+    title: 'Shadow AI Firewall',
+    description:
+      'Browser extension that masks PII, financial identifiers, and high-signal secrets in outbound requests to supported AI chat sites—redacting serialized payloads before they leave the browser while restoring readable text locally in the UI.',
+    stack: ['TypeScript', 'WebExtensions', 'Chrome MV3'],
+    imageLabel: 'Shadow AI Firewall',
+    imageUrl: '/shadow-ai-preview.png',
+    githubUrl: 'https://github.com/varveroglouvasileios',
+    liveUrl: 'https://chromewebstore.google.com/detail/dobaajjnlgpbfkhlfldikmlfihnilajp',
+    liveLabelKey: 'projects.chromeStore',
+    breakdown: {
+      architecture:
+        'Service worker and content coordination intercept outgoing fetch/XHR bodies on declared origins, walk JSON and embedded strings, and replace matches with stable placeholders. An in-memory mapping supports local restoration where the page renders responses.',
+      security:
+        'Heuristic detectors (email, IBAN, cards, Greek tax/social patterns, phone, money-like values, JWT-shaped tokens, etc.) run client-side; protection is scoped to host permissions so the extension does not run elsewhere. Settings stay local unless an enterprise key enables minimal metadata telemetry.',
+      challenges:
+        'Avoiding fragile DOM rewrites in SPAs by operating on the network layer, merging overlapping detections predictably, and tuning rules to limit false positives on real chat UIs without blocking normal usage.',
+    },
+  },
+  {
     id: 3,
     title: 'VibeBites',
     description:

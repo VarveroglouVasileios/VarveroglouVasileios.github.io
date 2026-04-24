@@ -24,6 +24,8 @@ export interface Project {
   imageUrl?: string
   githubUrl: string
   liveUrl: string
+  /** When set, used as i18n key for the primary outbound link (default: projects.live). */
+  liveLabelKey?: string
   breakdown?: {
     architecture: string
     security: string

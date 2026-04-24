@@ -115,7 +115,9 @@ watch(
 
       <!-- Mobile Toggle -->
       <button
-        class="flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
+        class="flex h-12 w-12 flex-col items-center justify-center gap-1.5 md:hidden"
+        aria-label="Toggle menu"
+        :aria-expanded="isMobileMenuOpen"
         @click="isMobileMenuOpen = !isMobileMenuOpen"
       >
         <div

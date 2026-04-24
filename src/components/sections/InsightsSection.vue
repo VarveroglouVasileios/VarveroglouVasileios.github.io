@@ -36,7 +36,7 @@ const { t } = useI18n()
         <p class="mb-4 flex-1 text-sm leading-relaxed text-slate-400">
           {{ item.content }}
         </p>
-        <time class="text-[10px] font-mono uppercase tracking-wider text-slate-600">
+        <time class="text-[10px] font-mono uppercase tracking-wider text-slate-400">
           {{ item.date }}
         </time>
       </article>

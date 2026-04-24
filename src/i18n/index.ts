@@ -34,6 +34,7 @@ const messages = {
       title: 'Selected Projects',
       github: 'GitHub',
       live: 'Live Demo',
+      chromeStore: 'Chrome Web Store',
       breakdown: {
         cta: 'Technical breakdown',
         title: 'Case study',
@@ -43,6 +44,11 @@ const messages = {
         close: 'Close',
       },
       items: {
+        shadowfirewall: {
+          title: 'Shadow AI Firewall',
+          description:
+            'Browser extension that masks PII, financial identifiers, and high-signal secrets in outbound requests to supported AI chat sites—redacting serialized payloads before they leave the browser while restoring readable text locally in the UI.',
+        },
         vibebites: {
           title: 'VibeBites',
           description: 'Greek-first social cooking platform: recipe discovery, shopping lists, meal planning, AI fridge assistant (ingredients to recipes with macros), cooking mode, and PWA install — built for sharing across social.'
@@ -135,6 +141,7 @@ const messages = {
       title: 'Επιλεγμένα Projects',
       github: 'GitHub',
       live: 'Live Demo',
+      chromeStore: 'Chrome Web Store',
       breakdown: {
         cta: 'Τεχνική ανάλυση',
         title: 'Case study',
@@ -144,6 +151,11 @@ const messages = {
         close: 'Κλείσιμο',
       },
       items: {
+        shadowfirewall: {
+          title: 'Shadow AI Firewall',
+          description:
+            'Επέκταση browser που αποκρύπτει PII, οικονομικά αναγνωριστικά και ευαίσθητα μυστικά στα εξερχόμενα αιτήματα προς υποστηριζόμενες ιστοσελίδες AI chat—με redaction στο σώμα του αιτήματος πριν φύγει από τον browser και τοπική επαναφορά αναγνώσιμου κειμένου στο UI.',
+        },
         vibebites: {
           title: 'VibeBites',
           description: 'Social cooking πλατφόρμα με AI fridge assistant, meal planning και PWA υποστήριξη. Σχεδιασμένη για την ελληνική αγορά με έμφαση στο social sharing.'

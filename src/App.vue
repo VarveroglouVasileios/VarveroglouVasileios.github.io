@@ -1,9 +1,25 @@
 <script setup lang="ts">
+import { watch, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import DeferredBackground3D from '@/components/DeferredBackground3D.vue'
 import Footer from '@/components/layout/Footer.vue'
 import TopNav from '@/components/layout/TopNav.vue'
 import CustomCursor from '@/components/ui/global/CustomCursor.vue'
 import SecurityTerminal from '@/components/ui/global/SecurityTerminal.vue'
+
+const { locale } = useI18n()
+
+const updateDocumentLang = (lang: string) => {
+  document.documentElement.lang = lang
+}
+
+watch(locale, (newLocale) => {
+  updateDocumentLang(newLocale)
+})
+
+onMounted(() => {
+  updateDocumentLang(locale.value)
+})
 </script>
 
 <template>

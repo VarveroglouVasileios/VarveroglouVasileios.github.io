@@ -104,7 +104,7 @@ onBeforeUnmount(() => {
             rel="noopener noreferrer"
             class="clickable group/live flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-cyan-400 transition hover:text-cyan-300"
           >
-            {{ t('projects.live') }}
+            {{ project.liveLabelKey ? t(project.liveLabelKey) : t('projects.live') }}
             <span class="transition-transform group-hover/live:translate-x-1">→</span>
           </a>
         </div>

@@ -68,9 +68,21 @@ function startScramble(): void {
   runDecode(props.text)
 }
 
+const prefersReducedMotion = (): boolean =>
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
 function setupObserver(): void {
   observer?.disconnect()
   ran.value = false
+
+  // Respect reduced-motion: render the final text immediately, skip the scramble.
+  if (prefersReducedMotion()) {
+    ran.value = true
+    display.value = props.text
+    return
+  }
+
   display.value = props.text.replace(/[^\s]/g, '·')
 
   const el = rootRef.value
@@ -110,6 +122,9 @@ watch(
     :class="contentClass"
     :aria-label="text"
   >
+    <!-- Real, crawlable text: always present in the DOM as a readable text node -->
+    <span class="sr-only">{{ text }}</span>
+    <!-- Decorative scramble/decode animation, hidden from assistive tech & search engines -->
     <span aria-hidden="true">{{ display }}</span>
   </component>
 </template>

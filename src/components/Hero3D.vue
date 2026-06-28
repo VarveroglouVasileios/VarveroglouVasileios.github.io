@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -7,20 +7,32 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const { t, locale } = useI18n()
+const fullHeadline = computed<string>(() => t('hero.headline'))
 const typedHeadline = ref<string>('')
 const heroRoot = ref<HTMLElement | null>(null)
 
 let typingIntervalId: number | undefined
 let context: gsap.Context | undefined
 
+const prefersReducedMotion = (): boolean =>
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
 const startTypingEffect = (): void => {
   if (typingIntervalId !== undefined) window.clearInterval(typingIntervalId)
+  const headline = fullHeadline.value
+
+  // Respect reduced-motion: show the full headline immediately, no typing.
+  if (prefersReducedMotion()) {
+    typedHeadline.value = headline
+    return
+  }
+
   let index = 0
-  const fullHeadline = t('hero.headline')
   typingIntervalId = window.setInterval(() => {
-    typedHeadline.value = fullHeadline.slice(0, index)
+    typedHeadline.value = headline.slice(0, index)
     index += 1
-    if (index > fullHeadline.length && typingIntervalId !== undefined) {
+    if (index > headline.length && typingIntervalId !== undefined) {
       window.clearInterval(typingIntervalId)
     }
   }, 35)
@@ -102,10 +114,16 @@ onBeforeUnmount(() => {
         </p>
         <h1
           data-hero-item
+          :aria-label="fullHeadline"
           class="mb-6 min-h-[4.5rem] text-balance text-3xl font-bold leading-tight text-white sm:min-h-[6rem] sm:text-4xl md:min-h-[8rem] md:text-6xl"
         >
-          {{ typedHeadline }}
-          <span class="animate-pulse text-cyan-300">|</span>
+          <!-- Real, crawlable headline: always present in the DOM on first paint -->
+          <span class="sr-only">{{ fullHeadline }}</span>
+          <!-- Decorative typing animation, hidden from assistive tech & search engines -->
+          <span aria-hidden="true">
+            {{ typedHeadline }}
+            <span class="animate-pulse text-cyan-300">|</span>
+          </span>
         </h1>
         <p
           data-hero-item

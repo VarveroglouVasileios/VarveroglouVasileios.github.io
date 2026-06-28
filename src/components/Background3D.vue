@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, reactive } from 'vue'
+import { onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 import { TresCanvas } from '@tresjs/core'
 import { Color, Vector3 } from 'three'
 import type { BackgroundSectionKey } from '@/composables/useScrollSectionTheme'
@@ -99,6 +99,24 @@ const PALETTE: Record<
   },
 }
 
+// Gate the WebGL particle field: skip it on touch/small screens and when the
+// user prefers reduced motion. The CSS gradient + vignette below remain, so the
+// page still looks intentional while we avoid the costly per-frame render on
+// mobile (a major Lighthouse performance drain).
+const enable3D = ref(false)
+
+const reducedMotionQuery =
+  typeof window !== 'undefined'
+    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    : null
+const desktopQuery =
+  typeof window !== 'undefined' ? window.matchMedia('(min-width: 768px)') : null
+
+const evaluate3D = (): void => {
+  enable3D.value =
+    !!desktopQuery?.matches && !reducedMotionQuery?.matches
+}
+
 const colors = reactive({ ...PALETTE.hero })
 const pool = new Color()
 const poolT = new Color()
@@ -122,8 +140,16 @@ const tickColors = (): void => {
 }
 tickColors()
 
+onMounted(() => {
+  evaluate3D()
+  desktopQuery?.addEventListener('change', evaluate3D)
+  reducedMotionQuery?.addEventListener('change', evaluate3D)
+})
+
 onBeforeUnmount(() => {
   cancelAnimationFrame(colorsRaf)
+  desktopQuery?.removeEventListener('change', evaluate3D)
+  reducedMotionQuery?.removeEventListener('change', evaluate3D)
 })
 
 function lerpStr(from: string, to: string, a: number): string {
@@ -155,7 +181,12 @@ const vv = (x: number, y: number, z: number) => new Vector3(x, y, z)
     class="pointer-events-none fixed inset-0 z-0 transition-colors duration-700"
     :style="{ backgroundColor: colors.baseBg }"
   >
-    <TresCanvas alpha window-size power-preference="high-performance">
+    <TresCanvas
+      v-if="enable3D"
+      alpha
+      window-size
+      power-preference="high-performance"
+    >
       <TresPerspectiveCamera :position="vv(0, 0, 15)" :fov="45" />
       <Background3DScene :colors="colors" />
     </TresCanvas>

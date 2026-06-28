@@ -76,14 +76,16 @@ function setupObserver(): void {
   observer?.disconnect()
   ran.value = false
 
-  // Respect reduced-motion: render the final text immediately, skip the scramble.
+  // Single source of truth: the real text is the default DOM content, so search
+  // engines (which don't scroll to trigger the IntersectionObserver) always read
+  // the genuine heading exactly once — never the scramble placeholder.
+  display.value = props.text
+
+  // Respect reduced-motion: keep the final text, skip the scramble entirely.
   if (prefersReducedMotion()) {
     ran.value = true
-    display.value = props.text
     return
   }
-
-  display.value = props.text.replace(/[^\s]/g, '·')
 
   const el = rootRef.value
   if (!el) return
@@ -122,9 +124,10 @@ watch(
     :class="contentClass"
     :aria-label="text"
   >
-    <!-- Real, crawlable text: always present in the DOM as a readable text node -->
-    <span class="sr-only">{{ text }}</span>
-    <!-- Decorative scramble/decode animation, hidden from assistive tech & search engines -->
+    <!--
+      Single text node. Defaults to the real text (read once by crawlers) and is
+      only transiently scrambled as a visual effect once scrolled into view.
+    -->
     <span aria-hidden="true">{{ display }}</span>
   </component>
 </template>

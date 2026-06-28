@@ -9,6 +9,11 @@ gsap.registerPlugin(ScrollTrigger)
 const { t, locale } = useI18n()
 const fullHeadline = computed<string>(() => t('hero.headline'))
 const typedHeadline = ref<string>('')
+// The not-yet-typed remainder of the SAME real headline. Rendered invisibly so
+// that typed + remainder === the full headline exactly once in the DOM.
+const remainingHeadline = computed<string>(() =>
+  fullHeadline.value.slice(typedHeadline.value.length),
+)
 const heroRoot = ref<HTMLElement | null>(null)
 
 let typingIntervalId: number | undefined
@@ -80,9 +85,27 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+/* Blinking caret as generated content so it never becomes indexable text. */
+.hero-type-cursor::after {
+  content: '|';
+  margin-left: 0.06em;
+  color: #67e8f9;
+  font-weight: 400;
+}
+
 @media (prefers-reduced-motion: no-preference) {
+  .hero-type-cursor::after {
+    animation: hero-caret-blink 1s steps(2, start) infinite;
+  }
+
   .hero-cta-pulse {
     animation: hero-cta-glow 2.4s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes hero-caret-blink {
+  50% {
+    opacity: 0;
   }
 }
 
@@ -116,15 +139,11 @@ onBeforeUnmount(() => {
           data-hero-item
           :aria-label="fullHeadline"
           class="mb-6 min-h-[4.5rem] text-balance text-3xl font-bold leading-tight text-white sm:min-h-[6rem] sm:text-4xl md:min-h-[8rem] md:text-6xl"
-        >
-          <!-- Real, crawlable headline: always present in the DOM on first paint -->
-          <span class="sr-only">{{ fullHeadline }}</span>
-          <!-- Decorative typing animation, hidden from assistive tech & search engines -->
-          <span aria-hidden="true">
-            {{ typedHeadline }}
-            <span class="animate-pulse text-cyan-300">|</span>
-          </span>
-        </h1>
+        ><!--
+          The full headline lives in the DOM exactly once: the typed part is
+          visible (with a blinking CSS cursor), the remainder is rendered but
+          visually hidden. typed + remainder === fullHeadline.
+        --><span aria-hidden="true" class="hero-type-cursor">{{ typedHeadline }}</span><span aria-hidden="true" class="invisible">{{ remainingHeadline }}</span></h1>
         <p
           data-hero-item
           class="mb-8 max-w-2xl text-base text-slate-300 sm:text-lg"

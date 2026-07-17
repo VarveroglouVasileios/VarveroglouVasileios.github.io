@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
+import { nextTick, onBeforeUnmount, onMounted, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -9,7 +9,60 @@ gsap.registerPlugin(ScrollTrigger);
 
 const { t, locale } = useI18n();
 const sectionRef = ref<HTMLElement | null>(null);
+const form = reactive({
+  name: "",
+  email: "",
+  message: "",
+});
+const submissionState = ref<"idle" | "submitting" | "success" | "error">("idle");
+const formspreeId = import.meta.env.VITE_FORMSPREE_ID?.trim();
 let context: gsap.Context | undefined;
+
+const submitForm = async () => {
+  if (submissionState.value === "submitting") return;
+
+  submissionState.value = "submitting";
+
+  if (!formspreeId) {
+    const subject = encodeURIComponent(t("contact.emailSubject"));
+    const body = encodeURIComponent(
+      `${t("contact.fullName")}: ${form.name}\n${t("contact.email")}: ${form.email}\n\n${form.message}`,
+    );
+
+    window.location.href = `mailto:varveroglouvas@gmail.com?subject=${subject}&body=${body}`;
+    submissionState.value = "idle";
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      `https://formspree.io/f/${encodeURIComponent(formspreeId)}`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+        }),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(`Form submission failed with status ${response.status}`);
+    }
+
+    form.name = "";
+    form.email = "";
+    form.message = "";
+    submissionState.value = "success";
+  } catch {
+    submissionState.value = "error";
+  }
+};
 
 onMounted(() => {
   nextTick(() => {
@@ -80,13 +133,16 @@ onBeforeUnmount(() => {
         </div>
       </div>
 
-      <form class="space-y-6" @submit.prevent>
+      <form class="space-y-6" @submit.prevent="submitForm">
         <div class="group relative">
           <input
-            type="text"
             id="name"
+            v-model.trim="form.name"
+            type="text"
+            name="name"
             autocomplete="name"
             placeholder=" "
+            required
             class="peer w-full rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-white outline-none transition focus:border-cyan-400/50 focus:bg-white/10"
           />
           <label
@@ -99,10 +155,13 @@ onBeforeUnmount(() => {
 
         <div class="group relative">
           <input
-            type="email"
             id="email"
+            v-model.trim="form.email"
+            type="email"
+            name="email"
             autocomplete="email"
             placeholder=" "
+            required
             class="peer w-full rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-white outline-none transition focus:border-cyan-400/50 focus:bg-white/10"
           />
           <label
@@ -116,8 +175,11 @@ onBeforeUnmount(() => {
         <div class="group relative">
           <textarea
             id="message"
+            v-model.trim="form.message"
+            name="message"
             rows="4"
             placeholder=" "
+            required
             class="peer w-full resize-none rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-white outline-none transition focus:border-cyan-400/50 focus:bg-white/10"
           ></textarea>
           <label
@@ -129,10 +191,32 @@ onBeforeUnmount(() => {
         </div>
 
         <button
+          type="submit"
+          :disabled="submissionState === 'submitting'"
           class="w-full rounded-2xl bg-cyan-400 py-4 font-bold uppercase tracking-widest text-slate-950 transition hover:bg-cyan-300 active:scale-[0.98]"
+          :class="{ 'cursor-wait opacity-70': submissionState === 'submitting' }"
         >
-          {{ t("contact.send") }}
+          {{
+            submissionState === "submitting"
+              ? t("contact.sending")
+              : t("contact.send")
+          }}
         </button>
+
+        <p
+          v-if="submissionState === 'success'"
+          class="text-sm text-emerald-400"
+          role="status"
+        >
+          {{ t("contact.success") }}
+        </p>
+        <p
+          v-else-if="submissionState === 'error'"
+          class="text-sm text-rose-400"
+          role="alert"
+        >
+          {{ t("contact.error") }}
+        </p>
       </form>
     </div>
   </section>

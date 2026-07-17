@@ -101,7 +101,11 @@ const messages = {
       fullName: 'Full Name',
       email: 'Email Address',
       details: 'Project Details',
-      send: 'SEND MESSAGE'
+      send: 'SEND MESSAGE',
+      sending: 'SENDING…',
+      success: 'Thanks! Your message has been sent.',
+      error: 'The message could not be sent. Please try again or email me directly.',
+      emailSubject: 'Portfolio contact request',
     },
     footer: {
       rights: '© 2026 Vasileios Varveroglou',
@@ -208,7 +212,11 @@ const messages = {
       fullName: 'Ονοματεπώνυμο',
       email: 'Email',
       details: 'Λεπτομέρειες Project',
-      send: 'ΑΠΟΣΤΟΛΗ'
+      send: 'ΑΠΟΣΤΟΛΗ',
+      sending: 'ΑΠΟΣΤΟΛΗ…',
+      success: 'Ευχαριστώ! Το μήνυμά σας στάλθηκε.',
+      error: 'Το μήνυμα δεν στάλθηκε. Δοκιμάστε ξανά ή επικοινωνήστε μαζί μου μέσω email.',
+      emailSubject: 'Επικοινωνία μέσω portfolio',
     },
     footer: {
       rights: '© 2026 Βασίλειος Βαρβέρογλου',

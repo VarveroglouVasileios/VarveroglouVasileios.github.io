@@ -22,7 +22,7 @@ const getProjectData = (id: number) => {
     4: 'shadowfirewall',
     3: 'vibebites',
     2: 'shadowai',
-    1: 'benefitpulse',
+    // 1: 'benefitpulse', // temporarily inactive
   }
   const key = mapping[id]
   return {

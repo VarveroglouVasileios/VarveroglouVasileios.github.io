@@ -66,22 +66,23 @@ export const projects: Project[] = [
       challenges: 'Designing a UI that can display high-frequency security events without overwhelming the user or sacrificing performance.'
     }
   },
-  {
-    id: 1,
-    title: 'BenefitPulse',
-    description:
-      'Platform that helps citizens quickly discover relevant Greek government benefits and allowances through a guided, user-friendly experience.',
-    stack: ['Vue 3', 'TypeScript', 'Node.js', 'Tailwind'],
-    imageLabel: 'BenefitPulse',
-    imageUrl: '/benefitpulse-preview.png',
-    githubUrl: 'https://github.com/VarveroglouVasileios',
-    liveUrl: 'https://benefitpulse.me/',
-    breakdown: {
-      architecture: 'Full stack implementation with a Node.js API serving as an aggregator for various government benefit criteria.',
-      security: 'Secure data ingestion from multiple public sources and local storage encryption for user preferences.',
-      challenges: 'Normalizing complex and often changing government criteria into a simplified, deterministic logic engine.'
-    }
-  },
+  // Temporarily inactive — uncomment to restore in portfolio
+  // {
+  //   id: 1,
+  //   title: 'BenefitPulse',
+  //   description:
+  //     'Platform that helps citizens quickly discover relevant Greek government benefits and allowances through a guided, user-friendly experience.',
+  //   stack: ['Vue 3', 'TypeScript', 'Node.js', 'Tailwind'],
+  //   imageLabel: 'BenefitPulse',
+  //   imageUrl: '/benefitpulse-preview.png',
+  //   githubUrl: 'https://github.com/VarveroglouVasileios',
+  //   liveUrl: 'https://benefitpulse.me/',
+  //   breakdown: {
+  //     architecture: 'Full stack implementation with a Node.js API serving as an aggregator for various government benefit criteria.',
+  //     security: 'Secure data ingestion from multiple public sources and local storage encryption for user preferences.',
+  //     challenges: 'Normalizing complex and often changing government criteria into a simplified, deterministic logic engine.'
+  //   }
+  // },
 ]
 
 export const experience: ExperienceItem[] = [

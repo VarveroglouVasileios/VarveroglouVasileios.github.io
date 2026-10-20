@@ -42,7 +42,7 @@ yarn preview
 To receive contact messages at your email:
 
 1. Go to [formspree.io](https://formspree.io) and create an account
-2. Create a new form and set your email (varveroglou@hotmail.gr) as recipient
+2. Create a new form and set your email (varveroglouvas@gmail.com) as recipient
 3. Copy the form ID from the endpoint URL (e.g. `mnopqrst` from `https://formspree.io/f/mnopqrst`)
 4. Add to `.env`: `VITE_FORMSPREE_ID=mnopqrst`
 

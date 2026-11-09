@@ -3,10 +3,12 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useLocalePath } from '@/composables/useLocalePath'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const { t, locale } = useI18n()
+const { to } = useLocalePath()
 const fullHeadline = computed<string>(() => t('hero.headline'))
 const typedHeadline = ref<string>('')
 // The not-yet-typed remainder of the SAME real headline. Rendered invisibly so
@@ -152,18 +154,18 @@ onBeforeUnmount(() => {
         </p>
 
         <div data-hero-item class="flex flex-wrap items-center gap-3 sm:gap-4">
-          <a
-            href="#projects"
+          <router-link
+            :to="to('contact')"
             class="hero-cta-pulse rounded-full border border-cyan-300/60 bg-cyan-400/20 px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-cyan-200 transition hover:-translate-y-0.5 hover:bg-cyan-300/30 sm:px-7 sm:text-sm sm:tracking-[0.16em]"
           >
-            {{ t('hero.viewProjects') }}
-          </a>
-          <a
-            href="#contact"
+            {{ t('hero.quote') }}
+          </router-link>
+          <router-link
+            :to="to('services')"
             class="rounded-full border border-white/20 px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-slate-200 transition hover:border-cyan-300/60 hover:text-cyan-200 sm:px-7 sm:text-sm sm:tracking-[0.16em]"
           >
-            {{ t('hero.hireMe') }}
-          </a>
+            {{ t('hero.services') }}
+          </router-link>
           <a
             href="/VasileiosVarveroglouCV.pdf"
             target="_blank"

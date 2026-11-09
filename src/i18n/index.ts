@@ -1,6 +1,8 @@
 import { createI18n } from 'vue-i18n'
+import { yearsOfExperience } from '@/data/site'
+import { pageMessages } from './pages'
 
-const messages = {
+const baseMessages = {
   en: {
     nav: {
       home: 'HOME',
@@ -11,9 +13,9 @@ const messages = {
       downloadCv: 'DOWNLOAD CV'
     },
     hero: {
-      title: 'Vue & Node.js Engineer',
-      headline: 'Shipping secure, scalable web platforms with Vue & Node.',
-      description: 'Full Stack Developer (FactSet) with a background in Computer Science and an MSc in Cybersecurity in progress—combining Vue.js, Node.js, and secure-by-design thinking to build reliable products.',
+      title: 'Web development & security · Kavala',
+      headline: 'Websites, e-shops and tools for businesses, secure by design.',
+      description: `I am a Full Stack Developer (FactSet) based in Kavala, with ${yearsOfExperience}+ years of experience and an MSc in Cybersecurity in progress. I build websites, e-shops, booking systems and internal tools for businesses in Greece.`,
       viewProjects: 'VIEW PROJECTS',
       hireMe: 'HIRE ME',
       downloadCv: 'DOWNLOAD CV'
@@ -21,7 +23,7 @@ const messages = {
     about: {
       tag: 'ABOUT ME',
       title: 'Full Stack Developer & Security-focused Engineer',
-      p1: 'I am a Full Stack Developer with 3 years of experience building and maintaining scalable web applications in an enterprise environment, currently working at FactSet and pursuing an MSc in Cybersecurity.',
+      p1: `I am a Full Stack Developer with ${yearsOfExperience}+ years of experience building and maintaining scalable web applications in an enterprise environment, currently working at FactSet and pursuing an MSc in Cybersecurity.`,
       p2: 'I work across the full stack with Vue.js, Node.js, TypeScript, PHP (Symfony), SQL, and Pinia, focusing on clean architecture, performance, and reliability—while applying secure-by-design principles from my cybersecurity studies.',
       techStack: 'TECH STACK'
     },
@@ -122,9 +124,9 @@ const messages = {
       downloadCv: 'DOWNLOAD CV'
     },
     hero: {
-      title: 'Full Stack & Security Engineer',
-      headline: 'Σχεδιασμός ασφαλών και κλιμακούμενων web εφαρμογών.',
-      description: 'Full Stack Developer στη FactSet με ακαδημαϊκό υπόβαθρο στην Πληροφορική και MSc στην Κυβερνοασφάλεια. Συνδυάζω Vue.js, Node.js και secure-by-design αρχιτεκτονική για την ανάπτυξη αξιόπιστων ψηφιακών προϊόντων.',
+      title: 'Ανάπτυξη web & ασφάλεια · Καβάλα',
+      headline: 'Ιστοσελίδες, e-shop και εργαλεία για επιχειρήσεις, ασφαλή από τον σχεδιασμό.',
+      description: `Είμαι Full Stack Developer (FactSet) στην Καβάλα, με ${yearsOfExperience}+ χρόνια εμπειρίας και MSc στην Κυβερνοασφάλεια σε εξέλιξη. Φτιάχνω ιστοσελίδες, e-shop, συστήματα κρατήσεων και εσωτερικά εργαλεία για επιχειρήσεις στην Ελλάδα.`,
       viewProjects: 'PROJECTS',
       hireMe: 'CONTACT',
       downloadCv: 'DOWNLOAD CV'
@@ -132,7 +134,7 @@ const messages = {
     about: {
       tag: 'ABOUT',
       title: 'Full Stack Developer με εξειδίκευση στο AppSec',
-      p1: 'Διαθέτω τριετή εμπειρία στην ανάπτυξη enterprise-level εφαρμογών, εργαζόμενος στη FactSet και ολοκληρώνοντας παράλληλα μεταπτυχιακές σπουδές (MSc) στον τομέα του Cybersecurity.',
+      p1: `Διαθέτω ${yearsOfExperience}+ χρόνια εμπειρίας στην ανάπτυξη enterprise-level εφαρμογών, εργαζόμενος στη FactSet και ολοκληρώνοντας παράλληλα μεταπτυχιακές σπουδές (MSc) στον τομέα του Cybersecurity.`,
       p2: 'Εξειδικεύομαι σε Vue.js, Node.js, TypeScript και PHP (Symfony), εστιάζοντας στην καθαρή δομή κώδικα και το performance, εφαρμόζοντας στην πράξη αρχές ασφαλούς ανάπτυξης λογισμικού.',
       techStack: 'TECH STACK'
     },
@@ -225,11 +227,28 @@ const messages = {
   }
 }
 
+type Tree = { [key: string]: string | Tree }
+
+const deepMerge = (a: Tree, b: Tree): Tree => {
+  const out: Tree = { ...a }
+  for (const [key, value] of Object.entries(b)) {
+    const current = out[key]
+    out[key] =
+      typeof value === 'object' && typeof current === 'object' ? deepMerge(current, value) : value
+  }
+  return out
+}
+
+const messages = {
+  en: deepMerge(baseMessages.en as Tree, pageMessages.en as Tree),
+  el: deepMerge(baseMessages.el as Tree, pageMessages.el as Tree),
+}
+
 const isProd = import.meta.env.PROD
 
 export const i18n = createI18n({
   legacy: false,
-  locale: 'en',
+  locale: 'el',
   fallbackLocale: 'en',
   messages,
   missingWarn: !isProd,

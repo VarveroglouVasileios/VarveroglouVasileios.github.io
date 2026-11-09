@@ -3,6 +3,7 @@ import Tres from '@tresjs/core'
 import App from './App.vue'
 import router from './router'
 import { i18n } from './i18n'
+import { initAnalytics } from './lib/analytics'
 import './style.css'
 
 if ('scrollRestoration' in history) {
@@ -14,6 +15,8 @@ const app = createApp(App)
 if (import.meta.env.PROD) {
   app.config.warnHandler = (): void => {}
 }
+
+initAnalytics()
 
 app.use(Tres)
 app.use(i18n)

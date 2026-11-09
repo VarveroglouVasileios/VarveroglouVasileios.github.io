@@ -17,6 +17,8 @@ export interface Skill {
 
 export interface Project {
   id: number
+  /** Case-study route slug (see data/caseStudies.ts). */
+  slug?: string
   title: string
   description: string
   stack: string[]

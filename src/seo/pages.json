@@ -1,0 +1,157 @@
+{
+  "pages": [
+    {
+      "key": "home",
+      "path": "",
+      "priority": 1.0,
+      "el": {
+        "title": "Κατασκευή ιστοσελίδων & e-shop στην Καβάλα | Β. Βαρβέρογλου",
+        "description": "Full Stack Developer στην Καβάλα με 4+ χρόνια εμπειρίας. Ιστοσελίδες, e-shop, κρατήσεις, εσωτερικά εργαλεία και έλεγχος ασφάλειας για επιχειρήσεις.",
+        "h1": "Ιστοσελίδες, e-shop και εργαλεία για επιχειρήσεις, ασφαλή από τον σχεδιασμό",
+        "summary": "Είμαι Full Stack Developer στην Καβάλα και φτιάχνω ιστοσελίδες, e-shop, συστήματα κρατήσεων και εσωτερικά εργαλεία για επιχειρήσεις της Ανατολικής Μακεδονίας και όλης της Ελλάδας."
+      },
+      "en": {
+        "title": "Web development & security, Kavala, Greece | V. Varveroglou",
+        "description": "Full Stack Developer in Kavala, Greece with 4+ years of experience. Websites, e-shops, booking systems, internal tools and security audits for businesses.",
+        "h1": "Websites, e-shops and tools for businesses, secure by design",
+        "summary": "I am a Full Stack Developer based in Kavala, Greece. I build websites, e-shops, booking systems and internal tools for businesses in Eastern Macedonia and across Greece."
+      }
+    },
+    {
+      "key": "services",
+      "path": "services",
+      "priority": 0.9,
+      "el": {
+        "title": "Υπηρεσίες: ιστοσελίδες, e-shop, κρατήσεις | Καβάλα",
+        "description": "Κατασκευή ιστοσελίδας, e-shop, σύστημα κρατήσεων, εσωτερικά εργαλεία και έλεγχος ασφάλειας στην Καβάλα. Δείτε τι περιλαμβάνει κάθε πακέτο.",
+        "h1": "Υπηρεσίες για επιχειρήσεις",
+        "summary": "Κατασκευή ιστοσελίδας, e-shop, σύστημα κρατήσεων, εσωτερικά εργαλεία και έλεγχος ασφάλειας. Για επιχειρήσεις στην Καβάλα, τη Θάσο και την Ανατολική Μακεδονία."
+      },
+      "en": {
+        "title": "Services: websites, e-shops, bookings | Kavala, Greece",
+        "description": "Website development, e-shops, booking systems, internal tools and security audits from Kavala, Greece. See what each package includes.",
+        "h1": "Services for businesses",
+        "summary": "Website development, e-shops, booking systems, internal tools and security audits for businesses in Kavala, Thasos and Eastern Macedonia."
+      }
+    },
+    {
+      "key": "security-audit",
+      "path": "security-audit",
+      "priority": 0.8,
+      "el": {
+        "title": "Έλεγχος ασφάλειας ιστοσελίδας για επιχειρήσεις",
+        "description": "Έλεγχος ασφάλειας ιστοσελίδας ή e-shop: HTTPS, security headers, φόρμες, cookies και βασικά ΓΚΠΔ. Γραπτή αναφορά με συγκεκριμένες διορθώσεις.",
+        "h1": "Έλεγχος ασφάλειας για την ιστοσελίδα σας",
+        "summary": "Τεχνικός έλεγχος ιστοσελίδας ή e-shop: HTTPS, security headers, φόρμες, cookies και βασικά ΓΚΠΔ, με γραπτή αναφορά και προτεινόμενες διορθώσεις."
+      },
+      "en": {
+        "title": "Website security audit for businesses",
+        "description": "Security audit for your website or e-shop: HTTPS, security headers, forms, cookies and GDPR basics. Written report with concrete fixes.",
+        "h1": "A security audit for your website",
+        "summary": "A technical review of your website or e-shop: HTTPS, security headers, forms, cookies and GDPR basics, with a written report and recommended fixes."
+      }
+    },
+    {
+      "key": "projects",
+      "path": "projects",
+      "priority": 0.8,
+      "el": {
+        "title": "Έργα και case studies | Βασίλειος Βαρβέρογλου",
+        "description": "Case studies με πρόβλημα, λύση και αποτέλεσμα: Shadow AI Firewall, VibeBites και Shadow AI Dashboard, με τεχνολογίες και live links.",
+        "h1": "Έργα και case studies",
+        "summary": "Case studies με πρόβλημα, λύση και αποτέλεσμα: Shadow AI Firewall, VibeBites και Shadow AI Dashboard."
+      },
+      "en": {
+        "title": "Projects and case studies | Vasileios Varveroglou",
+        "description": "Case studies with problem, solution and result: Shadow AI Firewall, VibeBites and Shadow AI Dashboard, with tech stacks and live links.",
+        "h1": "Projects and case studies",
+        "summary": "Case studies with problem, solution and result: Shadow AI Firewall, VibeBites and Shadow AI Dashboard."
+      }
+    },
+    {
+      "key": "project-shadow-ai-firewall",
+      "path": "projects/shadow-ai-firewall",
+      "priority": 0.6,
+      "el": {
+        "title": "Case study: Shadow AI Firewall (επέκταση Chrome)",
+        "description": "Πώς φτιάχτηκε μια επέκταση Chrome που κρύβει προσωπικά δεδομένα και μυστικά πριν σταλούν σε AI chat. Πρόβλημα, λύση, αποτέλεσμα.",
+        "h1": "Shadow AI Firewall",
+        "summary": "Επέκταση Chrome που κρύβει προσωπικά και εμπιστευτικά δεδομένα πριν φύγουν προς AI chat."
+      },
+      "en": {
+        "title": "Case study: Shadow AI Firewall (Chrome extension)",
+        "description": "How a Chrome extension that masks personal data and secrets before they reach an AI chat was built. Problem, solution, result.",
+        "h1": "Shadow AI Firewall",
+        "summary": "A Chrome extension that masks personal and confidential data before it leaves for an AI chat."
+      }
+    },
+    {
+      "key": "project-vibebites",
+      "path": "projects/vibebites",
+      "priority": 0.6,
+      "el": {
+        "title": "Case study: VibeBites (PWA μαγειρικής με AI)",
+        "description": "Ελληνική PWA μαγειρικής με AI βοηθό, λίστες αγορών και meal planning, φτιαγμένη με Vue 3. Πρόβλημα, λύση, αποτέλεσμα.",
+        "h1": "VibeBites",
+        "summary": "Ελληνική πλατφόρμα μαγειρικής με AI βοηθό, λίστες αγορών και meal planning."
+      },
+      "en": {
+        "title": "Case study: VibeBites (AI cooking PWA)",
+        "description": "A Greek-first cooking PWA with an AI assistant, shopping lists and meal planning, built with Vue 3. Problem, solution, result.",
+        "h1": "VibeBites",
+        "summary": "A Greek-first cooking platform with an AI assistant, shopping lists and meal planning."
+      }
+    },
+    {
+      "key": "project-shadow-ai-dashboard",
+      "path": "projects/shadow-ai-dashboard",
+      "priority": 0.6,
+      "el": {
+        "title": "Case study: Shadow AI Admin Dashboard",
+        "description": "Πίνακας ελέγχου ασφάλειας με zero-knowledge αρχιτεκτονική, που δείχνει τη χρήση AI χωρίς να αποθηκεύει prompts.",
+        "h1": "Shadow AI, Admin Dashboard",
+        "summary": "Πίνακας ελέγχου για ομάδες ασφάλειας, με ορατότητα στη χρήση AI χωρίς αποθήκευση των prompts."
+      },
+      "en": {
+        "title": "Case study: Shadow AI Admin Dashboard",
+        "description": "A security dashboard with zero-knowledge architecture that shows AI usage without storing prompts.",
+        "h1": "Shadow AI, Admin Dashboard",
+        "summary": "An admin dashboard for security teams with visibility into AI usage without storing prompts."
+      }
+    },
+    {
+      "key": "about",
+      "path": "about",
+      "priority": 0.7,
+      "el": {
+        "title": "Σχετικά: Full Stack Developer στην Καβάλα",
+        "description": "Full Stack Developer από την Καβάλα, με εμπειρία σε FactSet, MSc Κυβερνοασφάλειας και δουλειά για επιχειρήσεις στη Θάσο και την Ανατολική Μακεδονία.",
+        "h1": "Σχετικά με εμένα",
+        "summary": "Full Stack Developer από την Καβάλα. Δουλεύω στη FactSet, κάνω MSc Κυβερνοασφάλειας και βοηθώ επιχειρήσεις της Ανατολικής Μακεδονίας με ασφαλείς ιστοσελίδες και εργαλεία."
+      },
+      "en": {
+        "title": "About: Full Stack Developer in Kavala, Greece",
+        "description": "Full Stack Developer from Kavala, Greece with FactSet experience and an MSc in Cybersecurity, working with businesses in Thasos and Eastern Macedonia.",
+        "h1": "About me",
+        "summary": "Full Stack Developer from Kavala, Greece. I work at FactSet, I am completing an MSc in Cybersecurity and I help businesses in Eastern Macedonia with secure websites and tools."
+      }
+    },
+    {
+      "key": "contact",
+      "path": "contact",
+      "priority": 0.8,
+      "el": {
+        "title": "Επικοινωνία και αίτημα προσφοράς | Καβάλα",
+        "description": "Ζητήστε προσφορά για ιστοσελίδα, e-shop ή έλεγχο ασφάλειας. Email, WhatsApp, τηλέφωνο ή φόρμα. Απαντώ σύντομα.",
+        "h1": "Ζητήστε προσφορά",
+        "summary": "Ζητήστε προσφορά για ιστοσελίδα, e-shop, κρατήσεις, εσωτερικά εργαλεία ή έλεγχο ασφάλειας."
+      },
+      "en": {
+        "title": "Contact and request a quote | Kavala, Greece",
+        "description": "Request a quote for a website, e-shop or security audit. Email, WhatsApp, phone or form. I reply quickly.",
+        "h1": "Request a quote",
+        "summary": "Request a quote for a website, e-shop, booking system, internal tool or security audit."
+      }
+    }
+  ]
+}

@@ -3,15 +3,26 @@ import { nextTick, onBeforeUnmount, onMounted, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRoute } from "vue-router";
 import DecodingText from "@/components/ui/DecodingText.vue";
+import ContactLinks from "@/components/ui/ContactLinks.vue";
+import { contactInfo } from "@/data/site";
+import { trackEvent } from "@/lib/analytics";
 
 gsap.registerPlugin(ScrollTrigger);
 
+withDefaults(defineProps<{ headingTag?: string }>(), { headingTag: "h2" });
+
 const { t, locale } = useI18n();
+const route = useRoute();
+const serviceIds = ["website", "eshop", "booking", "internal", "security", "other"] as const;
 const sectionRef = ref<HTMLElement | null>(null);
 const form = reactive({
   name: "",
   email: "",
+  service: serviceIds.includes(route.query.service as (typeof serviceIds)[number])
+    ? (route.query.service as string)
+    : "website",
   message: "",
 });
 const submissionState = ref<"idle" | "submitting" | "success" | "error">("idle");
@@ -26,10 +37,11 @@ const submitForm = async () => {
   if (!formspreeId) {
     const subject = encodeURIComponent(t("contact.emailSubject"));
     const body = encodeURIComponent(
-      `${t("contact.fullName")}: ${form.name}\n${t("contact.email")}: ${form.email}\n\n${form.message}`,
+      `${t("contact.fullName")}: ${form.name}\n${t("contact.email")}: ${form.email}\n${t("contact.service")} ${t(`contact.serviceOptions.${form.service}`)}\n\n${form.message}`,
     );
 
-    window.location.href = `mailto:varveroglouvas@gmail.com?subject=${subject}&body=${body}`;
+    trackEvent("Quote form", { mode: "mailto", service: form.service });
+    window.location.href = `mailto:${contactInfo.email}?subject=${subject}&body=${body}`;
     submissionState.value = "idle";
     return;
   }
@@ -46,6 +58,7 @@ const submitForm = async () => {
         body: JSON.stringify({
           name: form.name,
           email: form.email,
+          service: t(`contact.serviceOptions.${form.service}`),
           message: form.message,
         }),
       },
@@ -59,6 +72,7 @@ const submitForm = async () => {
     form.email = "";
     form.message = "";
     submissionState.value = "success";
+    trackEvent("Quote form", { mode: "formspree", service: form.service });
   } catch {
     submissionState.value = "error";
   }
@@ -104,7 +118,7 @@ onBeforeUnmount(() => {
         </p>
         <DecodingText
           :key="locale"
-          as="h2"
+          :as="headingTag"
           :text="t('contact.title')"
           :duration="1600"
           content-class="mb-6 text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl"
@@ -113,24 +127,18 @@ onBeforeUnmount(() => {
           {{ t("contact.description") }}
         </p>
 
-        <div class="space-y-4">
-          <div class="flex items-center gap-4 text-slate-300">
-            <div
-              class="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-400/10 text-cyan-400"
-            >
-              📧
-            </div>
-            <span>varveroglouvas@gmail.com</span>
-          </div>
-          <div class="flex items-center gap-4 text-slate-300">
-            <div
-              class="flex h-10 w-10 items-center justify-center rounded-full bg-violet-400/10 text-violet-400"
-            >
-              📍
-            </div>
-            <span>Kavala, Greece</span>
-          </div>
-        </div>
+        <p class="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-cyan-300/80">
+          {{ t("contact.directTitle") }}
+        </p>
+        <ContactLinks source="contact" />
+        <p class="mt-6 flex items-center gap-3 text-slate-300">
+          <span
+            class="flex h-10 w-10 items-center justify-center rounded-full bg-violet-400/10 text-violet-400"
+            aria-hidden="true"
+            >📍</span
+          >
+          <span>{{ contactInfo.location }}</span>
+        </p>
       </div>
 
       <form class="space-y-6" @submit.prevent="submitForm">
@@ -170,6 +178,22 @@ onBeforeUnmount(() => {
           >
             {{ t("contact.email") }}
           </label>
+        </div>
+
+        <div class="relative">
+          <label for="service" class="mb-2 block text-xs text-slate-400">
+            {{ t("contact.service") }}
+          </label>
+          <select
+            id="service"
+            v-model="form.service"
+            name="service"
+            class="w-full rounded-2xl border border-white/10 bg-slate-900 px-6 py-4 text-white outline-none transition focus:border-cyan-400/50"
+          >
+            <option v-for="id in serviceIds" :key="id" :value="id">
+              {{ t(`contact.serviceOptions.${id}`) }}
+            </option>
+          </select>
         </div>
 
         <div class="group relative">

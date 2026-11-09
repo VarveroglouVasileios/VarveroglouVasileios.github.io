@@ -65,3 +65,14 @@ VITE_BASE='/your-repo-name/' yarn build
 ### Other hosts (Vercel, Netlify)
 
 Deploy the `dist` folder. No base path needed for custom domains.
+
+## Content to fill in before launch
+
+- `src/data/site.ts`: `phone` and `whatsapp` (they render only when set), `yearsOfExperience`.
+- `src/data/services.ts`: `priceFrom` per package (`null` shows "Quote on request").
+- `src/data/caseStudies.ts`: add real numbers (installs, users, load time) when available.
+- `VITE_PLAUSIBLE_DOMAIN` / `VITE_SITE_URL` (repo variables) for analytics and a custom domain.
+
+Greek is the default language (`/services`), English lives under `/en/`. `yarn build` also
+prerenders per-page HTML (title, description, canonical, hreflang) and `sitemap.xml`
+via `scripts/prerender.mjs`.

@@ -16,6 +16,7 @@ export const techSkills: Skill[] = [
 export const projects: Project[] = [
   {
     id: 4,
+    slug: 'shadow-ai-firewall',
     title: 'Shadow AI Firewall',
     description:
       'Browser extension that masks PII, financial identifiers, and high-signal secrets in outbound requests to supported AI chat sites—redacting serialized payloads before they leave the browser while restoring readable text locally in the UI.',
@@ -36,6 +37,7 @@ export const projects: Project[] = [
   },
   {
     id: 3,
+    slug: 'vibebites',
     title: 'VibeBites',
     description:
       'Greek-first social cooking platform: recipe discovery, shopping lists, meal planning, AI fridge assistant (ingredients to recipes with macros), cooking mode, and PWA install — built for sharing across social.',
@@ -52,6 +54,7 @@ export const projects: Project[] = [
   },
   {
     id: 2,
+    slug: 'shadow-ai-dashboard',
     title: 'Shadow AI — Admin Dashboard',
     description:
       'Marketing and admin experience for Shadow AI: a security layer between teams and AI tools — zero-knowledge inspection, DLP-style policies, secret redaction, and live session visibility without storing prompts.',

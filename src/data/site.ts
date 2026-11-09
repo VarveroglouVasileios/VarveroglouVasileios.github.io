@@ -9,8 +9,8 @@ export const siteUrl: string = (import.meta.env.VITE_SITE_URL as string | undefi
 
 export const contactInfo = {
   email: 'varveroglouvas@gmail.com',
-  phone: '',
-  whatsapp: '',
+  phone: '+30 694 823 6772',
+  whatsapp: '306948236772',
   location: 'Kavala, Greece',
 } as const
 

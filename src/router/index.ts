@@ -28,6 +28,7 @@ const router = createRouter({
       name: 'project',
       component: () => import('@/views/CaseStudyView.vue'),
     },
+    { path: `${L}/privacy`, name: 'privacy', component: () => import('@/views/PrivacyView.vue'), meta: { page: 'privacy' } },
     { path: `${L}/contact`, name: 'contact', component: () => import('@/views/ContactView.vue'), meta: { page: 'contact' } },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],

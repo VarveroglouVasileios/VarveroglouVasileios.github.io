@@ -12,6 +12,7 @@ const footerLinks = [
   { key: 'footer.security', route: 'security-audit' },
   { key: 'footer.about', route: 'about' },
   { key: 'footer.contact', route: 'contact' },
+  { key: 'footer.privacy', route: 'privacy' },
 ]
 
 const scrollToTop = (): void => {

@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRoute } from "vue-router";
 import DecodingText from "@/components/ui/DecodingText.vue";
 import ContactLinks from "@/components/ui/ContactLinks.vue";
+import { useLocalePath } from "@/composables/useLocalePath";
 import { contactInfo } from "@/data/site";
 import { trackEvent } from "@/lib/analytics";
 
@@ -15,7 +16,8 @@ withDefaults(defineProps<{ headingTag?: string }>(), { headingTag: "h2" });
 
 const { t, locale } = useI18n();
 const route = useRoute();
-const serviceIds = ["website", "eshop", "booking", "internal", "security", "other"] as const;
+const { to } = useLocalePath();
+const serviceIds = ["website", "eshop", "booking", "internal", "maintenance", "security", "other"] as const;
 const sectionRef = ref<HTMLElement | null>(null);
 const form = reactive({
   name: "",
@@ -226,6 +228,11 @@ onBeforeUnmount(() => {
               : t("contact.send")
           }}
         </button>
+
+        <p class="text-xs text-slate-400">
+          {{ t("contact.privacyNote") }}
+          <router-link :to="to('privacy')" class="underline hover:text-white">{{ t("contact.privacyLink") }}</router-link>
+        </p>
 
         <p
           v-if="submissionState === 'success'"

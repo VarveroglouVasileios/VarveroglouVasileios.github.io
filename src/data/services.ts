@@ -1,6 +1,6 @@
 import type { L10n, L10nList } from '@/lib/l10n'
 
-export type ServiceId = 'website' | 'eshop' | 'booking' | 'internal' | 'security'
+export type ServiceId = 'website' | 'eshop' | 'booking' | 'internal' | 'maintenance' | 'security'
 
 export interface ServicePackage {
   id: ServiceId
@@ -138,6 +138,35 @@ export const services: ServicePackage[] = [
         'Integration with existing systems and APIs',
         'Secure data storage and backups',
         'Documentation and post-delivery support',
+      ],
+    },
+    priceFrom: null,
+  },
+  {
+    id: 'maintenance',
+    title: { el: 'Συντήρηση και υποστήριξη', en: 'Maintenance and support' },
+    summary: {
+      el: 'Το site ή η εφαρμογή σας παραμένει ενημερωμένη, ασφαλής και λειτουργική μετά την παράδοση.',
+      en: 'Your site or app stays up to date, secure and working after delivery.',
+    },
+    idealFor: {
+      el: 'Πελάτες που θέλουν κάποιον να φροντίζει το site τους χωρίς να ασχολούνται οι ίδιοι.',
+      en: 'Clients who want someone to look after their site without doing it themselves.',
+    },
+    includes: {
+      el: [
+        'Ενημερώσεις λογισμικού και ασφάλειας',
+        'Αντίγραφα ασφαλείας',
+        'Παρακολούθηση λειτουργίας του site',
+        'Μικροαλλαγές σε κείμενα και εικόνες',
+        'Άμεση επικοινωνία όταν κάτι χρειάζεται προσοχή',
+      ],
+      en: [
+        'Software and security updates',
+        'Backups',
+        'Uptime monitoring',
+        'Small content and image changes',
+        'Direct contact when something needs attention',
       ],
     },
     priceFrom: null,

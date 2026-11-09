@@ -137,6 +137,23 @@
       }
     },
     {
+      "key": "privacy",
+      "path": "privacy",
+      "priority": 0.3,
+      "el": {
+        "title": "Πολιτική απορρήτου | Βασίλειος Βαρβέρογλου",
+        "description": "Πώς χρησιμοποιούνται τα στοιχεία που στέλνετε μέσω της φόρμας επικοινωνίας και ποια είναι τα δικαιώματά σας.",
+        "h1": "Πολιτική απορρήτου",
+        "summary": "Πώς χρησιμοποιούνται τα στοιχεία που στέλνετε μέσω της φόρμας επικοινωνίας και ποια είναι τα δικαιώματά σας."
+      },
+      "en": {
+        "title": "Privacy policy | Vasileios Varveroglou",
+        "description": "How the details you send through the contact form are used and what your rights are.",
+        "h1": "Privacy policy",
+        "summary": "How the details you send through the contact form are used and what your rights are."
+      }
+    },
+    {
       "key": "contact",
       "path": "contact",
       "priority": 0.8,

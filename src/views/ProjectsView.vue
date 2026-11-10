@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue'
+import { useI18n } from 'vue-i18n'
+import PageHeader from '@/components/ui/PageHeader.vue'
+import QuoteCta from '@/components/ui/QuoteCta.vue'
+import ProjectsSection from '@/components/sections/ProjectsSection.vue'
+import { getPage } from '@/seo/head'
 
-const Hero3D = defineAsyncComponent(() => import('@/components/Hero3D.vue'))
-const ProjectsSection = defineAsyncComponent(() => import('@/components/sections/ProjectsSection.vue'))
+const { t, locale } = useI18n()
+const h1 = () => getPage('projects')?.[locale.value === 'en' ? 'en' : 'el'].h1 ?? ''
 </script>
 
 <template>
   <div>
-    <Hero3D />
-    <ProjectsSection />
+    <PageHeader :tag="t('projectsPage.tag')" :title="h1()" :lead="t('projectsPage.lead')" />
+    <ProjectsSection hide-heading />
+    <QuoteCta :title="t('caseStudy.ctaTitle')" :text="t('caseStudy.ctaText')" source="projects" />
   </div>
 </template>

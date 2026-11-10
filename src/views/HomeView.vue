@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const Hero3D = defineAsyncComponent(() => import('@/components/Hero3D.vue'))
+const ServicesSection = defineAsyncComponent(() => import('@/components/sections/ServicesSection.vue'))
 const AboutSection = defineAsyncComponent(() => import('@/components/sections/AboutSection.vue'))
 const ProjectsSection = defineAsyncComponent(() => import('@/components/sections/ProjectsSection.vue'))
 const ExperienceSection = defineAsyncComponent(() => import('@/components/sections/ExperienceSection.vue'))
@@ -35,6 +36,7 @@ onBeforeUnmount(() => {
 <template>
   <div>
     <Hero3D />
+    <ServicesSection />
     <AboutSection />
     <ProjectsSection />
     <InsightsSection />

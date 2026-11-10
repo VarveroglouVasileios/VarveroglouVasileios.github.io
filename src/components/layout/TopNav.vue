@@ -1,25 +1,39 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { useLocalePath } from "@/composables/useLocalePath";
+import { trackEvent } from "@/lib/analytics";
 
 const { t, locale } = useI18n();
 const route = useRoute();
+const router = useRouter();
 const isScrolled = ref(false);
 const isMobileMenuOpen = ref(false);
 /** Scroll read progress (0–100), όπως το παλιό “status” bar κάτω από το nav */
 const scrollProgress = ref(0);
 
+const { to } = useLocalePath();
+
 const navLinks = [
-  { name: "nav.home", href: "/", hash: "#hero" },
-  { name: "nav.work", href: "/#projects", hash: "#projects" },
-  { name: "nav.insights", href: "/#insights", hash: "#insights" },
-  { name: "nav.experience", href: "/#experience", hash: "#experience" },
-  { name: "nav.contact", href: "/#contact", hash: "#contact" },
+  { name: "nav.services", route: "services" },
+  { name: "nav.projects", route: "projects" },
+  { name: "nav.security", route: "security-audit" },
+  { name: "nav.about", route: "about" },
+  { name: "nav.contact", route: "contact" },
 ];
 
+const isActive = (name: string) =>
+  route.name === name || (name === "projects" && route.name === "project");
+
 const toggleLocale = () => {
-  locale.value = locale.value === "en" ? "el" : "en";
+  const next = locale.value === "en" ? "el" : "en";
+  router.push({
+    name: route.name as string,
+    params: { ...route.params, locale: next === "en" ? "en" : undefined },
+    query: route.query,
+    hash: route.hash,
+  });
 };
 
 const updateScrollState = () => {
@@ -69,7 +83,7 @@ watch(
     <div
       class="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6"
     >
-      <router-link to="/" class="group flex items-center gap-2">
+      <router-link :to="to('home')" class="group flex items-center gap-2">
         <span
           class="text-xl font-bold tracking-tighter text-white sm:text-2xl uppercase"
         >
@@ -84,15 +98,15 @@ watch(
       <!-- Desktop Nav -->
       <div class="hidden items-center gap-8 md:flex">
         <div class="flex items-center gap-6">
-          <a
+          <router-link
             v-for="link in navLinks"
             :key="link.name"
-            :href="link.href"
+            :to="to(link.route)"
             class="text-xs font-medium tracking-[0.15em] text-slate-300 transition hover:text-cyan-300"
-            :class="{ 'text-cyan-400': route.hash === link.hash }"
+            :class="{ 'text-cyan-400': isActive(link.route) }"
           >
             {{ t(link.name) }}
-          </a>
+          </router-link>
         </div>
 
         <div class="flex items-center gap-4 border-l border-white/10 pl-6">
@@ -102,21 +116,20 @@ watch(
           >
             {{ locale === "en" ? "ΕΛ" : "EN" }}
           </button>
-          <a
-            href="/VasileiosVarveroglouCV.pdf"
-            target="_blank"
-            download="VasileiosVarveroglouCV.pdf"
-            class="rounded-full border border-white/10 bg-white/5 px-5 py-2 text-xs font-semibold tracking-wider text-white transition hover:bg-white/10"
+          <router-link
+            :to="to('contact')"
+            class="rounded-full bg-cyan-400 px-5 py-2 text-xs font-bold tracking-wider text-slate-950 transition hover:bg-cyan-300"
+            @click="trackEvent('Quote CTA', { source: 'nav' })"
           >
-            {{ t("nav.downloadCv") }}
-          </a>
+            {{ t("nav.quote") }}
+          </router-link>
         </div>
       </div>
 
       <!-- Mobile Toggle -->
       <button
         class="flex h-12 w-12 flex-col items-center justify-center gap-1.5 md:hidden"
-        aria-label="Toggle menu"
+        :aria-label="t('nav.menu')"
         :aria-expanded="isMobileMenuOpen"
         @click="isMobileMenuOpen = !isMobileMenuOpen"
       >
@@ -161,15 +174,15 @@ watch(
         class="absolute left-0 right-0 top-full bg-slate-900/95 p-6 backdrop-blur-xl md:hidden"
       >
         <div class="flex flex-col gap-6">
-          <a
+          <router-link
             v-for="link in navLinks"
             :key="link.name"
-            :href="link.href"
+            :to="to(link.route)"
             class="text-center text-sm font-semibold tracking-widest text-slate-200"
             @click="isMobileMenuOpen = false"
           >
             {{ t(link.name) }}
-          </a>
+          </router-link>
           <div class="flex flex-col gap-4 border-t border-white/10 pt-6">
             <button
               @click="toggleLocale"
@@ -177,14 +190,13 @@ watch(
             >
               {{ locale === "en" ? "ΕΛΛΗΝΙΚΑ" : "ENGLISH" }}
             </button>
-            <a
-              href="/VasileiosVarveroglouCV.pdf"
-              target="_blank"
-              download="VasileiosVarveroglouCV.pdf"
-              class="rounded-xl bg-cyan-500/10 py-4 text-center text-xs font-bold tracking-widest text-cyan-400"
+            <router-link
+              :to="to('contact')"
+              class="rounded-xl bg-cyan-400 py-4 text-center text-xs font-bold tracking-widest text-slate-950"
+              @click="isMobileMenuOpen = false; trackEvent('Quote CTA', { source: 'nav-mobile' })"
             >
-              {{ t("nav.downloadCv") }}
-            </a>
+              {{ t("nav.quote") }}
+            </router-link>
           </div>
         </div>
       </div>

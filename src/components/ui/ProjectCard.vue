@@ -2,8 +2,10 @@
 import { nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { Project } from '@/types/portfolio'
+import { useLocalePath } from '@/composables/useLocalePath'
 
 const { t } = useI18n()
+const { to } = useLocalePath()
 
 defineProps<{
   project: Project
@@ -81,14 +83,23 @@ onBeforeUnmount(() => {
       </p>
 
       <div class="mt-auto flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <button
-          v-if="project.breakdown"
-          type="button"
-          class="clickable w-fit rounded-full border border-cyan-400/35 bg-cyan-400/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-200 transition hover:border-cyan-300/60 hover:bg-cyan-400/20"
-          @click="showBreakdown = true"
-        >
-          {{ t('projects.breakdown.cta') }}
-        </button>
+        <div class="flex flex-wrap items-center gap-3">
+          <router-link
+            v-if="project.slug"
+            :to="to('project', { slug: project.slug })"
+            class="clickable w-fit rounded-full border border-cyan-300/60 bg-cyan-400/20 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-100 transition hover:bg-cyan-300/30"
+          >
+            {{ t('projectsPage.readCase') }}
+          </router-link>
+          <button
+            v-if="project.breakdown"
+            type="button"
+            class="clickable w-fit rounded-full border border-cyan-400/35 bg-cyan-400/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-200 transition hover:border-cyan-300/60 hover:bg-cyan-400/20"
+            @click="showBreakdown = true"
+          >
+            {{ t('projects.breakdown.cta') }}
+          </button>
+        </div>
         <div class="flex flex-wrap items-center gap-6">
           <a
             :href="project.githubUrl"

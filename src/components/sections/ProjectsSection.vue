@@ -9,6 +9,8 @@ import { projects } from '@/data/portfolio'
 
 gsap.registerPlugin(ScrollTrigger)
 
+defineProps<{ hideHeading?: boolean }>()
+
 const { t, locale } = useI18n()
 const sectionRef = ref<HTMLElement | null>(null)
 const headingRef = ref<HTMLElement | null>(null)
@@ -19,6 +21,7 @@ let context: gsap.Context | undefined
 // Map portfolio data IDs to i18n keys
 const getProjectData = (id: number) => {
   const mapping: Record<number, string> = {
+    5: 'thasoshotel',
     4: 'shadowfirewall',
     3: 'vibebites',
     2: 'shadowai',
@@ -115,7 +118,7 @@ onBeforeUnmount(() => {
 
 <template>
   <section id="projects" ref="sectionRef" class="relative mx-auto w-full max-w-6xl px-4 py-20 sm:snap-start sm:px-6 md:py-28" style="perspective: 1200px">
-    <div ref="headingRef" class="mb-10 flex items-end justify-between gap-4">
+    <div v-if="!hideHeading" ref="headingRef" class="mb-10 flex items-end justify-between gap-4">
       <div>
         <p class="mb-3 text-sm uppercase tracking-[0.18em] text-cyan-300">{{ t('projects.tag') }}</p>
         <DecodingText

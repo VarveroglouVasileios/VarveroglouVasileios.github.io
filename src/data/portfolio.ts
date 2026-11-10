@@ -15,7 +15,29 @@ export const techSkills: Skill[] = [
 
 export const projects: Project[] = [
   {
+    id: 5,
+    slug: 'elia-bay-hotel-demo',
+    title: 'Elia Bay, hotel booking demo',
+    description:
+      'Demo concept: boutique hotel website for Thasos with live availability, season pricing, booking flow and an admin dashboard. Greek and English.',
+    stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'Vitest'],
+    imageLabel: 'Elia Bay hotel demo',
+    imageUrl: '/elia-bay-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/HotelProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/HotelProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'Booking rules live in pure, tested functions (dates, season pricing, overlap and availability). The UI is Vue 3 with hash routing so it runs on static hosting.',
+      security:
+        'Inputs are validated on blur and again on submit, and availability is re-checked at the last moment. In a real build the same checks run on the server, with a database.',
+      challenges:
+        'Several identical units per room type: a night is only sold out when the busiest overlapping night uses every unit, and a guest may arrive the day another leaves.',
+    },
+  },
+  {
     id: 4,
+    slug: 'shadow-ai-firewall',
     title: 'Shadow AI Firewall',
     description:
       'Browser extension that masks PII, financial identifiers, and high-signal secrets in outbound requests to supported AI chat sites—redacting serialized payloads before they leave the browser while restoring readable text locally in the UI.',
@@ -36,6 +58,7 @@ export const projects: Project[] = [
   },
   {
     id: 3,
+    slug: 'vibebites',
     title: 'VibeBites',
     description:
       'Greek-first social cooking platform: recipe discovery, shopping lists, meal planning, AI fridge assistant (ingredients to recipes with macros), cooking mode, and PWA install — built for sharing across social.',
@@ -52,6 +75,7 @@ export const projects: Project[] = [
   },
   {
     id: 2,
+    slug: 'shadow-ai-dashboard',
     title: 'Shadow AI — Admin Dashboard',
     description:
       'Marketing and admin experience for Shadow AI: a security layer between teams and AI tools — zero-knowledge inspection, DLP-style policies, secret redaction, and live session visibility without storing prompts.',

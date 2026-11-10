@@ -9,6 +9,8 @@ import { techSkills } from '@/data/portfolio'
 
 gsap.registerPlugin(ScrollTrigger)
 
+defineProps<{ hideHeading?: boolean }>()
+
 const { t, locale } = useI18n()
 const sectionRef = ref<HTMLElement | null>(null)
 const headingRef = ref<HTMLElement | null>(null)
@@ -90,8 +92,8 @@ onBeforeUnmount(() => {
   <section id="about" ref="sectionRef" class="relative mx-auto max-w-7xl px-4 py-24 sm:snap-start sm:px-6 md:py-32">
     <div class="grid gap-16 lg:grid-cols-2 lg:gap-24">
       <div ref="textRef">
-        <p class="mb-4 text-sm uppercase tracking-[0.2em] text-cyan-400">{{ t('about.tag') }}</p>
-        <div ref="headingRef">
+        <p v-if="!hideHeading" class="mb-4 text-sm uppercase tracking-[0.2em] text-cyan-400">{{ t('about.tag') }}</p>
+        <div v-if="!hideHeading" ref="headingRef">
           <DecodingText
             :key="locale"
             as="h2"

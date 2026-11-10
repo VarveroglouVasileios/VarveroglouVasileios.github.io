@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import RoomArt from './RoomArt.vue'
 import type { Room } from '@/lib/types'
 
 const props = defineProps<{
   room: Room
+  /** Alternate image side on wide screens. */
+  flip?: boolean
   /** Present only when dates were searched. */
   nights?: number
   total?: number
@@ -15,34 +16,39 @@ const props = defineProps<{
 
 const { t, locale } = useI18n()
 const lang = computed(() => (locale.value === 'en' ? 'en' : 'el'))
+const base = import.meta.env.BASE_URL
 const searched = computed(() => props.total !== undefined && props.nights !== undefined)
 </script>
 
 <template>
-  <article class="flex flex-col overflow-hidden rounded-2xl border border-sand-200 bg-white shadow-sm">
-    <div class="aspect-[5/3]"><RoomArt :hue="room.hue" :label="room.name[lang]" /></div>
-    <div class="flex flex-1 flex-col p-5">
-      <h3 class="font-serif text-xl font-bold text-olive-800">{{ room.name[lang] }}</h3>
-      <p class="mt-1 text-xs text-slate-500">
+  <article class="grid items-center gap-6 md:grid-cols-12 md:gap-10">
+    <div class="overflow-hidden bg-paper-dark md:col-span-7" :class="flip ? 'md:order-2' : ''">
+      <img
+        :src="`${base}images/${room.image}.webp`"
+        :alt="room.name[lang]"
+        width="1024"
+        height="768"
+        loading="lazy"
+        class="aspect-[4/3] w-full object-cover"
+      />
+    </div>
+    <div class="md:col-span-5" :class="flip ? 'md:order-1' : ''">
+      <h3 class="text-3xl">{{ room.name[lang] }}</h3>
+      <p class="mt-1 text-sm text-ink-soft">
         {{ t('rooms.sqm', { n: room.size }) }} · {{ t('rooms.upTo', { n: room.capacity }) }}
       </p>
-      <p class="mt-3 text-sm text-slate-700">{{ room.description[lang] }}</p>
-      <ul class="mt-3 flex flex-wrap gap-2">
-        <li v-for="f in room.features" :key="f.en" class="rounded-full bg-sand-100 px-3 py-1 text-xs text-slate-700">
-          {{ f[lang] }}
-        </li>
-      </ul>
-      <div class="mt-auto flex flex-wrap items-end justify-between gap-3 pt-5">
-        <div>
-          <p v-if="searched" class="font-semibold text-slate-900">
-            {{ t('rooms.total', { total, nights }) }}
-          </p>
-          <p v-else class="font-semibold text-slate-900">{{ t('rooms.perNight', { price: room.basePrice }) }}</p>
-          <p v-if="left !== undefined && left <= 2" class="text-xs font-semibold text-clay-600">
-            {{ left === 1 ? t('rooms.lastOne') : t('rooms.left', { n: left }) }}
-          </p>
-        </div>
-        <router-link v-if="bookTo" :to="bookTo" class="btn">{{ t('rooms.book') }}</router-link>
+      <p class="mt-4">{{ room.description[lang] }}</p>
+      <p class="mt-3 text-ink-soft">{{ room.features.map((f) => f[lang]).join(' · ') }}</p>
+
+      <div class="mt-6 border-t border-rule pt-5">
+        <p v-if="searched" class="font-serif text-2xl tabular-nums">
+          {{ total }}€ <span class="font-sans text-base text-ink-soft">{{ t('rooms.forNights', { nights }) }}</span>
+        </p>
+        <p v-else class="font-serif text-2xl tabular-nums">{{ t('rooms.perNight', { price: room.basePrice }) }}</p>
+        <p v-if="left !== undefined && left <= 2" class="mt-1 text-sm font-medium text-clay-600">
+          {{ left === 1 ? t('rooms.lastOne') : t('rooms.left', { n: left }) }}
+        </p>
+        <router-link v-if="bookTo" :to="bookTo" class="btn mt-4">{{ t('rooms.book') }}</router-link>
       </div>
     </div>
   </article>

@@ -3,8 +3,6 @@ export interface L10n {
   en: string
 }
 
-export type Hue = 'olive' | 'sea' | 'clay'
-
 export interface Room {
   id: string
   name: L10n
@@ -16,7 +14,8 @@ export interface Room {
   basePrice: number
   size: number
   features: L10n[]
-  hue: Hue
+  /** File name (without extension) in public/images, AI-generated. */
+  image: string
 }
 
 export interface Stay {

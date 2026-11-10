@@ -17,7 +17,7 @@ Each demo is a standalone app with its own `package.json`, so it can be hosted s
 
 | # | Demo | Folder | Status |
 |---|---|---|---|
-| 1 | Elia Bay Suites, boutique hotel in Thasos with booking system | `thasos-hotel/` | Built, needs design polish + hosting |
+| 1 | Elia Bay, boutique hotel in Thasos with booking system | `thasos-hotel/` | Built, responsive, in the portfolio. Live after merge to `main` |
 | 2 | Taverna with menu and table reservations | `briefs/02-taverna-prompt.md` | Prompt ready |
 | 3 | Café / brunch | not started | |
 | 4 | Local products e-shop | not started | |
@@ -26,14 +26,16 @@ Each demo is a standalone app with its own `package.json`, so it can be hosted s
 
 Design briefs and prompts: `briefs/`.
 
-## Hosting
+## Hosting: GitHub Pages (chosen)
 
-| Option | When | How |
-|---|---|---|
-| Vercel (recommended) | These demos are static (no server), so any static host works | Import the repo, set **Root Directory** to `demos/<name>`, build command `yarn build`, output `dist` |
-| Netlify / Cloudflare Pages | Same | Same settings |
-| GitHub Pages | Only if you want everything under one domain | Build with `VITE_BASE=/demos/<name>/` and publish the `dist` folder under that path |
-| Floot | If a demo needs a real backend (database, emails) | Rebuild the store layer as endpoints. Floot is React, so this means porting the UI |
+Demos are built and published with the portfolio by `.github/workflows/deploy.yml`:
+each demo is built with `VITE_BASE=/demos/<name>/` and copied into `dist/demos/<name>`.
+Live URL pattern: `https://varveroglouvasileios.github.io/demos/<name>/`.
 
-Recommended URLs once a domain exists: `hotel.demo.<your-domain>`, `taverna.demo.<your-domain>`.
-Link each live demo from its case study in the portfolio (`src/data/caseStudies.ts`).
+- Demos use **hash routing** (`/#/rooms`) so deep links and reloads work on GitHub Pages with no server fallback.
+- `robots.txt` disallows `/demos/` and every demo has `noindex`, so demos do not compete with the portfolio in search.
+- To add a demo: create `demos/<name>/`, add one build and copy step to the workflow, and add a case study in `src/data/caseStudies.ts`.
+- Floot was considered and rejected: it hosts React apps in its own format, and these demos are Vue 3.
+- Static demos can also be hosted on Vercel or Netlify (root directory `demos/<name>`, build `yarn build`, output `dist`).
+
+Photos: AI-generated (illustrative), labelled in each demo footer. Replace with real photography for a real client.

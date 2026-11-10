@@ -42,6 +42,13 @@ const quoteTo = () => to('contact', {}, undefined, { service: props.service.id }
       </p>
       <div class="flex flex-wrap items-center gap-4">
         <router-link
+          v-if="service.demoSlug"
+          :to="to('project', { slug: service.demoSlug })"
+          class="text-xs font-bold uppercase tracking-[0.16em] text-slate-400 transition hover:text-white"
+        >
+          {{ t('cta.seeDemo') }}
+        </router-link>
+        <router-link
           v-if="service.page"
           :to="to(service.page)"
           class="text-xs font-bold uppercase tracking-[0.16em] text-slate-400 transition hover:text-white"

@@ -5,45 +5,56 @@ import RoomCard from '@/components/RoomCard.vue'
 import { rooms } from '@/data/rooms'
 
 const { t } = useI18n()
+const base = import.meta.env.BASE_URL
 </script>
 
 <template>
   <div>
-    <section class="bg-gradient-to-b from-sea-700 to-sea-500 px-4 pb-24 pt-16 text-white sm:px-6">
-      <div class="mx-auto max-w-6xl">
-        <p class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-sky-100">{{ t('home.tag') }}</p>
-        <h1 class="max-w-3xl text-balance font-serif text-4xl font-bold leading-tight sm:text-6xl">{{ t('home.title') }}</h1>
-        <p class="mt-5 max-w-2xl text-lg text-sky-50">{{ t('home.lead') }}</p>
+    <img
+      :src="`${base}images/hero-bay.webp`"
+      alt=""
+      width="1024"
+      height="576"
+      class="h-[42vh] min-h-[220px] w-full object-cover sm:h-[56vh]"
+    />
+
+    <div class="wrap mt-10 grid gap-6 md:mt-14 md:grid-cols-12 md:gap-12">
+      <h1 class="text-4xl leading-tight sm:text-5xl md:col-span-7">{{ t('home.title') }}</h1>
+      <p class="text-lg text-ink-soft md:col-span-5 md:pt-3">{{ t('home.lead') }}</p>
+    </div>
+
+    <section class="wrap mt-10 md:mt-14">
+      <h2 class="mb-4 text-2xl">{{ t('home.searchTitle') }}</h2>
+      <SearchBar />
+    </section>
+
+    <section class="wrap mt-16 md:mt-24">
+      <p class="max-w-2xl font-serif text-2xl leading-snug sm:text-3xl">{{ t('home.intro') }}</p>
+    </section>
+
+    <section class="wrap mt-16 md:mt-24">
+      <div class="mb-8 flex flex-wrap items-baseline justify-between gap-3 border-b border-rule pb-3">
+        <h2 class="text-3xl">{{ t('home.roomsTitle') }}</h2>
+        <router-link to="/rooms" class="link">{{ t('home.allRooms') }}</router-link>
+      </div>
+      <div class="space-y-14 md:space-y-20">
+        <RoomCard v-for="(room, i) in rooms" :key="room.id" :room="room" :flip="i % 2 === 1" />
       </div>
     </section>
 
-    <div class="mx-auto -mt-12 max-w-6xl px-4 sm:px-6"><SearchBar /></div>
-
-    <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-      <div class="mb-8 flex flex-wrap items-end justify-between gap-3">
-        <h2 class="font-serif text-3xl font-bold text-olive-800">{{ t('home.roomsTitle') }}</h2>
-        <router-link to="/rooms" class="btn-ghost">{{ t('home.allRooms') }}</router-link>
-      </div>
-      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <RoomCard v-for="room in rooms" :key="room.id" :room="room" />
+    <section class="wrap mt-16 md:mt-24">
+      <h2 class="mb-8 border-b border-rule pb-3 text-3xl">{{ t('home.dailyTitle') }}</h2>
+      <div class="grid gap-8 md:grid-cols-3 md:gap-10">
+        <div v-for="k in ['d1', 'd2', 'd3']" :key="k">
+          <h3 class="text-xl">{{ t(`home.${k}t`) }}</h3>
+          <p class="mt-2 text-ink-soft">{{ t(`home.${k}`) }}</p>
+        </div>
       </div>
     </section>
 
-    <section class="bg-sand-100 px-4 py-16 sm:px-6">
-      <div class="mx-auto grid max-w-6xl gap-10 md:grid-cols-2">
-        <div>
-          <h2 class="mb-4 font-serif text-3xl font-bold text-olive-800">{{ t('home.whyTitle') }}</h2>
-          <ul class="space-y-2 text-slate-700">
-            <li v-for="k in ['why1', 'why2', 'why3']" :key="k" class="flex gap-2">
-              <span class="text-olive-600" aria-hidden="true">✓</span>{{ t(`home.${k}`) }}
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h2 class="mb-4 font-serif text-3xl font-bold text-olive-800">{{ t('home.locationTitle') }}</h2>
-          <p class="text-slate-700">{{ t('home.locationText') }}</p>
-        </div>
-      </div>
+    <section class="wrap mt-16 md:mt-24">
+      <h2 class="mb-3 text-3xl">{{ t('home.locationTitle') }}</h2>
+      <p class="max-w-xl text-ink-soft">{{ t('home.locationText') }}</p>
     </section>
   </div>
 </template>

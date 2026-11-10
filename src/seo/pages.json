@@ -86,6 +86,23 @@
       }
     },
     {
+      "key": "project-elia-bay-hotel-demo",
+      "path": "projects/elia-bay-hotel-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: ιστοσελίδα ξενοδοχείου με σύστημα κρατήσεων, Θάσος",
+        "description": "Demo concept ξενοδοχείου στη Θάσο με διαθεσιμότητα σε πραγματικό χρόνο, εποχιακές τιμές, κράτηση και πίνακα διαχείρισης. Δοκιμάστε το.",
+        "h1": "Elia Bay, hotel με σύστημα κρατήσεων",
+        "summary": "Demo concept: ιστοσελίδα boutique ξενοδοχείου στη Θάσο με διαθεσιμότητα και κρατήσεις σε πραγματικό χρόνο."
+      },
+      "en": {
+        "title": "Demo: hotel website with a booking system, Thasos",
+        "description": "A demo concept hotel in Thasos with live availability, season pricing, booking and an admin dashboard. Try it.",
+        "h1": "Elia Bay, hotel with a booking system",
+        "summary": "Demo concept: a boutique hotel website in Thasos with live availability and booking."
+      }
+    },
+    {
       "key": "project-vibebites",
       "path": "projects/vibebites",
       "priority": 0.6,

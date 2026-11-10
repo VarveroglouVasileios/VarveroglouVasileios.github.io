@@ -41,24 +41,25 @@ const nights = computed(() => (searched.value ? nightsBetween(stay.value.checkIn
 </script>
 
 <template>
-  <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-    <h1 class="mb-6 font-serif text-4xl font-bold text-olive-800">{{ t('rooms.title') }}</h1>
+  <div class="wrap pt-10">
+    <h1 class="mb-6 text-4xl">{{ t('rooms.title') }}</h1>
     <SearchBar :key="route.fullPath" :check-in="route.query.in as string" :check-out="route.query.out as string" :guests="Number(route.query.g) || 2" />
-    <p class="mt-3 text-xs text-slate-500">{{ t('rooms.peakNote') }}</p>
+    <p class="mt-3 text-sm text-ink-soft">{{ t('rooms.peakNote') }}</p>
 
-    <p v-if="searched" class="mt-8 font-semibold text-slate-800">
+    <p v-if="searched" class="mt-10 border-b border-rule pb-3 font-serif text-xl">
       {{ t('rooms.resultsFor', { nights, guests: stay.guests }) }}
     </p>
 
-    <p v-if="searched && visible.length === 0" class="mt-6 rounded-xl bg-white p-6 text-slate-700" role="status">
+    <p v-if="searched && visible.length === 0" class="mt-8 border border-rule bg-white p-6" role="status">
       {{ t('rooms.none') }}
     </p>
 
-    <div class="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div class="mt-10 space-y-14 md:space-y-20">
       <RoomCard
-        v-for="r in visible"
+        v-for="(r, i) in visible"
         :key="r.room.id"
         :room="r.room"
+        :flip="i % 2 === 1"
         :nights="r.nights"
         :total="r.total"
         :left="r.left"

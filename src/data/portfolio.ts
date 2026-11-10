@@ -15,6 +15,27 @@ export const techSkills: Skill[] = [
 
 export const projects: Project[] = [
   {
+    id: 5,
+    slug: 'elia-bay-hotel-demo',
+    title: 'Elia Bay, hotel booking demo',
+    description:
+      'Demo concept: boutique hotel website for Thasos with live availability, season pricing, booking flow and an admin dashboard. Greek and English.',
+    stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'Vitest'],
+    imageLabel: 'Elia Bay hotel demo',
+    imageUrl: '/elia-bay-preview.webp',
+    githubUrl: 'https://github.com/varveroglouvasileios/varveroglouvasileios.github.io/tree/main/demos/thasos-hotel',
+    liveUrl: '/demos/thasos-hotel/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'Booking rules live in pure, tested functions (dates, season pricing, overlap and availability). The UI is Vue 3 with hash routing so it runs on static hosting.',
+      security:
+        'Inputs are validated on blur and again on submit, and availability is re-checked at the last moment. In a real build the same checks run on the server, with a database.',
+      challenges:
+        'Several identical units per room type: a night is only sold out when the busiest overlapping night uses every unit, and a guest may arrive the day another leaves.',
+    },
+  },
+  {
     id: 4,
     slug: 'shadow-ai-firewall',
     title: 'Shadow AI Firewall',

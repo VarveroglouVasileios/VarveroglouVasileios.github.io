@@ -52,16 +52,16 @@ const usedOn = (roomId: string, day: string): number =>
 
 const sorted = computed(() => [...bookings.value].sort((a, b) => a.checkIn.localeCompare(b.checkIn)))
 const cellClass = (used: number, units: number): string =>
-  used === 0 ? 'bg-sand-100 text-slate-400' : used >= units ? 'bg-clay-500 text-white' : 'bg-sea-500/70 text-white'
+  used === 0 ? 'bg-paper-dark text-ink-soft' : used >= units ? 'bg-clay-500 text-white' : 'bg-sea-600/70 text-white'
 </script>
 
 <template>
-  <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-    <form v-if="!signedIn" class="mx-auto max-w-sm space-y-4 rounded-2xl bg-white p-6 shadow-sm" @submit.prevent="login">
-      <h1 class="font-serif text-2xl font-bold text-olive-800">{{ t('admin.loginTitle') }}</h1>
-      <p class="text-sm text-slate-500">{{ t('admin.loginHint') }}</p>
+  <div class="wrap pt-10">
+    <form v-if="!signedIn" class="mx-auto max-w-sm space-y-4 border border-rule bg-white p-6" @submit.prevent="login">
+      <h1 class="text-2xl">{{ t('admin.loginTitle') }}</h1>
+      <p class="text-sm text-ink-soft">{{ t('admin.loginHint') }}</p>
       <div>
-        <label for="pw" class="mb-1 block text-sm font-semibold">{{ t('admin.password') }}</label>
+        <label for="pw" class="field-label">{{ t('admin.password') }}</label>
         <input id="pw" v-model="password" type="password" class="field" autocomplete="off" />
         <p v-if="wrong" class="field-error" role="alert">{{ t('admin.wrong') }}</p>
       </div>
@@ -70,21 +70,21 @@ const cellClass = (used: number, units: number): string =>
 
     <template v-else>
       <div class="mb-8 flex flex-wrap items-center justify-between gap-3">
-        <h1 class="font-serif text-3xl font-bold text-olive-800">{{ t('admin.title') }}</h1>
+        <h1 class="text-3xl">{{ t('admin.title') }}</h1>
         <div class="flex gap-2">
-          <button type="button" class="btn-ghost" @click="reset">{{ t('admin.reset') }}</button>
-          <button type="button" class="btn-ghost" @click="logout">{{ t('admin.logout') }}</button>
+          <button type="button" class="link" @click="reset">{{ t('admin.reset') }}</button>
+          <button type="button" class="link" @click="logout">{{ t('admin.logout') }}</button>
         </div>
       </div>
 
       <section class="mb-10">
         <h2 class="mb-3 text-lg font-semibold">{{ t('admin.occupancy') }}</h2>
-        <div class="overflow-x-auto rounded-xl bg-white p-3 shadow-sm">
+        <div class="overflow-x-auto border border-rule bg-white p-3">
           <table class="w-full min-w-[640px] border-separate border-spacing-1 text-center text-xs">
             <thead>
               <tr>
                 <th class="text-left font-semibold">{{ t('admin.room') }}</th>
-                <th v-for="d in days" :key="d" class="font-normal text-slate-500">{{ d.slice(8) }}/{{ d.slice(5, 7) }}</th>
+                <th v-for="d in days" :key="d" class="font-normal text-ink-soft">{{ d.slice(8) }}/{{ d.slice(5, 7) }}</th>
               </tr>
             </thead>
             <tbody>
@@ -101,10 +101,10 @@ const cellClass = (used: number, units: number): string =>
 
       <section>
         <h2 class="mb-3 text-lg font-semibold">{{ t('admin.bookings') }} · {{ t('admin.count', { n: sorted.length }) }}</h2>
-        <p v-if="sorted.length === 0" class="rounded-xl bg-white p-6">{{ t('admin.empty') }}</p>
-        <div v-else class="overflow-x-auto rounded-xl bg-white shadow-sm">
+        <p v-if="sorted.length === 0" class="border border-rule bg-white p-6">{{ t('admin.empty') }}</p>
+        <div v-else class="overflow-x-auto border border-rule bg-white">
           <table class="w-full min-w-[720px] text-left text-sm">
-            <thead class="bg-sand-100 text-xs uppercase tracking-wide text-slate-500">
+            <thead class="bg-paper-dark text-xs uppercase tracking-wide text-ink-soft">
               <tr>
                 <th class="p-3">{{ t('admin.ref') }}</th>
                 <th class="p-3">{{ t('admin.guest') }}</th>
@@ -116,13 +116,13 @@ const cellClass = (used: number, units: number): string =>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="b in sorted" :key="b.ref" class="border-t border-sand-200">
+              <tr v-for="b in sorted" :key="b.ref" class="border-t border-rule">
                 <td class="p-3 font-mono text-xs">{{ b.ref }}</td>
                 <td class="p-3">{{ b.name }}</td>
                 <td class="p-3">{{ getRoom(b.roomId)?.name[lang] }}</td>
                 <td class="p-3">{{ b.checkIn }} → {{ b.checkOut }}</td>
                 <td class="p-3">{{ b.total }}€</td>
-                <td class="p-3" :class="b.status === 'cancelled' ? 'text-slate-400' : 'text-olive-700'">
+                <td class="p-3" :class="b.status === 'cancelled' ? 'text-ink-soft' : 'text-sea-600'">
                   {{ t(`admin.${b.status}`) }}
                 </td>
                 <td class="p-3 text-right">

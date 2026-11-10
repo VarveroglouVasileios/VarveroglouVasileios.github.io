@@ -17,20 +17,20 @@ const nights = computed(() => (booking.value ? nightsBetween(booking.value.check
 </script>
 
 <template>
-  <div class="mx-auto max-w-2xl px-4 py-12 sm:px-6">
-    <p v-if="!booking || !room" class="rounded-xl bg-white p-6">
+  <div class="wrap max-w-2xl pt-10">
+    <p v-if="!booking || !room" class="border border-rule bg-white p-6">
       {{ t('done.notFound') }}
-      <router-link to="/" class="font-semibold text-sea-600 underline">{{ t('done.home') }}</router-link>
+      <router-link to="/" class="link">{{ t('done.home') }}</router-link>
     </p>
 
     <template v-else>
-      <h1 class="font-serif text-4xl font-bold text-olive-800">{{ t('done.title') }}</h1>
-      <p class="mt-4 text-slate-700">
-        {{ t('done.ref') }}: <strong class="rounded bg-sand-200 px-2 py-1 font-mono">{{ booking.ref }}</strong>
+      <h1 class="text-4xl">{{ t('done.title') }}</h1>
+      <p class="mt-4 text-ink">
+        {{ t('done.ref') }}: <strong class="rounded bg-paper-dark px-2 py-1 font-mono">{{ booking.ref }}</strong>
       </p>
 
-      <section class="mt-8 rounded-2xl border border-dashed border-slate-300 bg-white p-6">
-        <h2 class="text-xs font-bold uppercase tracking-wide text-slate-500">{{ t('done.emailTitle') }}</h2>
+      <section class="mt-8 border border-dashed border-rule bg-white p-6">
+        <h2 class="text-xs font-bold uppercase tracking-wide text-ink-soft">{{ t('done.emailTitle') }}</h2>
         <p class="mt-3 font-semibold">{{ t('done.subject', { ref: booking.ref }) }}</p>
         <p class="mt-3 text-sm">{{ t('done.greeting', { name: booking.name }) }}</p>
         <p class="mt-2 text-sm">
@@ -38,7 +38,7 @@ const nights = computed(() => (booking.value ? nightsBetween(booking.value.check
         </p>
         <p class="mt-2 text-sm font-semibold">{{ t('done.total', { total: booking.total }) }}</p>
       </section>
-      <p class="mt-3 text-xs text-slate-500">{{ t('done.emailNote') }}</p>
+      <p class="mt-3 text-xs text-ink-soft">{{ t('done.emailNote') }}</p>
 
       <router-link to="/" class="btn mt-8">{{ t('done.home') }}</router-link>
     </template>

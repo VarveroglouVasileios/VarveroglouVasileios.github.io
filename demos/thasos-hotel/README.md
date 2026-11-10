@@ -1,7 +1,7 @@
 # Elia Bay Suites (demo)
 
 Fictional boutique hotel in Thasos with a working availability and booking flow.
-Vue 3 + TypeScript + Tailwind + vue-i18n (Greek default, English). No backend: bookings live in `localStorage`.
+Vue 3 + TypeScript + Tailwind + vue-i18n (Greek default, English). No backend: bookings live in `localStorage`. Photos are AI-generated. Hash routing, so it runs on GitHub Pages.
 
 ```bash
 yarn install
@@ -37,4 +37,4 @@ src/views/           Home, Rooms, Book, Confirmation, Admin
 
 ## Hosting
 
-See `../README.md`. Vercel: root directory `demos/thasos-hotel`, build `yarn build`, output `dist`.
+GitHub Pages via the root workflow, see `../README.md`. Live at `/demos/thasos-hotel/`.

@@ -67,48 +67,48 @@ const submit = (): void => {
 </script>
 
 <template>
-  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-    <h1 class="mb-6 font-serif text-4xl font-bold text-olive-800">{{ t('book.title') }}</h1>
+  <div class="wrap max-w-4xl pt-10">
+    <h1 class="mb-6 text-4xl">{{ t('book.title') }}</h1>
 
-    <p v-if="!room || stayError" class="rounded-xl bg-white p-6">
+    <p v-if="!room || stayError" class="border border-rule bg-white p-6">
       {{ t('book.noStay') }}
-      <router-link to="/rooms" class="font-semibold text-sea-600 underline">{{ t('nav.rooms') }}</router-link>
+      <router-link to="/rooms" class="link">{{ t('nav.rooms') }}</router-link>
     </p>
 
     <div v-else class="grid gap-8 md:grid-cols-5">
-      <aside class="rounded-2xl bg-white p-6 shadow-sm md:col-span-2">
-        <h2 class="mb-3 font-semibold text-slate-900">{{ t('book.summary') }}</h2>
-        <p class="font-serif text-xl font-bold text-olive-800">{{ room.name[lang] }}</p>
-        <p class="mt-2 text-sm text-slate-600">{{ stay.checkIn }} → {{ stay.checkOut }}</p>
-        <p class="text-sm text-slate-600">{{ t('book.nights', { n: nights }) }} · {{ stay.guests }} {{ t('search.guests').toLowerCase() }}</p>
-        <p class="mt-4 text-2xl font-bold text-slate-900">{{ total }}€</p>
-        <p class="mt-3 text-xs text-slate-500">{{ t('book.payNote') }}</p>
-        <router-link :to="{ name: 'rooms', query: route.query }" class="mt-4 inline-block text-sm font-semibold text-sea-600 underline">
+      <aside class="border border-rule bg-white p-6 md:col-span-2">
+        <h2 class="mb-3 font-semibold text-ink">{{ t('book.summary') }}</h2>
+        <p class="font-serif text-xl">{{ room.name[lang] }}</p>
+        <p class="mt-2 text-sm text-ink-soft">{{ stay.checkIn }} → {{ stay.checkOut }}</p>
+        <p class="text-sm text-ink-soft">{{ t('book.nights', { n: nights }) }} · {{ stay.guests }} {{ t('search.guests').toLowerCase() }}</p>
+        <p class="mt-4 text-2xl font-bold text-ink">{{ total }}€</p>
+        <p class="mt-3 text-xs text-ink-soft">{{ t('book.payNote') }}</p>
+        <router-link :to="{ name: 'rooms', query: route.query }" class="mt-4 inline-block text-sm link">
           {{ t('book.back') }}
         </router-link>
       </aside>
 
       <form class="space-y-4 md:col-span-3" novalidate @submit.prevent="submit">
-        <p v-if="unavailable" class="rounded-xl bg-clay-500/15 p-4 text-sm font-semibold text-clay-600" role="alert">
+        <p v-if="unavailable" class="border border-clay-500/40 bg-clay-500/10 p-4 text-sm font-medium text-clay-600" role="alert">
           {{ msg('unavailable') }}
         </p>
 
         <div>
-          <label for="name" class="mb-1 block text-sm font-semibold">{{ t('book.name') }}</label>
+          <label for="name" class="field-label">{{ t('book.name') }}</label>
           <input id="name" v-model="form.name" class="field" autocomplete="name" @blur="touched.name = true" />
           <p v-if="touched.name && errors.name" class="field-error">{{ msg(errors.name) }}</p>
         </div>
         <div>
-          <label for="email" class="mb-1 block text-sm font-semibold">{{ t('book.email') }}</label>
+          <label for="email" class="field-label">{{ t('book.email') }}</label>
           <input id="email" v-model="form.email" type="email" class="field" autocomplete="email" @blur="touched.email = true" />
           <p v-if="touched.email && errors.email" class="field-error">{{ msg(errors.email) }}</p>
         </div>
         <div>
-          <label for="phone" class="mb-1 block text-sm font-semibold">{{ t('book.phone') }}</label>
+          <label for="phone" class="field-label">{{ t('book.phone') }}</label>
           <input id="phone" v-model="form.phone" type="tel" class="field" autocomplete="tel" />
         </div>
         <div>
-          <label for="notes" class="mb-1 block text-sm font-semibold">{{ t('book.notes') }}</label>
+          <label for="notes" class="field-label">{{ t('book.notes') }}</label>
           <textarea id="notes" v-model="form.notes" rows="3" class="field" />
         </div>
         <div>

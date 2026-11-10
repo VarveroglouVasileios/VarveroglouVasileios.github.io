@@ -5,7 +5,7 @@ export interface CaseStudy {
   /** Matches `Project.id` in portfolio.ts */
   projectId: number
   /** Be upfront: these are the author's own products, not client work. */
-  kind: 'own-product' | 'client'
+  kind: 'own-product' | 'demo' | 'client'
   title: string
   tagline: L10n
   context: L10n
@@ -26,6 +26,62 @@ export interface CaseStudy {
  * do not invent figures.
  */
 export const caseStudies: CaseStudy[] = [
+  {
+    slug: 'elia-bay-hotel-demo',
+    projectId: 5,
+    kind: 'demo',
+    title: 'Elia Bay, hotel με σύστημα κρατήσεων',
+    tagline: {
+      el: 'Demo concept: ιστοσελίδα boutique ξενοδοχείου στη Θάσο με διαθεσιμότητα και κρατήσεις σε πραγματικό χρόνο.',
+      en: 'Demo concept: a boutique hotel website in Thasos with live availability and booking.',
+    },
+    context: {
+      el: 'Φανταστικό ξενοδοχείο, φτιαγμένο για να δείχνει σε ιδιοκτήτες καταλυμάτων της Θάσου και της Ανατολικής Μακεδονίας πώς δουλεύει ένα σύστημα κρατήσεων.',
+      en: 'A fictional hotel built to show owners of accommodation in Thasos and Eastern Macedonia how a booking system works.',
+    },
+    problem: {
+      el: 'Πολλά μικρά καταλύματα δέχονται κρατήσεις με τηλέφωνο και μηνύματα. Χάνουν ώρα, γράφουν λάθος ημερομηνίες και χάνουν πελάτες που θέλουν να κλείσουν αμέσως, ακόμα και βράδυ.',
+      en: 'Many small hotels take bookings by phone and messages. They lose time, mix up dates and lose guests who want to book right away, even at night.',
+    },
+    solution: {
+      el: [
+        'Αναζήτηση με ημερομηνίες και επισκέπτες, με ελέγχους (παρελθόν, ελάχιστη διαμονή, χωρητικότητα).',
+        'Διαθεσιμότητα ανά τύπο δωματίου με πολλά τεμάχια. Το δωμάτιο που έχει εξαντληθεί δεν εμφανίζεται.',
+        'Τιμές ανά περίοδο (χαμηλή, ενδιάμεση, υψηλή) και ελάχιστη διαμονή το καλοκαίρι.',
+        'Φόρμα κράτησης με επιβεβαίωση, κωδικό και προεπισκόπηση του email που θα έπαιρνε ο πελάτης.',
+        'Πίνακας διαχείρισης με πληρότητα 28 ημερών και ακύρωση κρατήσεων. Ελληνικά και αγγλικά, σχεδιασμένο πρώτα για κινητό.',
+      ],
+      en: [
+        'Search by dates and guests, with checks (past dates, minimum stay, capacity).',
+        'Availability per room type with several units. A sold-out room is not shown.',
+        'Season-based prices (low, shoulder, peak) and a summer minimum stay.',
+        'Booking form with confirmation, a reference code and a preview of the email the guest would get.',
+        'Admin dashboard with a 28-day occupancy grid and booking cancellation. Greek and English, designed mobile-first.',
+      ],
+    },
+    result: {
+      el: [
+        'Λειτουργικό demo που μπορείτε να δοκιμάσετε: κάντε μια κράτηση και δείτε την στον πίνακα διαχείρισης (κωδικός «demo»).',
+        'Η λογική κρατήσεων καλύπτεται από αυτόματα tests (επικαλυπτόμενες ημερομηνίες, ακυρώσεις, εποχές).',
+        'Τα δεδομένα είναι προσομοιωμένα και μένουν στον browser σας. Σε πραγματικό έργο μπαίνουν βάση δεδομένων και αληθινά email.',
+        'Οι φωτογραφίες είναι δημιουργημένες με AI και είναι ενδεικτικές.',
+      ],
+      en: [
+        'A working demo you can try: make a booking and see it in the admin dashboard (password “demo”).',
+        'The booking logic is covered by automated tests (overlapping dates, cancellations, seasons).',
+        'Data is simulated and stays in your browser. A real project adds a database and real emails.',
+        'Photos are AI-generated and illustrative.',
+      ],
+    },
+    forYourBusiness: {
+      el: 'Αν έχετε ξενοδοχείο, ενοικιαζόμενα δωμάτια ή βίλες, αυτό είναι το σύστημα που θα προσαρμόσω στα δικά σας δωμάτια, τις τιμές και το ωράριό σας.',
+      en: 'If you run a hotel, rooms or villas, this is the system I would adapt to your own rooms, prices and hours.',
+    },
+    stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'vue-i18n', 'Vitest'],
+    imageUrl: '/elia-bay-preview.webp',
+    liveUrl: '/demos/thasos-hotel/',
+    liveLabel: { el: 'Δοκιμάστε το demo', en: 'Try the demo' },
+  },
   {
     slug: 'shadow-ai-firewall',
     projectId: 4,

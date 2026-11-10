@@ -15,6 +15,8 @@ export interface ServicePackage {
   priceFrom: number | null
   /** Optional dedicated page (route name). */
   page?: 'security-audit'
+  /** Case-study slug of a live demo of this service. */
+  demoSlug?: string
 }
 
 export const services: ServicePackage[] = [
@@ -110,6 +112,7 @@ export const services: ServicePackage[] = [
       ],
     },
     priceFrom: null,
+    demoSlug: 'elia-bay-hotel-demo',
   },
   {
     id: 'internal',

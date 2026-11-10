@@ -28,13 +28,14 @@ const breakdown = computed(() => projects.find((p) => p.id === study.value?.proj
 
       <header class="mb-8">
         <span
-          v-if="study.kind === 'own-product'"
+          v-if="study.kind !== 'client'"
           class="mb-3 inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-cyan-300"
         >
-          {{ t('projectsPage.ownProduct') }}
+          {{ study.kind === 'demo' ? t('projectsPage.demoConcept') : t('projectsPage.ownProduct') }}
         </span>
         <h1 class="mb-3 text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">{{ study.title }}</h1>
         <p class="text-lg text-slate-300">{{ pick(study.tagline, locale) }}</p>
+        <p v-if="study.kind === 'demo'" class="mt-3 text-sm text-slate-400">{{ t('caseStudy.demoNote') }}</p>
       </header>
 
       <img

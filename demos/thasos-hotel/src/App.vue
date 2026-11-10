@@ -3,36 +3,44 @@ import { useI18n } from 'vue-i18n'
 import { setLocale } from '@/i18n'
 
 const { t, locale } = useI18n()
-const toggle = (): void => setLocale(locale.value === 'el' ? 'en' : 'el')
 </script>
 
 <template>
   <div class="flex min-h-screen flex-col">
-    <div class="bg-slate-900 px-4 py-2 text-center text-xs text-slate-100" role="note">
-      {{ t('demo.banner') }}
-    </div>
+    <p class="bg-ink px-5 py-1.5 text-center text-xs text-paper" role="note">{{ t('demo.banner') }}</p>
 
-    <header class="border-b border-sand-200 bg-sand-50/90 backdrop-blur">
-      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
-        <router-link to="/" class="font-serif text-xl font-bold text-olive-800">{{ t('brand') }}</router-link>
-        <nav class="flex items-center gap-5 text-sm font-medium" aria-label="Main">
-          <router-link to="/" class="hover:text-sea-600">{{ t('nav.home') }}</router-link>
-          <router-link to="/rooms" class="hover:text-sea-600">{{ t('nav.rooms') }}</router-link>
-          <router-link to="/admin" class="hover:text-sea-600">{{ t('nav.admin') }}</router-link>
-          <button type="button" class="rounded-full border border-slate-300 px-3 py-1 text-xs font-bold" @click="toggle">
-            {{ locale === 'el' ? 'EN' : 'ΕΛ' }}
-          </button>
+    <header class="border-b border-rule">
+      <div class="wrap flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 py-5">
+        <router-link to="/" class="font-serif text-2xl text-ink">
+          Elia Bay <span class="text-base italic text-ink-soft">Θάσος</span>
+        </router-link>
+        <nav class="flex items-baseline gap-5 text-base" aria-label="Main">
+          <router-link to="/rooms" class="hover:text-sea-600" active-class="font-medium text-sea-600">{{ t('nav.rooms') }}</router-link>
+          <router-link to="/admin" class="hover:text-sea-600" active-class="font-medium text-sea-600">{{ t('nav.admin') }}</router-link>
+          <span class="text-ink-soft" aria-label="Language">
+            <button type="button" class="px-1" :class="locale === 'el' ? 'font-semibold text-ink' : 'hover:text-ink'" :aria-pressed="locale === 'el'" @click="setLocale('el')">ΕΛ</button>/<button type="button" class="px-1" :class="locale === 'en' ? 'font-semibold text-ink' : 'hover:text-ink'" :aria-pressed="locale === 'en'" @click="setLocale('en')">EN</button>
+          </span>
         </nav>
       </div>
     </header>
 
-    <main class="flex-1">
-      <router-view />
-    </main>
+    <main class="flex-1"><router-view /></main>
 
-    <footer class="border-t border-sand-200 bg-sand-100 px-4 py-8 text-center text-sm text-slate-600">
-      <p>{{ t('footer.rights') }}</p>
-      <p class="mt-1">{{ t('demo.by') }}</p>
+    <footer class="mt-20 border-t border-rule bg-paper-dark">
+      <div class="wrap grid gap-8 py-10 text-base sm:grid-cols-3">
+        <div>
+          <p class="font-serif text-xl">Elia Bay</p>
+          <p class="mt-2 text-ink-soft">{{ t('footer.address') }}</p>
+        </div>
+        <div>
+          <p class="font-medium">{{ t('footer.reception') }}</p>
+          <p class="mt-2 text-ink-soft">{{ t('footer.hours') }}</p>
+        </div>
+        <div class="text-sm text-ink-soft">
+          <p>{{ t('demo.by') }}</p>
+          <p class="mt-1">{{ t('demo.ai') }}</p>
+        </div>
+      </div>
     </footer>
   </div>
 </template>

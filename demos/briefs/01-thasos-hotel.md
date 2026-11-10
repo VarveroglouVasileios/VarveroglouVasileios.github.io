@@ -8,7 +8,7 @@
 - Secondary (the real audience of the demo): hotel owners judging whether this looks professional and easy for their guests.
 
 ## Tone and look
-Calm, warm, Mediterranean. Sand and olive neutrals, sea blue as the action colour, terracotta for urgency (last room, errors). Serif headings, clean sans body. Generous space. No stock-photo clichés, no carousel.
+Calm, warm, editorial, like a family guesthouse rather than a booking site: photography first, serif headings, hairline rules instead of cards, small radii, no gradients or decorative icons. Paper-white ground, sea blue for the single action colour, terracotta only for scarcity and errors. Short, human copy.
 
 ## What to design (screens)
 1. **Home:** hero, search bar (dates + guests), room highlights, why stay, location.

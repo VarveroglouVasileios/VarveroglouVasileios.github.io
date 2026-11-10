@@ -17,7 +17,7 @@ export const rooms: Room[] = [
     basePrice: 85,
     size: 26,
     features: [l('Κλιματισμός', 'Air conditioning'), l('Βεράντα', 'Terrace'), l('Πρωινό', 'Breakfast')],
-    hue: 'olive',
+    image: 'garden-double',
   },
   {
     id: 'sea-suite',
@@ -31,7 +31,7 @@ export const rooms: Room[] = [
     basePrice: 140,
     size: 38,
     features: [l('Θέα θάλασσα', 'Sea view'), l('Μπαλκόνι', 'Balcony'), l('Μίνι μπαρ', 'Minibar')],
-    hue: 'sea',
+    image: 'sea-suite',
   },
   {
     id: 'family-apartment',
@@ -45,7 +45,7 @@ export const rooms: Room[] = [
     basePrice: 170,
     size: 55,
     features: [l('2 υπνοδωμάτια', '2 bedrooms'), l('Κουζίνα', 'Kitchenette'), l('Παιδικό κρεβάτι', 'Baby cot')],
-    hue: 'clay',
+    image: 'family-apartment',
   },
   {
     id: 'pool-villa',
@@ -59,7 +59,7 @@ export const rooms: Room[] = [
     basePrice: 320,
     size: 120,
     features: [l('Ιδιωτική πισίνα', 'Private pool'), l('3 υπνοδωμάτια', '3 bedrooms'), l('Πάρκινγκ', 'Parking')],
-    hue: 'sea',
+    image: 'pool-villa',
   },
 ]
 

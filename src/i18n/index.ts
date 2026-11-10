@@ -37,6 +37,7 @@ const baseMessages = {
       github: 'GitHub',
       live: 'Live Demo',
       chromeStore: 'Chrome Web Store',
+      tryDemo: 'Try the demo',
       breakdown: {
         cta: 'Technical breakdown',
         title: 'Case study',
@@ -46,6 +47,10 @@ const baseMessages = {
         close: 'Close',
       },
       items: {
+        thasoshotel: {
+          title: 'Elia Bay, hotel booking demo',
+          description: 'Demo concept: a boutique hotel website for Thasos with live availability, season pricing, a booking flow and an admin dashboard. Greek and English.'
+        },
         shadowfirewall: {
           title: 'Shadow AI Firewall',
           description:
@@ -148,6 +153,7 @@ const baseMessages = {
       github: 'GitHub',
       live: 'Live Demo',
       chromeStore: 'Chrome Web Store',
+      tryDemo: 'Δοκιμάστε το demo',
       breakdown: {
         cta: 'Τεχνική ανάλυση',
         title: 'Case study',
@@ -157,6 +163,10 @@ const baseMessages = {
         close: 'Κλείσιμο',
       },
       items: {
+        thasoshotel: {
+          title: 'Elia Bay, demo ξενοδοχείου με κρατήσεις',
+          description: 'Demo concept: ιστοσελίδα boutique ξενοδοχείου στη Θάσο με διαθεσιμότητα, εποχιακές τιμές, κράτηση και πίνακα διαχείρισης. Ελληνικά και αγγλικά.'
+        },
         shadowfirewall: {
           title: 'Shadow AI Firewall',
           description:

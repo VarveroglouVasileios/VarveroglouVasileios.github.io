@@ -21,7 +21,7 @@ const room: Room = {
   basePrice: 100,
   size: 20,
   features: [],
-  hue: 'sea',
+  image: 'x',
 }
 
 const booking = (checkIn: string, checkOut: string, status: Booking['status'] = 'confirmed'): Booking => ({

@@ -79,7 +79,7 @@ export const caseStudies: CaseStudy[] = [
     },
     stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'vue-i18n', 'Vitest'],
     imageUrl: '/elia-bay-preview.webp',
-    liveUrl: '/demos/thasos-hotel/',
+    liveUrl: 'https://varveroglouvasileios.github.io/HotelProject/',
     liveLabel: { el: 'Δοκιμάστε το demo', en: 'Try the demo' },
   },
   {

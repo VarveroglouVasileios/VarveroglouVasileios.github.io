@@ -4,10 +4,10 @@ Paste everything below the line into a new Claude Code session (or Floot) opened
 
 ---
 
-You are building demo site #2 for my portfolio: a fictional Greek taverna with an online menu and a table reservation system. Read `demos/README.md` first and follow its rules. Use `demos/thasos-hotel/` as the reference implementation: same stack (Vue 3 + TypeScript + Tailwind, vue-i18n, vue-router, vitest), same project layout, same style of pure, tested logic in `src/lib`.
+You are building demo site #2 for my portfolio: a fictional Greek taverna with an online menu and a table reservation system. Read `demos/README.md` first and follow its rules. Use the `HotelProject` repository (Elia Bay hotel demo) as the reference implementation: same stack (Vue 3 + TypeScript + Tailwind, vue-i18n, vue-router, vitest), same project layout, same style of pure, tested logic in `src/lib`.
 
 ## Create
-A new folder `demos/taverna-meltemi/` with its own `package.json` (copy the config files from `demos/thasos-hotel/`: vite, vitest, tsconfig, tailwind, postcss). Do not touch the root portfolio code except to update the demo index in `demos/README.md`.
+A **new, separate repository** `taverna-meltemi` (do not put it inside the portfolio repo). Use the `HotelProject` repository (Elia Bay hotel demo) as the reference implementation: copy its config (vite, vitest, tsconfig with `@types/node`, tailwind, postcss, `.github/workflows/deploy.yml`) and change the base path to `/taverna-meltemi/`. The repository is created by me on GitHub; ask me for it if it does not exist yet. It is hosted on its own GitHub Pages site (Source: GitHub Actions). The portfolio only links to it.
 
 ## The business (fictional, never imitate a real taverna)
 "Taverna Meltemi" (Demo concept), a family taverna by the sea in Kavala. Greek home cooking, grilled fish and meat, local wine. Open daily 13:00 to 23:30. Seating: 14 tables, 56 seats in total (tables of 2, 4 and 6).
@@ -31,8 +31,9 @@ A new folder `demos/taverna-meltemi/` with its own `package.json` (copy the conf
 - `yarn test` covers the reservation logic (overlap windows, boundary times, capacity, past times, cancellations).
 - `yarn build` passes with `vue-tsc`.
 - Verify the whole flow in a real browser (Playwright is installed): sold-out slot hidden, successful reservation, validation errors, admin cancel, language toggle. Report what you verified.
-- Mobile first, visible labels, inline errors, keyboard focus.
-- No stock photos. Use illustrative SVG placeholders like the hotel demo.
+- Mobile first and responsive on every device (check 375, 768, 1280, 1920 px for horizontal overflow), visible labels, inline errors, keyboard focus.
+- Photos: generate AI images of the interior, dishes and terrace (illustrative, labelled as AI-generated in the footer), optimised to webp.
+- Design must feel human, not like a template: photography first, serif headings, hairline rules instead of cards, small radii, no gradients or decorative icons, short personal copy in Greek.
 
 ## Deliver
-Write `demos/taverna-meltemi/README.md` (what it shows, structure, what a real build adds), add a design brief `demos/briefs/02-taverna.md` in the format of `demos/briefs/01-thasos-hotel.md`, update the table in `demos/README.md`, commit on the current branch and push. Do not open a pull request.
+Write the new repository's `README.md` (what it shows, structure, what a real build adds, live URL), and in the portfolio repo add a design brief `demos/briefs/02-taverna.md` in the format of `demos/briefs/01-thasos-hotel.md` and update the table in `demos/README.md`. Commit and push. Do not open a pull request.

@@ -23,8 +23,8 @@ export const projects: Project[] = [
     stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'Vitest'],
     imageLabel: 'Elia Bay hotel demo',
     imageUrl: '/elia-bay-preview.webp',
-    githubUrl: 'https://github.com/varveroglouvasileios/varveroglouvasileios.github.io/tree/main/demos/thasos-hotel',
-    liveUrl: '/demos/thasos-hotel/',
+    githubUrl: 'https://github.com/VarveroglouVasileios/HotelProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/HotelProject/',
     liveLabelKey: 'projects.tryDemo',
     breakdown: {
       architecture:

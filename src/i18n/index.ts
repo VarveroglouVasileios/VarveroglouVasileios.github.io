@@ -47,6 +47,10 @@ const baseMessages = {
         close: 'Close',
       },
       items: {
+        tavernademo: {
+          title: 'Taverna Meltemi, menu and table booking demo',
+          description: 'Demo concept: a taverna website with a bilingual menu, photo gallery and table reservations that check seat capacity. Includes an admin dashboard.'
+        },
         thasoshotel: {
           title: 'Elia Bay, hotel booking demo',
           description: 'Demo concept: a boutique hotel website for Thasos with live availability, season pricing, a booking flow and an admin dashboard. Greek and English.'
@@ -163,6 +167,10 @@ const baseMessages = {
         close: 'Κλείσιμο',
       },
       items: {
+        tavernademo: {
+          title: 'Taverna Meltemi, demo μενού και κρατήσεων',
+          description: 'Demo concept: ιστοσελίδα ταβέρνας με δίγλωσσο μενού, γκαλερί και κρατήσεις τραπεζιών που ελέγχουν τις θέσεις. Περιλαμβάνει πίνακα διαχείρισης.'
+        },
         thasoshotel: {
           title: 'Elia Bay, demo ξενοδοχείου με κρατήσεις',
           description: 'Demo concept: ιστοσελίδα boutique ξενοδοχείου στη Θάσο με διαθεσιμότητα, εποχιακές τιμές, κράτηση και πίνακα διαχείρισης. Ελληνικά και αγγλικά.'

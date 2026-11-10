@@ -49,6 +49,7 @@ export const caseStudies: CaseStudy[] = [
         'Διαθεσιμότητα ανά τύπο δωματίου με πολλά τεμάχια. Το δωμάτιο που έχει εξαντληθεί δεν εμφανίζεται.',
         'Τιμές ανά περίοδο (χαμηλή, ενδιάμεση, υψηλή) και ελάχιστη διαμονή το καλοκαίρι.',
         'Φόρμα κράτησης με επιβεβαίωση, κωδικό και προεπισκόπηση του email που θα έπαιρνε ο πελάτης.',
+        'Σελίδα ανά δωμάτιο με γκαλερί και άμεσο έλεγχο τιμής, γκαλερί με lightbox, τοποθεσία και FAQ.',
         'Πίνακας διαχείρισης με πληρότητα 28 ημερών και ακύρωση κρατήσεων. Ελληνικά και αγγλικά, σχεδιασμένο πρώτα για κινητό.',
       ],
       en: [
@@ -56,6 +57,7 @@ export const caseStudies: CaseStudy[] = [
         'Availability per room type with several units. A sold-out room is not shown.',
         'Season-based prices (low, shoulder, peak) and a summer minimum stay.',
         'Booking form with confirmation, a reference code and a preview of the email the guest would get.',
+        'A page for every room with a gallery and instant price check, a gallery with lightbox, location and FAQ.',
         'Admin dashboard with a 28-day occupancy grid and booking cancellation. Greek and English, designed mobile-first.',
       ],
     },
@@ -80,6 +82,62 @@ export const caseStudies: CaseStudy[] = [
     stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'vue-i18n', 'Vitest'],
     imageUrl: '/elia-bay-preview.webp',
     liveUrl: 'https://varveroglouvasileios.github.io/HotelProject/',
+    liveLabel: { el: 'Δοκιμάστε το demo', en: 'Try the demo' },
+  },
+  {
+    slug: 'taverna-meltemi-demo',
+    projectId: 6,
+    kind: 'demo',
+    title: 'Taverna Meltemi, μενού και κρατήσεις τραπεζιών',
+    tagline: {
+      el: 'Demo concept: ιστοσελίδα ταβέρνας με δίγλωσσο μενού και online κράτηση τραπεζιού με έλεγχο θέσεων.',
+      en: 'Demo concept: a taverna website with a bilingual menu and online table booking that checks seat capacity.',
+    },
+    context: {
+      el: 'Φανταστική παραθαλάσσια ταβέρνα στην Καβάλα, φτιαγμένη για να δείχνει σε εστιάτορες πώς μπορεί να δουλέψει ένα μενού και ένα σύστημα κρατήσεων.',
+      en: 'A fictional seaside taverna in Kavala, built to show restaurant owners how a menu and a reservation system can work.',
+    },
+    problem: {
+      el: 'Οι κρατήσεις με τηλέφωνο και μηνύματα τα βράδια της σεζόν χάνονται, μπερδεύονται και αφήνουν τραπέζια άδεια ή υπερκλεισμένα. Το μενού σε χαρτί ή PDF δεν δείχνει φωτογραφίες, αλλεργιογόνα ή επιλογές για vegetarian.',
+      en: 'Phone and message bookings get lost on busy summer evenings and leave tables empty or overbooked. A paper or PDF menu shows no photos, allergens or vegetarian options.',
+    },
+    solution: {
+      el: [
+        'Κράτηση ανά 30 λεπτά, με έλεγχο θέσεων: κάθε τραπέζι δεσμεύεται για 90 λεπτά και η ώρα γεμίζει όταν ξεπεραστούν οι 56 θέσεις.',
+        'Η ώρα υπολογίζεται στη ζώνη της Αθήνας, και δεν επιτρέπονται παρελθοντικές ώρες ούτε παρέες πάνω από 10 άτομα.',
+        'Δίγλωσσο μενού 24 πιάτων με φωτογραφίες και συνδυαστικά φίλτρα (vegetarian, νηστίσιμο, χωρίς γλουτένη) και σημείωση αλλεργιογόνων.',
+        'Πίνακας διαχείρισης με κρατήσεις της ημέρας, πληρότητα 7 ημερών, ένδειξη «κάθισε» και ακύρωση.',
+        'Γκαλερί με lightbox, FAQ και σχεδιασμός πρώτα για κινητό.',
+      ],
+      en: [
+        'Booking in 30-minute steps with seat checks: each table is held for 90 minutes and a time fills up once 56 seats are used.',
+        'Times are calculated in Athens time, and past times and parties over 10 are rejected.',
+        'A bilingual 24-dish menu with photos, combinable filters (vegetarian, lenten, gluten-free) and an allergen note.',
+        'An admin dashboard with the day’s bookings, 7-day occupancy, “seated” status and cancellation.',
+        'A gallery with lightbox, an FAQ and a mobile-first design.',
+      ],
+    },
+    result: {
+      el: [
+        'Λειτουργικό demo που δοκιμάζετε αμέσως: κλείστε τραπέζι και δείτε το στον πίνακα διαχείρισης (κωδικός «demo»).',
+        'Η λογική κρατήσεων καλύπτεται από 17 αυτόματα tests (επικαλυπτόμενα παράθυρα, όρια ωρών, χωρητικότητα, ακυρώσεις).',
+        'Προσβάσιμη φόρμα με ορατά labels, μηνύματα σφάλματος και εστίαση στο πρώτο λάθος.',
+        'Τα δεδομένα είναι προσομοιωμένα και μένουν στον browser σας. Οι φωτογραφίες είναι δημιουργημένες με AI και ενδεικτικές.',
+      ],
+      en: [
+        'A working demo you can try right away: book a table and see it in the admin dashboard (password “demo”).',
+        'The booking logic is covered by 17 automated tests (overlapping windows, time boundaries, capacity, cancellations).',
+        'An accessible form with visible labels, error messages and focus on the first error.',
+        'Data is simulated and stays in your browser. Photos are AI-generated and illustrative.',
+      ],
+    },
+    forYourBusiness: {
+      el: 'Αν έχετε εστιατόριο, ταβέρνα ή καφέ, αυτό προσαρμόζεται στο δικό σας μενού, στους χώρους σας και στους κανόνες κρατήσεών σας.',
+      en: 'If you run a restaurant, taverna or café, this adapts to your own menu, your space and your booking rules.',
+    },
+    stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'vue-i18n', 'Vitest'],
+    imageUrl: '/taverna-meltemi-preview.webp',
+    liveUrl: 'https://varveroglouvasileios.github.io/TavernaProject/',
     liveLabel: { el: 'Δοκιμάστε το demo', en: 'Try the demo' },
   },
   {

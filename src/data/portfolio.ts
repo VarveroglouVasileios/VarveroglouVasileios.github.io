@@ -36,6 +36,27 @@ export const projects: Project[] = [
     },
   },
   {
+    id: 6,
+    slug: 'taverna-meltemi-demo',
+    title: 'Taverna Meltemi, menu and table booking demo',
+    description:
+      'Demo concept: a taverna website with a bilingual menu, photo gallery and table reservations that check seat capacity. Includes an admin dashboard.',
+    stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'Vitest'],
+    imageLabel: 'Taverna Meltemi demo',
+    imageUrl: '/taverna-meltemi-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/TavernaProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/TavernaProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'Reservation rules live in pure, tested functions: 30-minute slots, a 90-minute table window and seat capacity computed in Athens time. The UI is Vue 3 with hash routing so it runs on static hosting.',
+      security:
+        'Inputs are validated on blur and again on submit (Greek mobile format, party size, past times), and availability is re-checked at the last moment. A real build repeats these checks on the server.',
+      challenges:
+        'Sold-out logic must consider overlapping 90-minute windows rather than single slots, and stay correct around the current time and across days.',
+    },
+  },
+  {
     id: 4,
     slug: 'shadow-ai-firewall',
     title: 'Shadow AI Firewall',

@@ -103,6 +103,23 @@
       }
     },
     {
+      "key": "project-taverna-meltemi-demo",
+      "path": "projects/taverna-meltemi-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: ιστοσελίδα ταβέρνας με μενού και κρατήσεις τραπεζιών",
+        "description": "Demo concept ταβέρνας με δίγλωσσο μενού, γκαλερί και κράτηση τραπεζιού με έλεγχο θέσεων και πίνακα διαχείρισης. Δοκιμάστε το.",
+        "h1": "Taverna Meltemi, μενού και κρατήσεις",
+        "summary": "Demo concept: ιστοσελίδα ταβέρνας με δίγλωσσο μενού και online κράτηση τραπεζιού με έλεγχο θέσεων."
+      },
+      "en": {
+        "title": "Demo: taverna website with a menu and table booking",
+        "description": "A demo concept taverna with a bilingual menu, gallery and table booking that checks seat capacity, plus an admin dashboard. Try it.",
+        "h1": "Taverna Meltemi, menu and table booking",
+        "summary": "Demo concept: a taverna website with a bilingual menu and online table booking that checks seat capacity."
+      }
+    },
+    {
       "key": "project-vibebites",
       "path": "projects/vibebites",
       "priority": 0.6,

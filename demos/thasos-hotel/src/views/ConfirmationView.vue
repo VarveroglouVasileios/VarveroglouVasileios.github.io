@@ -1,0 +1,46 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
+import { getRoom } from '@/data/rooms'
+import { nightsBetween } from '@/lib/booking'
+import { useBookings } from '@/lib/store'
+
+const { t, locale } = useI18n()
+const route = useRoute()
+const { find } = useBookings()
+
+const lang = computed(() => (locale.value === 'en' ? 'en' : 'el'))
+const booking = computed(() => find(String(route.params.ref)))
+const room = computed(() => (booking.value ? getRoom(booking.value.roomId) : undefined))
+const nights = computed(() => (booking.value ? nightsBetween(booking.value.checkIn, booking.value.checkOut) : 0))
+</script>
+
+<template>
+  <div class="mx-auto max-w-2xl px-4 py-12 sm:px-6">
+    <p v-if="!booking || !room" class="rounded-xl bg-white p-6">
+      {{ t('done.notFound') }}
+      <router-link to="/" class="font-semibold text-sea-600 underline">{{ t('done.home') }}</router-link>
+    </p>
+
+    <template v-else>
+      <h1 class="font-serif text-4xl font-bold text-olive-800">{{ t('done.title') }}</h1>
+      <p class="mt-4 text-slate-700">
+        {{ t('done.ref') }}: <strong class="rounded bg-sand-200 px-2 py-1 font-mono">{{ booking.ref }}</strong>
+      </p>
+
+      <section class="mt-8 rounded-2xl border border-dashed border-slate-300 bg-white p-6">
+        <h2 class="text-xs font-bold uppercase tracking-wide text-slate-500">{{ t('done.emailTitle') }}</h2>
+        <p class="mt-3 font-semibold">{{ t('done.subject', { ref: booking.ref }) }}</p>
+        <p class="mt-3 text-sm">{{ t('done.greeting', { name: booking.name }) }}</p>
+        <p class="mt-2 text-sm">
+          {{ t('done.body', { checkIn: booking.checkIn, checkOut: booking.checkOut, nights, room: room.name[lang] }) }}
+        </p>
+        <p class="mt-2 text-sm font-semibold">{{ t('done.total', { total: booking.total }) }}</p>
+      </section>
+      <p class="mt-3 text-xs text-slate-500">{{ t('done.emailNote') }}</p>
+
+      <router-link to="/" class="btn mt-8">{{ t('done.home') }}</router-link>
+    </template>
+  </div>
+</template>

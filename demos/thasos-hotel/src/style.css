@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { @apply scroll-smooth antialiased; }
+  body { @apply bg-sand-50 text-slate-800; }
+  :focus-visible { @apply outline-2 outline-offset-2 outline-sea-600; }
+}
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center rounded-full bg-olive-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-olive-800 disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-ghost { @apply inline-flex items-center justify-center rounded-full border border-olive-700/30 px-5 py-2 text-sm font-semibold text-olive-800 transition hover:bg-olive-700/10; }
+  .field { @apply w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900; }
+  .field-error { @apply mt-1 text-sm text-clay-600; }
+}

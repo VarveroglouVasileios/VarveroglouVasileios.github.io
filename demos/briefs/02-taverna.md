@@ -1,7 +1,7 @@
 # Brief 02 — Taverna Meltemi (Kavala seaside taverna)
 
 **Purpose** Demonstrate a bilingual menu and online table reservations to independent restaurants and tavernas.
-**Status** Functional demo in `../taverna-meltemi/`.
+**Status** Functional demo in [TavernaProject](https://github.com/VarveroglouVasileios/TavernaProject).
 
 ## Audience
 

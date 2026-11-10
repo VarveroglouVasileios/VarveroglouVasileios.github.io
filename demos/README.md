@@ -25,7 +25,7 @@ Fictional businesses used as live examples for the portfolio. **Each demo lives 
 | # | Demo | Repository | Live | Status |
 |---|---|---|---|---|
 | 1 | Elia Bay, boutique hotel in Thasos with booking system | `VarveroglouVasileios/HotelProject` | `/HotelProject/` | Built and pushed. Needs Pages enabled (Source: GitHub Actions) |
-| 2 | Taverna Meltemi, Kavala taverna with menu and table reservations | [OrbitFolio / taverna-meltemi](taverna-meltemi/) | | Built, hosting pending |
+| 2 | Taverna Meltemi, Kavala taverna with menu and table reservations | [VarveroglouVasileios/TavernaProject](https://github.com/VarveroglouVasileios/TavernaProject) | | Built, hosting pending |
 | 3 | Café / brunch | not started | | |
 | 4 | Local products e-shop | not started | | |
 | 5 | Appointments (beauty / physio) | not started | | |

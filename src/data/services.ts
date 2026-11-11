@@ -50,6 +50,7 @@ export const services: ServicePackage[] = [
       ],
     },
     priceFrom: null,
+    demoSlug: 'taverna-meltemi-demo',
   },
   {
     id: 'eshop',

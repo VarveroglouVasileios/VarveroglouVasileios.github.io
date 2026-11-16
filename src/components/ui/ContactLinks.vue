@@ -17,10 +17,10 @@ const whatsappHref = computed(() => whatsappUrl(t('contact.whatsappMessage')))
     <li>
       <a
         :href="`mailto:${contactInfo.email}`"
-        class="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-slate-200 transition hover:border-cyan-300/60 hover:text-cyan-200"
+        class="btn-outline clickable"
         @click="trackEvent('Contact click', { method: 'email', source })"
       >
-        {{ t('cta.email') }}: {{ contactInfo.email }}
+        {{ contactInfo.email }}
       </a>
     </li>
     <li v-if="contactInfo.whatsapp">
@@ -28,7 +28,7 @@ const whatsappHref = computed(() => whatsappUrl(t('contact.whatsappMessage')))
         :href="whatsappHref"
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 rounded-full border border-emerald-400/50 px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-300 transition hover:bg-emerald-400/15"
+        class="btn-outline clickable !border-emerald-400/50 !text-emerald-300 hover:!border-emerald-300"
         @click="trackEvent('Contact click', { method: 'whatsapp', source })"
       >
         {{ t('cta.whatsapp') }}
@@ -37,10 +37,10 @@ const whatsappHref = computed(() => whatsappUrl(t('contact.whatsappMessage')))
     <li v-if="contactInfo.phone">
       <a
         :href="phoneHref"
-        class="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-slate-200 transition hover:border-cyan-300/60 hover:text-cyan-200"
+        class="btn-outline clickable"
         @click="trackEvent('Contact click', { method: 'phone', source })"
       >
-        {{ t('cta.call') }}: {{ contactInfo.phone }}
+        {{ contactInfo.phone }}
       </a>
     </li>
   </ul>

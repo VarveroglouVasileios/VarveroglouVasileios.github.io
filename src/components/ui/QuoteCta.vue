@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ContactLinks from '@/components/ui/ContactLinks.vue'
 import { useLocalePath } from '@/composables/useLocalePath'
+import { useMagneticHover } from '@/composables/useMagneticHover'
 import { trackEvent } from '@/lib/analytics'
 
 const props = defineProps<{
@@ -14,26 +16,36 @@ const props = defineProps<{
 
 const { t } = useI18n()
 const { to } = useLocalePath()
+const { attach } = useMagneticHover()
+const magnetRef = ref<HTMLElement | null>(null)
 
 const quoteTo = () => to('contact', {}, undefined, props.service ? { service: props.service } : undefined)
+
+onMounted(() => {
+  if (magnetRef.value) attach(magnetRef.value)
+})
 </script>
 
 <template>
-  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-20">
-    <div class="rounded-[2rem] border border-cyan-300/20 bg-slate-900/50 p-8 backdrop-blur-xl md:p-12">
-      <h2 class="mb-3 text-2xl font-bold text-white sm:text-3xl">{{ title }}</h2>
-      <p class="mb-8 max-w-2xl text-slate-300">{{ text }}</p>
-      <div class="flex flex-wrap items-center gap-4">
-        <router-link
-          :to="quoteTo()"
-          class="rounded-full bg-cyan-400 px-7 py-3 text-xs font-bold uppercase tracking-[0.16em] text-slate-950 transition hover:bg-cyan-300 sm:text-sm"
-          @click="trackEvent('Quote CTA', { source })"
-        >
-          {{ t('cta.quote') }}
-        </router-link>
+  <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24">
+    <div class="grid gap-10 border-t border-white/15 pt-12 lg:grid-cols-12 lg:items-end">
+      <div class="lg:col-span-7">
+        <h2 class="section-title text-balance">{{ title }}</h2>
+        <p class="mt-5 max-w-xl text-lg text-slate-300">{{ text }}</p>
       </div>
-      <div class="mt-6">
-        <ContactLinks :source="source" />
+      <div class="lg:col-span-5">
+        <span ref="magnetRef" class="inline-block">
+          <router-link
+            :to="quoteTo()"
+            class="btn-primary clickable px-8 py-4 text-lg"
+            @click="trackEvent('Quote CTA', { source })"
+          >
+            {{ t('cta.quote') }}
+          </router-link>
+        </span>
+        <div class="mt-6">
+          <ContactLinks :source="source" />
+        </div>
       </div>
     </div>
   </section>

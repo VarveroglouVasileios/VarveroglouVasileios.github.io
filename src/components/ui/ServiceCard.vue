@@ -16,53 +16,51 @@ const quoteTo = () => to('contact', {}, undefined, { service: props.service.id }
 <template>
   <article
     :id="service.id"
-    class="flex h-full flex-col rounded-[2rem] border border-white/10 bg-slate-900/40 p-6 backdrop-blur-xl transition hover:border-cyan-300/40 hover:bg-slate-900/60 sm:p-8"
+    class="flex h-full scroll-mt-28 flex-col rounded-2xl border border-white/10 bg-slate-900/70 p-6 sm:p-8"
   >
-    <h3 class="mb-3 text-xl font-bold text-white sm:text-2xl">{{ pick(service.title, locale) }}</h3>
-    <p class="mb-5 text-sm leading-relaxed text-slate-300">{{ pick(service.summary, locale) }}</p>
+    <div class="mb-3 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+      <h3 class="text-2xl font-semibold tracking-tight text-white">{{ pick(service.title, locale) }}</h3>
+      <p class="text-base font-medium text-cyan-300">
+        <template v-if="service.priceFrom !== null">{{ t('servicesPage.from') }} {{ service.priceFrom }}€</template>
+        <template v-else>{{ t('servicesPage.onRequest') }}</template>
+      </p>
+    </div>
+    <p class="mb-6 leading-relaxed text-slate-300">{{ pick(service.summary, locale) }}</p>
 
     <template v-if="detailed">
-      <p class="mb-1 text-[10px] font-bold uppercase tracking-widest text-cyan-400/90">{{ t('servicesPage.idealFor') }}</p>
-      <p class="mb-5 text-sm text-slate-400">{{ pick(service.idealFor, locale) }}</p>
-      <p class="mb-2 text-[10px] font-bold uppercase tracking-widest text-cyan-400/90">{{ t('servicesPage.includes') }}</p>
-      <ul class="mb-6 space-y-2 text-sm text-slate-300">
-        <li v-for="item in pick(service.includes, locale)" :key="item" class="flex gap-2">
-          <span class="text-cyan-400" aria-hidden="true">✓</span>
+      <h4 class="mb-1 text-sm font-semibold text-white">{{ t('servicesPage.idealFor') }}</h4>
+      <p class="mb-5 text-sm leading-relaxed text-slate-400">{{ pick(service.idealFor, locale) }}</p>
+      <h4 class="mb-2 text-sm font-semibold text-white">{{ t('servicesPage.includes') }}</h4>
+      <ul class="mb-7 space-y-2 text-sm text-slate-300">
+        <li v-for="item in pick(service.includes, locale)" :key="item" class="flex gap-2.5">
+          <svg class="mt-1 shrink-0 text-cyan-400" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>
           <span>{{ item }}</span>
         </li>
       </ul>
     </template>
 
-    <div class="mt-auto flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-5">
-      <p class="text-sm font-semibold text-white">
-        <template v-if="service.priceFrom !== null">
-          {{ t('servicesPage.from') }} {{ service.priceFrom }}€
-        </template>
-        <template v-else>{{ t('servicesPage.onRequest') }}</template>
-      </p>
-      <div class="flex flex-wrap items-center gap-4">
-        <router-link
-          v-if="service.demoSlug"
-          :to="to('project', { slug: service.demoSlug })"
-          class="text-xs font-bold uppercase tracking-[0.16em] text-slate-400 transition hover:text-white"
-        >
-          {{ t('cta.seeDemo') }}
-        </router-link>
-        <router-link
-          v-if="service.page"
-          :to="to(service.page)"
-          class="text-xs font-bold uppercase tracking-[0.16em] text-slate-400 transition hover:text-white"
-        >
-          {{ t('cta.learnMore') }}
-        </router-link>
-        <router-link
-          :to="quoteTo()"
-          class="rounded-full border border-cyan-300/50 bg-cyan-400/15 px-5 py-2 text-xs font-bold uppercase tracking-[0.14em] text-cyan-200 transition hover:bg-cyan-300/25"
-          @click="trackEvent('Service quote', { service: service.id })"
-        >
-          {{ t('cta.quote') }}
-        </router-link>
-      </div>
+    <div class="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-white/10 pt-5">
+      <router-link
+        :to="quoteTo()"
+        class="btn-outline clickable"
+        @click="trackEvent('Service quote', { service: service.id })"
+      >
+        {{ t('cta.quote') }}
+      </router-link>
+      <router-link
+        v-if="service.demoSlug"
+        :to="to('project', { slug: service.demoSlug })"
+        class="text-link clickable text-sm font-medium text-slate-300"
+      >
+        {{ t('cta.seeDemo') }}
+      </router-link>
+      <router-link
+        v-if="service.page"
+        :to="to(service.page)"
+        class="text-link clickable text-sm font-medium text-slate-300"
+      >
+        {{ t('cta.learnMore') }}
+      </router-link>
     </div>
   </article>
 </template>

@@ -25,7 +25,7 @@ const baseMessages = {
       title: 'Full Stack Developer & Security-focused Engineer',
       p1: `I am a Full Stack Developer with ${yearsOfExperience}+ years of experience building and maintaining scalable web applications in an enterprise environment, currently working at FactSet and pursuing an MSc in Cybersecurity.`,
       p2: 'I work across the full stack with Vue.js, Node.js, TypeScript, PHP (Symfony), SQL, and Pinia, focusing on clean architecture, performance, and reliability—while applying secure-by-design principles from my cybersecurity studies.',
-      techStack: 'TECH STACK'
+      techStack: 'Tools I work with'
     },
     insights: {
       tag: 'FIELD NOTES',
@@ -76,7 +76,7 @@ const baseMessages = {
     },
     experience: {
       tag: 'RESUME',
-      title: 'Career Timeline',
+      title: 'Experience and studies',
       items: {
         bsc: {
           title: 'BSc in Computer Science and Engineering',
@@ -112,15 +112,15 @@ const baseMessages = {
       fullName: 'Full Name',
       email: 'Email Address',
       details: 'Project Details',
-      send: 'SEND MESSAGE',
-      sending: 'SENDING…',
+      send: 'Send message',
+      sending: 'Sending…',
       success: 'Thanks! Your message has been sent.',
       error: 'The message could not be sent. Please try again or email me directly.',
       emailSubject: 'Portfolio contact request',
     },
     footer: {
       rights: '© 2026 Vasileios Varveroglou',
-      backToTop: 'TOP'
+      backToTop: 'Back to top'
     }
   },
   el: {
@@ -145,7 +145,7 @@ const baseMessages = {
       title: 'Full Stack Developer με εξειδίκευση στο AppSec',
       p1: `Διαθέτω ${yearsOfExperience}+ χρόνια εμπειρίας στην ανάπτυξη enterprise-level εφαρμογών, εργαζόμενος στη FactSet και ολοκληρώνοντας παράλληλα μεταπτυχιακές σπουδές (MSc) στον τομέα του Cybersecurity.`,
       p2: 'Εξειδικεύομαι σε Vue.js, Node.js, TypeScript και PHP (Symfony), εστιάζοντας στην καθαρή δομή κώδικα και το performance, εφαρμόζοντας στην πράξη αρχές ασφαλούς ανάπτυξης λογισμικού.',
-      techStack: 'TECH STACK'
+      techStack: 'Τεχνολογίες που χρησιμοποιώ'
     },
     insights: {
       tag: 'ΣΗΜΕΙΩΣΕΙΣ',
@@ -196,7 +196,7 @@ const baseMessages = {
     },
     experience: {
       tag: 'RESUME',
-      title: 'Career Timeline',
+      title: 'Εμπειρία και σπουδές',
       items: {
         bsc: {
           title: 'BSc in Computer Science and Engineering',
@@ -232,15 +232,15 @@ const baseMessages = {
       fullName: 'Ονοματεπώνυμο',
       email: 'Email',
       details: 'Λεπτομέρειες Project',
-      send: 'ΑΠΟΣΤΟΛΗ',
-      sending: 'ΑΠΟΣΤΟΛΗ…',
+      send: 'Αποστολή μηνύματος',
+      sending: 'Αποστολή…',
       success: 'Ευχαριστώ! Το μήνυμά σας στάλθηκε.',
       error: 'Το μήνυμα δεν στάλθηκε. Δοκιμάστε ξανά ή επικοινωνήστε μαζί μου μέσω email.',
       emailSubject: 'Επικοινωνία μέσω portfolio',
     },
     footer: {
       rights: '© 2026 Βασίλειος Βαρβέρογλου',
-      backToTop: 'TOP'
+      backToTop: 'Πάνω'
     }
   }
 }

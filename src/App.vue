@@ -29,7 +29,7 @@ onMounted(() => {
     <SecurityTerminal />
     <TopNav />
     <main
-      class="relative z-[5] pt-[calc(10rem+env(safe-area-inset-top,0px))] sm:pt-[calc(9rem+env(safe-area-inset-top,0px))] md:pt-[calc(10rem+env(safe-area-inset-top,0px))]"
+      class="relative z-[5] pt-[calc(7rem+env(safe-area-inset-top,0px))]"
     >
       <RouterView v-slot="{ Component, route }">
         <Transition name="page" mode="out-in">

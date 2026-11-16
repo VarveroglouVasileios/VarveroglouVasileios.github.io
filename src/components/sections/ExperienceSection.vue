@@ -4,51 +4,67 @@ import { useI18n } from 'vue-i18n'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { experience } from '@/data/portfolio'
-import DecodingText from '@/components/ui/DecodingText.vue'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const { t, locale } = useI18n()
-const sectionRef = ref<HTMLElement | null>(null)
+const { t } = useI18n()
+const listRef = ref<HTMLElement | null>(null)
+const progressRef = ref<HTMLElement | null>(null)
+/** Entries the scroll line has already reached. */
+const reached = ref<Set<number>>(new Set())
 let context: gsap.Context | undefined
 
-// Map experience data IDs to i18n keys
-const getExperienceData = (id: number) => {
-  const mapping: Record<number, string> = {
-    4: 'bsc',
-    3: 'junior',
-    2: 'fullstack',
-    5: 'structwise',
-    1: 'msc'
-  }
-  const key = mapping[id]
+const I18N_KEYS: Record<number, string> = { 4: 'bsc', 3: 'junior', 2: 'fullstack', 5: 'structwise', 1: 'msc' }
+
+const entry = (id: number) => {
+  const key = I18N_KEYS[id]
   return {
     title: t(`experience.items.${key}.title`),
     organization: t(`experience.items.${key}.org`),
-    description: t(`experience.items.${key}.desc`)
+    description: t(`experience.items.${key}.desc`),
   }
 }
 
+const setReached = (id: number, value: boolean): void => {
+  const next = new Set(reached.value)
+  if (value) next.add(id)
+  else next.delete(id)
+  reached.value = next
+}
+
 onMounted(() => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    reached.value = new Set(experience.map((item) => item.id))
+    if (progressRef.value) progressRef.value.style.transform = 'scaleY(1)'
+    return
+  }
+
   nextTick(() => {
     context = gsap.context(() => {
-      const trigger = sectionRef.value
-      if (!trigger) return
+      const list = listRef.value
+      if (!list || !progressRef.value) return
 
-      gsap.from('.timeline-item', {
-        x: (i) => (i % 2 === 0 ? -60 : 60),
-        opacity: 0,
-        stagger: 0.2,
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.timeline-container',
-          start: 'top 80%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse',
+      // The line is drawn by scrolling; each entry lights up as the line reaches it.
+      gsap.fromTo(
+        progressRef.value,
+        { scaleY: 0 },
+        {
+          scaleY: 1,
+          ease: 'none',
+          scrollTrigger: { trigger: list, start: 'top 62%', end: 'bottom 62%', scrub: 0.4 },
         },
+      )
+
+      list.querySelectorAll<HTMLElement>('[data-entry]').forEach((element) => {
+        const id = Number(element.dataset.entry)
+        ScrollTrigger.create({
+          trigger: element,
+          start: 'top 62%',
+          onEnter: () => setReached(id, true),
+          onLeaveBack: () => setReached(id, false),
+        })
       })
-    }, sectionRef.value || undefined)
+    }, listRef.value || undefined)
   })
 })
 
@@ -58,46 +74,91 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section id="experience" ref="sectionRef" class="relative mx-auto max-w-5xl px-4 py-24 sm:snap-start sm:px-6 md:py-32">
-    <div class="mb-16 text-center">
-      <p class="mb-4 text-sm uppercase tracking-[0.25em] text-cyan-400">{{ t('experience.tag') }}</p>
-      <DecodingText
-        :key="locale"
-        as="h2"
-        :text="t('experience.title')"
-        :duration="1500"
-        content-class="text-3xl font-bold text-white sm:text-4xl md:text-5xl"
-      />
-    </div>
+  <section id="experience" class="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28">
+    <h2 class="section-title mb-14">{{ t('experience.title') }}</h2>
 
-    <div class="timeline-container relative">
-      <!-- Vertical Line -->
-      <div class="absolute left-0 h-full w-px bg-gradient-to-b from-transparent via-white/10 to-transparent md:left-1/2" />
+    <ol ref="listRef" class="timeline relative max-w-4xl">
+      <li class="timeline__rail" aria-hidden="true">
+        <span ref="progressRef" class="timeline__progress" />
+      </li>
 
-      <div class="space-y-12 md:space-y-24">
-        <div
-          v-for="(item, i) in experience"
-          :key="item.id"
-          class="timeline-item relative flex flex-col md:flex-row md:items-center md:justify-between"
-          :class="{ 'md:flex-row-reverse': i % 2 !== 0 }"
-        >
-          <!-- Point -->
-          <div class="absolute left-0 top-2 z-10 h-3 w-3 -translate-x-[5.5px] rounded-full border border-cyan-400 bg-slate-950 md:left-1/2 md:-translate-x-1.5" />
-
-          <!-- Content Wrapper -->
-          <div class="w-full md:w-[45%]">
-            <div class="rounded-3xl border border-white/10 bg-slate-900/40 p-6 backdrop-blur-xl transition hover:border-cyan-400/30 hover:bg-slate-900/60 md:p-8">
-              <span class="mb-4 block text-xs font-bold tracking-widest text-cyan-400">{{ item.period }}</span>
-              <h3 class="mb-2 text-xl font-bold text-white md:text-2xl">{{ getExperienceData(item.id).title }}</h3>
-              <p class="mb-4 text-sm font-medium text-slate-400">{{ getExperienceData(item.id).organization }}</p>
-              <p class="text-sm leading-relaxed text-slate-300">{{ getExperienceData(item.id).description }}</p>
-            </div>
-          </div>
-
-          <!-- Empty spacer for desktop -->
-          <div class="hidden w-[45%] md:block" />
+      <li
+        v-for="item in experience"
+        :key="item.id"
+        :data-entry="item.id"
+        class="timeline__entry relative pb-12 pl-8 last:pb-0 md:grid md:grid-cols-[13rem_1fr] md:pl-0"
+        :class="{ 'is-reached': reached.has(item.id) }"
+      >
+        <span class="timeline__dot" aria-hidden="true" />
+        <p class="mb-2 text-sm text-slate-400 md:mb-0 md:pr-10 md:pt-1 md:text-right">{{ item.period }}</p>
+        <div class="md:pl-10">
+          <h3 class="timeline__title text-xl font-semibold tracking-tight md:text-2xl">{{ entry(item.id).title }}</h3>
+          <p class="mt-1 text-base text-cyan-300">{{ entry(item.id).organization }}</p>
+          <p class="mt-3 max-w-prose leading-relaxed text-slate-400">{{ entry(item.id).description }}</p>
         </div>
-      </div>
-    </div>
+      </li>
+    </ol>
   </section>
 </template>
+
+<style scoped>
+.timeline {
+  --rail-x: 0px;
+}
+
+@media (min-width: 768px) {
+  .timeline {
+    --rail-x: 13rem;
+  }
+}
+
+.timeline__rail {
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0;
+  left: var(--rail-x);
+  width: 1px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.timeline__progress {
+  position: absolute;
+  inset: 0;
+  width: 2px;
+  margin-left: -0.5px;
+  background: #22d3ee;
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+.timeline__dot {
+  position: absolute;
+  top: 0.5rem;
+  left: var(--rail-x);
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: -0.375rem;
+  border-radius: 999px;
+  border: 2px solid #475569;
+  background: #020617;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.timeline__entry.is-reached .timeline__dot {
+  border-color: #22d3ee;
+  background: #22d3ee;
+  transform: scale(1.25);
+}
+
+.timeline__title {
+  color: #94a3b8;
+  transition: color 0.3s ease;
+}
+
+.timeline__entry.is-reached .timeline__title {
+  color: #fff;
+}
+</style>

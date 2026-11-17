@@ -13,56 +13,82 @@ const ExperienceSection = defineAsyncComponent(() => import('@/components/sectio
 const InsightsSection = defineAsyncComponent(() => import('@/components/sections/InsightsSection.vue'))
 const ContactSection = defineAsyncComponent(() => import('@/components/sections/ContactSection.vue'))
 
+const SECTION_IDS = ['hero', 'services', 'about', 'projects', 'insights', 'experience', 'contact'] as const
+
 let revealContext: gsap.Context | undefined
+let cancelled = false
 
 const prefersReducedMotion = (): boolean =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-/** Light once-reveals for section titles / leads marked with [data-reveal]. */
+const sectionsReady = (): boolean => SECTION_IDS.every((id) => document.getElementById(id))
+
+/** Wait until async home sections have mounted so ScrollTrigger measures real positions. */
+const waitForSections = async (): Promise<void> => {
+  for (let attempt = 0; attempt < 50 && !cancelled; attempt += 1) {
+    if (sectionsReady()) return
+    await new Promise<void>((resolve) => {
+      window.setTimeout(resolve, 100)
+    })
+  }
+}
+
+/** Once-reveals for [data-reveal] headings/leads as the user scrolls into them. */
 const setupReveals = (): void => {
   revealContext?.revert()
   revealContext = undefined
   if (prefersReducedMotion()) return
 
+  const targets = gsap.utils.toArray<HTMLElement>('[data-reveal]')
+  if (!targets.length) return
+
   revealContext = gsap.context(() => {
-    const targets = gsap.utils.toArray<HTMLElement>('[data-reveal]')
-    if (!targets.length) return
-    gsap.set(targets, { opacity: 0, y: 12 })
-    ScrollTrigger.batch(targets, {
-      start: 'top 88%',
-      once: true,
-      onEnter: (batch) => {
-        gsap.to(batch, {
-          opacity: 1,
-          y: 0,
-          duration: 0.55,
-          stagger: 0.08,
-          ease: 'power2.out',
-          overwrite: true,
-        })
-      },
+    targets.forEach((el) => {
+      // Hide first, then play only when the trigger is actually crossed.
+      gsap.set(el, { opacity: 0, y: 20 })
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: 'power3.out',
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          once: true,
+          toggleActions: 'play none none none',
+        },
+      })
     })
   })
 }
 
-const refreshScroll = (): void => {
-  nextTick(() => {
-    setTimeout(() => {
-      setupReveals()
-      ScrollTrigger.refresh()
-      if (!window.location.hash) window.scrollTo(0, 0)
-    }, 400)
+const bootScrollMotion = async (): Promise<void> => {
+  await nextTick()
+  await waitForSections()
+  if (cancelled) return
+  // One more frame so layout from images/fonts can settle.
+  await new Promise<void>((resolve) => {
+    requestAnimationFrame(() => resolve())
   })
+  if (cancelled) return
+  setupReveals()
+  ScrollTrigger.refresh()
+}
+
+const onWindowLoad = (): void => {
+  void bootScrollMotion()
 }
 
 onMounted(() => {
   if (!window.location.hash) window.scrollTo(0, 0)
-  refreshScroll()
-  window.addEventListener('load', refreshScroll)
+  void bootScrollMotion()
+  window.addEventListener('load', onWindowLoad)
 })
 
 onBeforeUnmount(() => {
-  window.removeEventListener('load', refreshScroll)
+  cancelled = true
+  window.removeEventListener('load', onWindowLoad)
   revealContext?.revert()
 })
 </script>

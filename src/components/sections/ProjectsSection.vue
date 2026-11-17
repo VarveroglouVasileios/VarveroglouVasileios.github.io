@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ProjectStage from '@/components/showcase/ProjectStage.vue'
 import type { FrameMode } from '@/components/showcase/BrowserFrame.vue'
 import { projects } from '@/data/portfolio'
 import { caseStudies } from '@/data/caseStudies'
 import { useLocalePath } from '@/composables/useLocalePath'
 import type { Project } from '@/types/portfolio'
+
+gsap.registerPlugin(ScrollTrigger)
 
 defineProps<{ hideHeading?: boolean }>()
 
@@ -49,23 +52,47 @@ const stageMode = ref<FrameMode>('preview')
 const locked = computed(() => stageMode.value !== 'preview')
 
 const isDesktop = ref(false)
+const sectionRoot = ref<HTMLElement | null>(null)
 const stageShell = ref<HTMLElement | null>(null)
 const rowElements = new Map<number, HTMLElement>()
 let mediaQuery: MediaQueryList | undefined
 let frame = 0
+let scrollContext: gsap.Context | undefined
+let swapTween: gsap.core.Tween | undefined
+
+const prefersReducedMotion = (): boolean => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 const setRowRef = (id: number, element: unknown): void => {
   if (element instanceof HTMLElement) rowElements.set(id, element)
   else rowElements.delete(id)
 }
 
+/** Keep one mounted stage (sticky-safe) and play a clear fade/slide on each change. */
+const playStageSwap = (): void => {
+  const el = stageShell.value
+  if (!el || prefersReducedMotion()) return
+  swapTween?.kill()
+  swapTween = gsap.fromTo(
+    el,
+    { opacity: 0, y: 24, scale: 0.985 },
+    { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: 'power3.out', overwrite: true },
+  )
+}
+
+const setActive = (id: number): void => {
+  if (activeId.value === id) return
+  activeId.value = id
+  // Wait for ProjectStage / BrowserFrame to patch the new preview, then animate.
+  nextTick(() => playStageSwap())
+}
+
 const select = (id: number): void => {
   stageMode.value = 'preview'
-  activeId.value = id
+  setActive(id)
 }
 
 const hover = (id: number): void => {
-  if (isDesktop.value && !locked.value) activeId.value = id
+  if (isDesktop.value && !locked.value) setActive(id)
 }
 
 /** The row closest to the reading line becomes the one on stage. */
@@ -84,7 +111,7 @@ const syncToScroll = (): void => {
       bestId = id
     }
   })
-  activeId.value = bestId
+  setActive(bestId)
 }
 
 const onScroll = (): void => {
@@ -95,43 +122,74 @@ const onMediaChange = (event: MediaQueryListEvent): void => {
   isDesktop.value = event.matches
 }
 
-const prefersReducedMotion = (): boolean => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+/** Fade/slide project rows in as they enter the viewport while scrolling. */
+const setupRowReveals = (): void => {
+  scrollContext?.revert()
+  scrollContext = undefined
+  if (prefersReducedMotion() || !sectionRoot.value) return
 
-/** Noticeable swap when scroll/hover/click changes the active project. */
-watch(activeId, () => {
-  const el = stageShell.value
-  if (!el || prefersReducedMotion()) return
-  gsap.killTweensOf(el)
-  gsap.fromTo(
-    el,
-    { opacity: 0, y: 18 },
-    { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out', overwrite: true },
-  )
-})
+  scrollContext = gsap.context(() => {
+    const rows = gsap.utils.toArray<HTMLElement>('.project-row')
+    rows.forEach((row) => {
+      gsap.fromTo(
+        row,
+        { opacity: 0.4, y: 32 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: row,
+            start: 'top 90%',
+            end: 'top 60%',
+            toggleActions: 'play none none reverse',
+          },
+        },
+      )
+    })
+  }, sectionRoot.value)
+}
 
 onMounted(() => {
   mediaQuery = window.matchMedia('(min-width: 1024px)')
   isDesktop.value = mediaQuery.matches
   mediaQuery.addEventListener('change', onMediaChange)
   window.addEventListener('scroll', onScroll, { passive: true })
+  nextTick(() => {
+    setupRowReveals()
+    ScrollTrigger.refresh()
+  })
 })
 
 onBeforeUnmount(() => {
   mediaQuery?.removeEventListener('change', onMediaChange)
   window.removeEventListener('scroll', onScroll)
   if (frame) cancelAnimationFrame(frame)
-  if (stageShell.value) gsap.killTweensOf(stageShell.value)
+  swapTween?.kill()
+  scrollContext?.revert()
+})
+
+watch(isDesktop, () => {
+  nextTick(() => {
+    setupRowReveals()
+    ScrollTrigger.refresh()
+  })
 })
 </script>
 
 <template>
-  <section id="projects" class="relative mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 md:py-28">
+  <section
+    id="projects"
+    ref="sectionRoot"
+    class="relative mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 md:py-28"
+  >
     <div v-if="!hideHeading" class="mb-12 max-w-2xl">
       <h2 class="section-title" data-reveal>{{ t('projects.title') }}</h2>
       <p class="mt-4 text-base text-slate-300 sm:text-lg" data-reveal>{{ t('projectsPage.lead') }}</p>
     </div>
 
-    <!-- Shared stage on mobile/tablet: one frame for the active project -->
+    <!-- Shared stage on mobile/tablet -->
     <div v-if="!isDesktop && activeItem" class="mb-8">
       <div ref="stageShell" class="project-stage-shell">
         <ProjectStage :project="activeItem" compact @mode="stageMode = $event" />
@@ -140,10 +198,10 @@ onBeforeUnmount(() => {
 
     <!--
       Do not put overflow-hidden on the stage column: it becomes a scrollport and
-      breaks position:sticky, so the frame scrolls away after ~2 projects.
+      breaks position:sticky. Also keep a single mounted stage (no out-in Transition)
+      so sticky height never collapses during swaps.
     -->
     <div class="lg:grid lg:grid-cols-12 lg:gap-12">
-      <!-- Project list -->
       <ol class="min-w-0 lg:col-span-5">
         <li
           v-for="item in items"
@@ -201,7 +259,6 @@ onBeforeUnmount(() => {
         </li>
       </ol>
 
-      <!-- Stage: sticks for the full height of the list while projects sync to scroll -->
       <div v-if="isDesktop && activeItem" class="min-w-0 lg:col-span-7">
         <div class="sticky top-28 z-[1]">
           <div ref="stageShell" class="project-stage-shell">
@@ -215,7 +272,9 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .project-stage-shell {
+  width: 100%;
   will-change: transform, opacity;
+  transform-origin: center top;
 }
 
 .project-row__marker {
@@ -249,7 +308,7 @@ onBeforeUnmount(() => {
 
 .project-row.is-active .project-row__title {
   color: #fff;
-  transform: translateX(4px);
+  transform: translateX(6px);
 }
 
 .project-row__title:hover {
@@ -274,6 +333,10 @@ onBeforeUnmount(() => {
   .project-row__marker,
   .project-row__title {
     transition: none;
+  }
+
+  .project-row.is-active .project-row__title {
+    transform: none;
   }
 }
 </style>

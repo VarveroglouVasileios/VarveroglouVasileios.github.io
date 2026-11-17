@@ -303,23 +303,30 @@ watch(
 
 .wipe-enter-active {
   z-index: 2;
-  transition: clip-path 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+  transition:
+    clip-path 0.55s cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 0.55s ease;
 }
 
 .wipe-leave-active {
-  transition: opacity 0.6s step-end;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
 }
 
 .wipe-enter-from {
+  opacity: 0.4;
   clip-path: inset(0 0 0 100%);
 }
 
 .wipe-enter-to {
+  opacity: 1;
   clip-path: inset(0 0 0 0);
 }
 
 .wipe-leave-to {
   opacity: 0;
+  transform: scale(1.02);
 }
 
 /* While building, the screenshot waits for the wireframe to finish. */

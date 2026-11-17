@@ -15,6 +15,10 @@ const { to } = useLocalePath()
 
 // Project id → i18n key for the translated title and description.
 const I18N_KEYS: Record<number, string> = {
+  10: 'rentaldemo',
+  9: 'salondemo',
+  8: 'shopdemo',
+  7: 'cafedemo',
   6: 'tavernademo',
   5: 'thasoshotel',
   4: 'shadowfirewall',

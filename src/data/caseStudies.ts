@@ -141,6 +141,222 @@ export const caseStudies: CaseStudy[] = [
     liveLabel: { el: 'Δοκιμάστε το demo', en: 'Try the demo' },
   },
   {
+    slug: 'almyra-cafe-demo',
+    projectId: 7,
+    kind: 'demo',
+    title: 'Almyra Café, demo παραγγελίας και παραλαβής',
+    tagline: {
+      el: 'Demo concept: café με παραγγελία και παραλαβή σε ώρες ανά 15 λεπτά, με όριο ανά ώρα και οθόνη κουζίνας.',
+      en: 'Demo concept: a café with order-ahead pickup in 15-minute slots, a per-slot limit and a kitchen board.',
+    },
+    context: {
+      el: 'Φανταστικό café δίπλα στη θάλασσα, φτιαγμένο για να δείχνει σε ιδιοκτήτες καφέ πώς η προπαραγγελία αφαιρεί την ουρά στο ταμείο.',
+      en: 'A fictional beachfront café, built to show café owners how ordering ahead can remove the queue at the counter.',
+    },
+    problem: {
+      el: 'Τα πρωινά δημιουργούν ουρά, βιαστικές παραγγελίες και πελάτες που φεύγουν, ενώ η κουζίνα δεν ξέρει πόσα έρχονται στα επόμενα δέκα λεπτά.',
+      en: 'Morning rushes create queues, rushed orders and walk-aways, while the kitchen cannot tell how much is coming in the next quarter hour.',
+    },
+    solution: {
+      el: [
+        'Μενού με καλάθι και σύνολο που υπολογίζεται σε λεπτά.',
+        'Ώρες παραλαβής ανά 15 λεπτά με όριο ανά ώρα· οι μεγάλες παραγγελίες μετρούν διπλά και οι γεμάτες ή περασμένες ώρες κλείνουν.',
+        'Ο έλεγχος επαναλαμβάνεται κατά την αποστολή, ώστε δύο πελάτες να μην πάρουν την τελευταία θέση.',
+        'Εισιτήριο παραγγελίας με κωδικό και οθόνη κουζίνας: νέες, ετοιμάζονται, έτοιμες, παραδόθηκαν, με φορτίο ανά ώρα.',
+        'Σχεδιασμός τύπου πόστερ, πρώτα για κινητό, με κίνηση που σέβεται τη ρύθμιση μειωμένης κίνησης.',
+      ],
+      en: [
+        'Menu with a cart and a total that is summed in cents.',
+        'Pickup times every 15 minutes with a capacity per slot; big orders count double, and full or past times close.',
+        'The check is repeated on submit, so two customers cannot take the last place.',
+        'An order ticket with a code, and a kitchen board: new, preparing, ready, collected, with the load per hour.',
+        'Poster-style design, mobile first, with motion that respects reduced-motion settings.',
+      ],
+    },
+    result: {
+      el: [
+        'Λειτουργικό demo: παραγγείλτε, διαλέξτε ώρα και δείτε την παραγγελία στην οθόνη κουζίνας (κωδικός «demo»).',
+        'Η λογική ωρών καλύπτεται από 12 αυτόματα tests (περασμένες ώρες, χωρητικότητα, ακυρώσεις, διπλό βάρος).',
+        'Τα δεδομένα είναι προσομοιωμένα και μένουν στον browser σας. Οι φωτογραφίες είναι δημιουργημένες με AI και ενδεικτικές.',
+      ],
+      en: [
+        'A working demo: order, pick a time and watch the order appear on the kitchen board (password “demo”).',
+        'The slot logic is covered by 12 automated tests (past times, capacity, cancellations, double-weight orders).',
+        'Data is simulated and stays in your browser. Photos are AI-generated and illustrative.',
+      ],
+    },
+    forYourBusiness: {
+      el: 'Αν έχετε καφέ ή φούρνο, αυτό προσαρμόζεται στο δικό σας μενού, στο ωράριο και στο πόσα προλαβαίνει η κουζίνα σας ανά τέταρτο.',
+      en: 'If you run a café or bakery, this adapts to your own menu, opening hours and how much your kitchen can make per quarter hour.',
+    },
+    stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'Vitest'],
+    imageUrl: '/almyra-cafe-preview.webp',
+    liveUrl: 'https://varveroglouvasileios.github.io/CafeProject/',
+    liveLabel: { el: 'Δοκιμάστε το demo', en: 'Try the demo' },
+  },
+  {
+    slug: 'eleon-pantry-demo',
+    projectId: 8,
+    kind: 'demo',
+    title: 'Eleon Pantry, demo e-shop τοπικών προϊόντων',
+    tagline: {
+      el: 'Demo concept: e-shop με πραγματικό απόθεμα, καλάθι με κανόνες αποστολής και έκπτωσης και διαχείριση παραγγελιών.',
+      en: 'Demo concept: an online shop with live stock, a cart with shipping and discount rules, and an orders admin.',
+    },
+    context: {
+      el: 'Φανταστικός παραγωγός ελαιολάδου, μελιού και βοτάνων από τη Θάσο, φτιαγμένος για να δείχνει σε μικρούς παραγωγούς τι μπορεί να κάνει ένα απλό e-shop.',
+      en: 'A fictional producer of olive oil, honey and herbs from Thasos, built to show small producers what a simple online shop can do.',
+    },
+    problem: {
+      el: 'Οι πωλήσεις με μηνύματα και έμβασμα είναι αργές, το απόθεμα κρατιέται από μνήμης και ο πελάτης δεν ξέρει τα μεταφορικά μέχρι το τέλος.',
+      en: 'Selling by messages and bank transfers is slow, stock is tracked by memory, and customers never know the shipping cost until the end.',
+    },
+    solution: {
+      el: [
+        'Κατάλογος με μεγέθη και πραγματικό απόθεμα: ενδείξεις εξαντλήθηκε και τελευταία τεμάχια, και καλάθι που δεν ξεπερνά ποτέ το απόθεμα.',
+        'Καλάθι και ταμείο με επικύρωση πεδίων, τρεις περιοχές αποστολής, δωρεάν αποστολή από 40 € και μπάρα προόδου προς αυτή.',
+        'Κωδικός έκπτωσης με ελάχιστο ποσό και συσκευασία δώρου, με όλα τα ποσά υπολογισμένα σε λεπτά.',
+        'Επιβεβαίωση παραγγελίας και διαχείριση με καταστάσεις νέα, συσκευάστηκε, στάλθηκε· η ακύρωση επιστρέφει τα τεμάχια στο απόθεμα.',
+        'Σχεδιασμός τύπου έντυπου καταλόγου, με κίνηση που σέβεται τη ρύθμιση μειωμένης κίνησης.',
+      ],
+      en: [
+        'Catalogue with sizes and live stock: sold out and last-pieces badges, and a cart that can never exceed the stock.',
+        'Cart and checkout with field validation, three shipping regions, free shipping from 40 € and a progress bar toward it.',
+        'A discount code with a minimum, and gift wrap, with all money calculated in cents.',
+        'Order confirmation and an admin with new, packed and shipped statuses; cancelling returns the units to the shelf.',
+        'Editorial design with motion that respects reduced-motion settings.',
+      ],
+    },
+    result: {
+      el: [
+        'Λειτουργικό demo: αγοράστε κάτι, δείτε το απόθεμα να μειώνεται και βρείτε την παραγγελία στη διαχείριση (κωδικός «demo», δοκιμάστε τον κωδικό THASOS10).',
+        'Η λογική καλαθιού, αποθέματος, έκπτωσης και αποστολής καλύπτεται από 12 αυτόματα tests.',
+        'Τα δεδομένα είναι προσομοιωμένα και μένουν στον browser σας. Οι φωτογραφίες είναι δημιουργημένες με AI και ενδεικτικές.',
+      ],
+      en: [
+        'A working demo: buy something, see the stock drop and find the order in the admin (password “demo”, try the code THASOS10).',
+        'The cart, stock, discount and shipping logic is covered by 12 automated tests.',
+        'Data is simulated and stays in your browser. Photos are AI-generated and illustrative.',
+      ],
+    },
+    forYourBusiness: {
+      el: 'Αν παράγετε ή πουλάτε τοπικά προϊόντα, αυτό προσαρμόζεται στα δικά σας προϊόντα, τιμές και κανόνες αποστολής. Για πραγματικές πληρωμές χρειάζεται πάροχος πληρωμών.',
+      en: 'If you produce or sell local goods, this adapts to your own products, prices and delivery rules. Real payments need a payment provider.',
+    },
+    stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'Vitest'],
+    imageUrl: '/eleon-pantry-preview.webp',
+    liveUrl: 'https://varveroglouvasileios.github.io/ShopProject/',
+    liveLabel: { el: 'Δοκιμάστε το demo', en: 'Try the demo' },
+  },
+  {
+    slug: 'kalypso-studio-demo',
+    projectId: 9,
+    kind: 'demo',
+    title: 'Kalypso Studio, demo online ραντεβού',
+    tagline: {
+      el: 'Demo concept: studio περιποίησης με online ραντεβού ανά υπηρεσία και ειδικό, και ημερολόγιο προσωπικού.',
+      en: 'Demo concept: a beauty studio with online appointments by service and specialist, and a staff calendar.',
+    },
+    context: {
+      el: 'Φανταστικό studio περιποίησης στην Καβάλα, φτιαγμένο για να δείχνει σε κομμωτήρια και κλινικές πώς δουλεύει η κράτηση χωρίς τηλέφωνα.',
+      en: 'A fictional beauty studio in Kavala, built to show salons and clinics how self-service booking can work without phone calls.',
+    },
+    problem: {
+      el: 'Τα ραντεβού με τηλέφωνο διακόπτουν τη δουλειά και οι σταθερές ώρες αγνοούν ότι ένα μασάζ κρατά μία ώρα και ένα μανικιούρ 45 λεπτά, με αποτέλεσμα κενά και επικαλύψεις.',
+      en: 'Appointments by phone interrupt the work, and fixed slots ignore that a massage takes an hour and a manicure 45 minutes, so gaps and overlaps appear.',
+    },
+    solution: {
+      el: [
+        'Υπηρεσίες με διάρκεια και τιμή, και ειδικοί που κάνουν ο καθένας μόνο ορισμένες υπηρεσίες.',
+        'Κάθε ειδικός έχει ημέρες εργασίας, ωράριο Σαββάτου και διαλείμματα· οι ελεύθερες ώρες ακολουθούν τη διάρκεια και αφήνουν 10 λεπτά καθαρισμού μετά από κάθε ραντεβού.',
+        'Το «όποιος είναι διαθέσιμος» ενώνει τις ελεύθερες ώρες όλων και αναθέτει στη λιγότερο φορτωμένη ημέρα.',
+        'Ο έλεγχος επαναλαμβάνεται κατά την επιβεβαίωση και το ημερολόγιο προσωπικού δείχνει την ημέρα κάθε ειδικού με ολοκλήρωση και ακύρωση.',
+        'Ήρεμος, μινιμαλ σχεδιασμός με κίνηση που σέβεται τη ρύθμιση μειωμένης κίνησης.',
+      ],
+      en: [
+        'Services with durations and prices, and specialists who each perform only some services.',
+        'Each specialist has working days, Saturday hours and breaks; free times follow the service duration and keep a 10-minute buffer after every appointment.',
+        '“Any available specialist” merges everyone’s free times and assigns the lighter day.',
+        'The check is repeated on confirmation, and a staff calendar shows each specialist’s day with complete and cancel actions.',
+        'A calm, minimal design with motion that respects reduced-motion settings.',
+      ],
+    },
+    result: {
+      el: [
+        'Λειτουργικό demo: κλείστε ραντεβού και δείτε το στο ημερολόγιο προσωπικού (κωδικός «demo»).',
+        'Η λογική προγραμματισμού καλύπτεται από 11 αυτόματα tests (διαλείμματα, χρόνος καθαρισμού, επικαλύψεις, προειδοποίηση ίδιας ημέρας, ανάθεση).',
+        'Τα δεδομένα είναι προσομοιωμένα και μένουν στον browser σας. Οι φωτογραφίες είναι δημιουργημένες με AI και ενδεικτικές.',
+      ],
+      en: [
+        'A working demo: book an appointment and see it in the staff calendar (password “demo”).',
+        'The scheduling logic is covered by 11 automated tests (breaks, buffers, overlaps, same-day notice, assignment).',
+        'Data is simulated and stays in your browser. Photos are AI-generated and illustrative.',
+      ],
+    },
+    forYourBusiness: {
+      el: 'Αν έχετε κομμωτήριο, κλινική ή studio, αυτό προσαρμόζεται στις δικές σας υπηρεσίες, στα ωράρια του προσωπικού και στους κανόνες σας.',
+      en: 'If you run a salon, clinic or studio, this adapts to your own services, staff hours and rules.',
+    },
+    stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'Vitest'],
+    imageUrl: '/kalypso-studio-preview.webp',
+    liveUrl: 'https://varveroglouvasileios.github.io/SalonProject/',
+    liveLabel: { el: 'Δοκιμάστε το demo', en: 'Try the demo' },
+  },
+  {
+    slug: 'bluewake-rentals-demo',
+    projectId: 10,
+    kind: 'demo',
+    title: 'Bluewake Rentals, demo κρατήσεων σκαφών και scooter',
+    tagline: {
+      el: 'Demo concept: ενοικίαση σκαφών και scooter με διαθεσιμότητα ανά όχημα, τιμολόγηση ανά διάρκεια και διαχείριση στόλου.',
+      en: 'Demo concept: boat and scooter rentals with per-vehicle availability, duration pricing and a fleet admin.',
+    },
+    context: {
+      el: 'Φανταστική επιχείρηση ενοικίασης στο λιμάνι της Θάσου, φτιαγμένη για να δείχνει σε ιδιοκτήτες πώς διαχειρίζονται online η διαθεσιμότητα και οι τιμές.',
+      en: 'A fictional rental business at the port of Thasos, built to show rental owners how availability and pricing can be handled online.',
+    },
+    problem: {
+      el: 'Οι κρατήσεις με τηλέφωνο διπλοκλείνουν σκάφη, οι τιμές αλλάζουν με τη διάρκεια και την εποχή και κανείς δεν βλέπει με μια ματιά τι είναι ελεύθερο τώρα.',
+      en: 'Phone bookings double-book boats, prices change with the duration and the season, and nobody knows at a glance what is free right now.',
+    },
+    solution: {
+      el: [
+        'Σκάφη με τιμή ανά μπλοκ (2 ώρες, 4 ώρες, ημέρα) και scooter ανά ημέρα, με έκπτωση 10% από 3 ημέρες και 20% από 7 ημέρες.',
+        'Διαθεσιμότητα ανά όχημα: κάθε ώρα έναρξης δείχνει πόσα είναι ελεύθερα, τα σκάφη επιστρέφουν έως τις 20:00 και χρειάζονται 30 λεπτά καθαρισμού.',
+        'Προκαταβολή 30%, επιστρεφόμενη εγγύηση και υποχρεωτική δήλωση διπλώματος για scooter.',
+        'Ο έλεγχος επαναλαμβάνεται κατά την επιβεβαίωση και ανατίθεται ελεύθερο όχημα· η διαχείριση στόλου δείχνει κάθε όχημα με ενέργειες παράδοσης και επιστροφής.',
+        'Σκούρος σχεδιασμός τύπου πίνακα λιμανιού, με κίνηση που σέβεται τη ρύθμιση μειωμένης κίνησης.',
+      ],
+      en: [
+        'Boats priced per block (2 hours, 4 hours, day) and scooters per day, with a 10% discount from 3 days and 20% from 7 days.',
+        'Availability is per vehicle: every start time shows how many are free, boats return by 20:00 and need a 30-minute turnaround.',
+        'A 30% advance, a refundable deposit and a required licence declaration for scooters.',
+        'The check is repeated on confirmation and a free vehicle is assigned; a fleet admin shows each vehicle and the hand-over and return actions.',
+        'A dark, harbour-board design with motion that respects reduced-motion settings.',
+      ],
+    },
+    result: {
+      el: [
+        'Λειτουργικό demo: κλείστε σκάφος ή scooter και βρείτε το στη διαχείριση στόλου (κωδικός «demo»).',
+        'Η λογική τιμολόγησης και διαθεσιμότητας καλύπτεται από 12 αυτόματα tests (ωράριο, χρόνος καθαρισμού, εκπτώσεις, κανόνας διπλώματος).',
+        'Τα δεδομένα είναι προσομοιωμένα και μένουν στον browser σας. Οι φωτογραφίες είναι δημιουργημένες με AI και ενδεικτικές.',
+      ],
+      en: [
+        'A working demo: book a boat or scooter and find it in the fleet admin (password “demo”).',
+        'The pricing and availability logic is covered by 12 automated tests (opening hours, turnaround, discounts, licence rule).',
+        'Data is simulated and stays in your browser. Photos are AI-generated and illustrative.',
+      ],
+    },
+    forYourBusiness: {
+      el: 'Αν ενοικιάζετε σκάφη, scooter, ποδήλατα ή εξοπλισμό, αυτό προσαρμόζεται στον δικό σας στόλο, στις τιμές και στους κανόνες σας.',
+      en: 'If you rent boats, scooters, bikes or equipment, this adapts to your own fleet, prices and rules.',
+    },
+    stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'Vitest'],
+    imageUrl: '/bluewake-rentals-preview.webp',
+    liveUrl: 'https://varveroglouvasileios.github.io/RentalProject/',
+    liveLabel: { el: 'Δοκιμάστε το demo', en: 'Try the demo' },
+  },
+  {
     slug: 'shadow-ai-firewall',
     projectId: 4,
     kind: 'own-product',

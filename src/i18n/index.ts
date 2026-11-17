@@ -47,6 +47,22 @@ const baseMessages = {
         close: 'Close',
       },
       items: {
+        cafedemo: {
+          title: 'Almyra Café, order-ahead pickup demo',
+          description: 'Demo concept: a café where customers order from their phone and pick up in a 15-minute slot, with a per-slot limit and a kitchen board.'
+        },
+        shopdemo: {
+          title: 'Eleon Pantry, local products shop demo',
+          description: 'Demo concept: an online shop for local products with live stock, cart, discount code, shipping rules and an orders admin.'
+        },
+        salondemo: {
+          title: 'Kalypso Studio, appointment booking demo',
+          description: 'Demo concept: a beauty studio where clients book by service and specialist, with times worked out from durations, working hours and cleaning buffers.'
+        },
+        rentaldemo: {
+          title: 'Bluewake Rentals, boat and scooter booking demo',
+          description: 'Demo concept: a rental business with per-vehicle availability, duration pricing, deposit and licence rules, and a fleet admin.'
+        },
         tavernademo: {
           title: 'Taverna Meltemi, menu and table booking demo',
           description: 'Demo concept: a taverna website with a bilingual menu, photo gallery and table reservations that check seat capacity. Includes an admin dashboard.'
@@ -167,6 +183,22 @@ const baseMessages = {
         close: 'Κλείσιμο',
       },
       items: {
+        cafedemo: {
+          title: 'Almyra Café, demo παραγγελίας και παραλαβής',
+          description: 'Demo concept: café όπου ο πελάτης παραγγέλνει από το κινητό και παραλαμβάνει σε ώρα ανά 15 λεπτά, με όριο παραγγελιών ανά ώρα και οθόνη κουζίνας.'
+        },
+        shopdemo: {
+          title: 'Eleon Pantry, demo e-shop τοπικών προϊόντων',
+          description: 'Demo concept: e-shop τοπικών προϊόντων με πραγματικό απόθεμα, καλάθι, κωδικό έκπτωσης, κανόνες αποστολής και διαχείριση παραγγελιών.'
+        },
+        salondemo: {
+          title: 'Kalypso Studio, demo online ραντεβού',
+          description: 'Demo concept: studio περιποίησης όπου ο πελάτης κλείνει ανά υπηρεσία και ειδικό, με ώρες που υπολογίζονται από διάρκειες, ωράρια και χρόνο καθαρισμού.'
+        },
+        rentaldemo: {
+          title: 'Bluewake Rentals, demo κρατήσεων σκαφών και scooter',
+          description: 'Demo concept: επιχείρηση ενοικίασης με διαθεσιμότητα ανά όχημα, τιμολόγηση ανά διάρκεια, εγγύηση, κανόνα διπλώματος και διαχείριση στόλου.'
+        },
         tavernademo: {
           title: 'Taverna Meltemi, demo μενού και κρατήσεων',
           description: 'Demo concept: ιστοσελίδα ταβέρνας με δίγλωσσο μενού, γκαλερί και κρατήσεις τραπεζιών που ελέγχουν τις θέσεις. Περιλαμβάνει πίνακα διαχείρισης.'

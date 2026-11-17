@@ -57,6 +57,90 @@ export const projects: Project[] = [
     },
   },
   {
+    id: 7,
+    slug: 'almyra-cafe-demo',
+    title: 'Almyra Café, order-ahead pickup demo',
+    description:
+      'Demo concept: a café where customers order from their phone and pick up in a 15-minute slot, with a per-slot limit and a kitchen board.',
+    stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'Vitest'],
+    imageLabel: 'Almyra Café demo',
+    imageUrl: '/almyra-cafe-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/CafeProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/CafeProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'Slot, capacity and cart rules live in pure, tested functions. The UI is Vue 3 with hash routing so it runs on static hosting.',
+      security:
+        'Inputs are validated on blur and on submit (Greek mobile format, past times), and capacity is re-checked at the last moment. A real build repeats this on the server.',
+      challenges:
+        'A big order must take more kitchen capacity than a small one, and a slot must close as soon as the last unit is taken, even when two people order together.',
+    },
+  },
+  {
+    id: 8,
+    slug: 'eleon-pantry-demo',
+    title: 'Eleon Pantry, local products shop demo',
+    description:
+      'Demo concept: an online shop for local products with live stock, cart, discount code, shipping rules and an orders admin.',
+    stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'Vitest'],
+    imageLabel: 'Eleon Pantry demo',
+    imageUrl: '/eleon-pantry-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/ShopProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/ShopProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'Cart, stock, discount and shipping rules live in pure, tested functions. The UI is Vue 3 with hash routing so it runs on static hosting.',
+      security:
+        'Inputs are validated on submit (names, email, phone, postcode by region) and stock is re-checked when the order is placed. A real build adds a payment provider and repeats the checks on the server.',
+      challenges:
+        'A discount can push the cart below the free-shipping threshold, so the order of operations matters, and the same unit must not be sold twice.',
+    },
+  },
+  {
+    id: 9,
+    slug: 'kalypso-studio-demo',
+    title: 'Kalypso Studio, appointment booking demo',
+    description:
+      'Demo concept: a beauty studio where clients book by service and specialist, with times worked out from durations, working hours and cleaning buffers.',
+    stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'Vitest'],
+    imageLabel: 'Kalypso Studio demo',
+    imageUrl: '/kalypso-studio-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/SalonProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/SalonProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'Working windows, durations, buffers and assignment live in pure, tested functions. The UI is Vue 3 with hash routing so it runs on static hosting.',
+      security:
+        'Inputs are validated on blur and on submit, and availability is re-checked at the last moment. A real build repeats this on the server and sends reminders.',
+      challenges:
+        'Appointments of different lengths must never overlap, back-to-back is allowed, and the cleaning buffer applies after an appointment but not before it.',
+    },
+  },
+  {
+    id: 10,
+    slug: 'bluewake-rentals-demo',
+    title: 'Bluewake Rentals, boat and scooter booking demo',
+    description:
+      'Demo concept: a rental business with per-vehicle availability, duration pricing, deposit and licence rules, and a fleet admin.',
+    stack: ['Vue 3', 'TypeScript', 'Tailwind CSS', 'Vitest'],
+    imageLabel: 'Bluewake Rentals demo',
+    imageUrl: '/bluewake-rentals-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/RentalProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/RentalProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'Pricing, opening hours and per-vehicle availability live in pure, tested functions. The UI is Vue 3 with hash routing so it runs on static hosting.',
+      security:
+        'Inputs are validated on blur and on submit, and availability is re-checked at the last moment. A real build repeats this on the server and handles payments and ID checks.',
+      challenges:
+        'A boat must stay blocked through its turnaround, a multi-day scooter rental spans midnight, and the last free unit must not be sold twice.',
+    },
+  },
+  {
     id: 4,
     slug: 'shadow-ai-firewall',
     title: 'Shadow AI Firewall',

@@ -14,20 +14,20 @@ const h1 = () => getPage('about')?.[locale.value === 'en' ? 'en' : 'el'].h1 ?? '
 
 <template>
   <div>
-    <PageHeader :tag="t('aboutPage.tag')" :title="h1()" />
+    <PageHeader :title="h1()" />
     <AboutSection hide-heading />
 
-    <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-      <div class="grid gap-5 md:grid-cols-2">
-        <div class="rounded-2xl border border-white/10 bg-slate-900/40 p-6 backdrop-blur-xl md:p-8">
-          <h2 class="mb-3 text-xl font-bold text-white">{{ t('aboutPage.localTitle') }}</h2>
-          <p class="text-slate-300">{{ t('aboutPage.localText') }}</p>
+    <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+      <div class="grid gap-12 md:grid-cols-2">
+        <div class="border-t border-white/15 pt-6">
+          <h2 class="mb-3 text-2xl font-semibold tracking-tight text-white">{{ t('aboutPage.localTitle') }}</h2>
+          <p class="leading-relaxed text-slate-300">{{ t('aboutPage.localText') }}</p>
         </div>
-        <div class="rounded-2xl border border-white/10 bg-slate-900/40 p-6 backdrop-blur-xl md:p-8">
-          <h2 class="mb-3 text-xl font-bold text-white">{{ t('aboutPage.whyTitle') }}</h2>
-          <ul class="space-y-2 text-slate-300">
-            <li v-for="key in ['why1', 'why2', 'why3']" :key="key" class="flex gap-2">
-              <span class="text-cyan-400" aria-hidden="true">✓</span>
+        <div class="border-t border-white/15 pt-6">
+          <h2 class="mb-3 text-2xl font-semibold tracking-tight text-white">{{ t('aboutPage.whyTitle') }}</h2>
+          <ul class="space-y-3 text-slate-300">
+            <li v-for="key in ['why1', 'why2', 'why3']" :key="key" class="flex gap-2.5">
+              <svg class="mt-1.5 shrink-0 text-cyan-400" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>
               <span>{{ t(`aboutPage.${key}`) }}</span>
             </li>
           </ul>
@@ -36,9 +36,9 @@ const h1 = () => getPage('about')?.[locale.value === 'en' ? 'en' : 'el'].h1 ?? '
             target="_blank"
             rel="noopener noreferrer"
             download="VasileiosVarveroglouCV.pdf"
-            class="mt-6 inline-block text-xs font-bold uppercase tracking-[0.18em] text-emerald-300 transition hover:text-emerald-200"
+            class="btn-outline clickable mt-6"
           >
-            {{ t('aboutPage.cv') }} →
+            {{ t('aboutPage.cv') }}
           </a>
         </div>
       </div>

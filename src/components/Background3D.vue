@@ -191,6 +191,8 @@ const vv = (x: number, y: number, z: number) => new Vector3(x, y, z)
       <Background3DScene :colors="colors" />
     </TresCanvas>
 
+    <!-- Keeps the particle field quiet enough to read text over it -->
+    <div class="absolute inset-0 bg-slate-950/50" />
     <div
       class="absolute inset-0 opacity-80"
       :style="{

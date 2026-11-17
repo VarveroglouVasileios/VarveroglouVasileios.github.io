@@ -88,8 +88,10 @@
       background-color: #020617;
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
     }
+    /* Only the root scrolls: `clip` on body keeps position: sticky working. */
+    html { overflow-x: hidden; }
+    body { overflow-x: clip; }
     #app {
       min-height: 100vh;
     }

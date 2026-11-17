@@ -5,6 +5,7 @@ Portfolio website built with Vue 3, TypeScript, Tailwind CSS, TresJS (3D), and G
 ## Features
 
 - **3D background** – Cursor-reactive wireframe scene with TresJS
+- **Interactive project showcase** – Project list with a sticky browser frame: preview, the live site embedded at desktop or phone width, and a technical breakdown
 - **Scroll animations** – GSAP ScrollTrigger reveals and parallax
 - **Responsive** – Mobile-first, scroll-snap sections
 - **Dark theme** – Cyan & purple accents

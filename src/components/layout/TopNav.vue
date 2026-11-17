@@ -73,25 +73,19 @@ watch(
 
 <template>
   <nav
-    class="fixed left-0 right-0 top-0 z-[100] border-b border-white/10 transition-all duration-300 pt-[env(safe-area-inset-top,0px)]"
+    class="fixed left-0 right-0 top-0 z-[100] border-b transition-all duration-300 pt-[env(safe-area-inset-top,0px)]"
     :class="[
       isScrolled
-        ? 'bg-slate-950/80 py-4 backdrop-blur-lg'
-        : 'bg-transparent py-6',
+        ? 'border-white/10 bg-slate-950/85 py-3 backdrop-blur-lg'
+        : 'border-transparent bg-transparent py-5',
     ]"
   >
     <div
       class="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6"
     >
       <router-link :to="to('home')" class="group flex items-center gap-2">
-        <span
-          class="text-xl font-bold tracking-tighter text-white sm:text-2xl uppercase"
-        >
-          VASILEIOS
-          <span
-            class="text-cyan-400 group-hover:text-cyan-300 transition-colors"
-            >VARVEROGLOU</span
-          >
+        <span class="text-lg font-semibold tracking-tight text-white transition-colors group-hover:text-cyan-300 sm:text-xl">
+          Vasileios Varveroglou
         </span>
       </router-link>
 
@@ -102,8 +96,8 @@ watch(
             v-for="link in navLinks"
             :key="link.name"
             :to="to(link.route)"
-            class="text-xs font-medium tracking-[0.15em] text-slate-300 transition hover:text-cyan-300"
-            :class="{ 'text-cyan-400': isActive(link.route) }"
+            class="text-sm font-medium text-slate-300 transition hover:text-white"
+            :class="{ '!text-cyan-300': isActive(link.route) }"
           >
             {{ t(link.name) }}
           </router-link>
@@ -112,13 +106,13 @@ watch(
         <div class="flex items-center gap-4 border-l border-white/10 pl-6">
           <button
             @click="toggleLocale"
-            class="text-xs font-bold tracking-widest text-slate-400 transition hover:text-white"
+            class="text-sm font-semibold text-slate-400 transition hover:text-white"
           >
             {{ locale === "en" ? "ΕΛ" : "EN" }}
           </button>
           <router-link
             :to="to('contact')"
-            class="rounded-full bg-cyan-400 px-5 py-2 text-xs font-bold tracking-wider text-slate-950 transition hover:bg-cyan-300"
+            class="rounded-full bg-cyan-400 px-5 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
             @click="trackEvent('Quote CTA', { source: 'nav' })"
           >
             {{ t("nav.quote") }}
@@ -148,16 +142,12 @@ watch(
       </button>
     </div>
 
-    <div
-      class="mx-auto mt-3 max-w-7xl px-4 sm:px-6"
-      aria-hidden="true"
-    >
-      <div class="h-1.5 overflow-hidden rounded-full bg-slate-800/90">
-        <div
-          class="h-full rounded-full bg-gradient-to-r from-cyan-400 to-violet-400 transition-[width] duration-150 ease-out"
-          :style="{ width: `${scrollProgress}%` }"
-        />
-      </div>
+    <!-- Reading progress: a hairline on the bottom edge of the bar -->
+    <div class="absolute inset-x-0 bottom-0 h-0.5 translate-y-full" aria-hidden="true">
+      <div
+        class="h-full origin-left bg-cyan-400 transition-transform duration-150 ease-out"
+        :style="{ transform: `scaleX(${scrollProgress / 100})` }"
+      />
     </div>
 
     <!-- Mobile Menu -->
@@ -178,7 +168,7 @@ watch(
             v-for="link in navLinks"
             :key="link.name"
             :to="to(link.route)"
-            class="text-center text-sm font-semibold tracking-widest text-slate-200"
+            class="text-center text-base font-medium text-slate-200"
             @click="isMobileMenuOpen = false"
           >
             {{ t(link.name) }}
@@ -186,13 +176,13 @@ watch(
           <div class="flex flex-col gap-4 border-t border-white/10 pt-6">
             <button
               @click="toggleLocale"
-              class="text-center text-xs font-bold tracking-widest text-cyan-400"
+              class="text-center text-sm font-semibold text-cyan-300"
             >
-              {{ locale === "en" ? "ΕΛΛΗΝΙΚΑ" : "ENGLISH" }}
+              {{ locale === "en" ? "Ελληνικά" : "English" }}
             </button>
             <router-link
               :to="to('contact')"
-              class="rounded-xl bg-cyan-400 py-4 text-center text-xs font-bold tracking-widest text-slate-950"
+              class="rounded-full bg-cyan-400 py-4 text-center text-base font-semibold text-slate-950"
               @click="isMobileMenuOpen = false; trackEvent('Quote CTA', { source: 'nav-mobile' })"
             >
               {{ t("nav.quote") }}

@@ -2,11 +2,12 @@
 export const pageMessages = {
   en: {
     nav: {
-      services: 'SERVICES',
-      projects: 'PROJECTS',
-      security: 'SECURITY AUDIT',
-      about: 'ABOUT',
-      quote: 'REQUEST A QUOTE',
+      services: 'Services',
+      projects: 'Projects',
+      security: 'Security audit',
+      about: 'About',
+      contact: 'Contact',
+      quote: 'Request a quote',
       menu: 'Toggle menu',
     },
     cta: {
@@ -120,15 +121,32 @@ export const pageMessages = {
     hero: {
       services: 'SERVICES',
       quote: 'REQUEST A QUOTE',
+      cv: 'Download CV',
+      nowShowing: 'On screen',
+      pick: 'Show {title}',
+    },
+    showcase: {
+      preview: 'Preview',
+      live: 'Try it live',
+      liveShort: 'Live',
+      how: 'How it was built',
+      desktop: 'Desktop',
+      mobile: 'Mobile',
+      device: 'Screen size',
+      loading: 'Loading the live site…',
+      openNew: 'Open in a new tab',
+      liveHint: 'This is the real site, running inside the page. Click around.',
+      select: 'Show {title}',
     },
   },
   el: {
     nav: {
-      services: 'ΥΠΗΡΕΣΙΕΣ',
-      projects: 'ΕΡΓΑ',
-      security: 'ΕΛΕΓΧΟΣ ΑΣΦΑΛΕΙΑΣ',
-      about: 'ΣΧΕΤΙΚΑ',
-      quote: 'ΖΗΤΗΣΤΕ ΠΡΟΣΦΟΡΑ',
+      services: 'Υπηρεσίες',
+      projects: 'Έργα',
+      security: 'Έλεγχος ασφάλειας',
+      about: 'Σχετικά',
+      contact: 'Επικοινωνία',
+      quote: 'Ζητήστε προσφορά',
       menu: 'Άνοιγμα μενού',
     },
     cta: {
@@ -242,6 +260,22 @@ export const pageMessages = {
     hero: {
       services: 'ΥΠΗΡΕΣΙΕΣ',
       quote: 'ΖΗΤΗΣΤΕ ΠΡΟΣΦΟΡΑ',
+      cv: 'Κατεβάστε το CV',
+      nowShowing: 'Στην οθόνη',
+      pick: 'Εμφάνιση: {title}',
+    },
+    showcase: {
+      preview: 'Προεπισκόπηση',
+      live: 'Δοκιμάστε το live',
+      liveShort: 'Live',
+      how: 'Πώς φτιάχτηκε',
+      desktop: 'Υπολογιστής',
+      mobile: 'Κινητό',
+      device: 'Μέγεθος οθόνης',
+      loading: 'Φορτώνει το live site…',
+      openNew: 'Άνοιγμα σε νέα καρτέλα',
+      liveHint: 'Αυτό είναι το πραγματικό site, μέσα στη σελίδα. Πατήστε ό,τι θέλετε.',
+      select: 'Εμφάνιση: {title}',
     },
   },
 }

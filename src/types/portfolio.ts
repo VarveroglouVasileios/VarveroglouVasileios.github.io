@@ -28,6 +28,8 @@ export interface Project {
   liveUrl: string
   /** When set, used as i18n key for the primary outbound link (default: projects.live). */
   liveLabelKey?: string
+  /** False when the live site cannot be shown inside the in-page preview (e.g. Chrome Web Store). */
+  embeddable?: boolean
   breakdown?: {
     architecture: string
     security: string

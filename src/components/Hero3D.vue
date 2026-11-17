@@ -1,182 +1,247 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import BrowserFrame from '@/components/showcase/BrowserFrame.vue'
+import { projects } from '@/data/portfolio'
 import { useLocalePath } from '@/composables/useLocalePath'
-
-gsap.registerPlugin(ScrollTrigger)
+import { useMagneticHover } from '@/composables/useMagneticHover'
+import { trackEvent } from '@/lib/analytics'
 
 const { t, locale } = useI18n()
 const { to } = useLocalePath()
-const fullHeadline = computed<string>(() => t('hero.headline'))
-const typedHeadline = ref<string>('')
-// The not-yet-typed remainder of the SAME real headline. Rendered invisibly so
-// that typed + remainder === the full headline exactly once in the DOM.
-const remainingHeadline = computed<string>(() =>
-  fullHeadline.value.slice(typedHeadline.value.length),
-)
+
 const heroRoot = ref<HTMLElement | null>(null)
+const magnetRef = ref<HTMLElement | null>(null)
+const { attach } = useMagneticHover()
 
-let typingIntervalId: number | undefined
+// The headline rises word by word; the full sentence stays readable as one label.
+const headline = computed(() => t('hero.headline'))
+const headlineWords = computed(() => headline.value.split(' '))
+
+// The hero shows the actual work: one screen that cycles through the live projects.
+const reel = projects.filter((project, index, list) =>
+  project.imageUrl && list.findIndex((other) => other.imageUrl === project.imageUrl) === index,
+)
+const reelIndex = ref(0)
+const current = computed(() => reel[reelIndex.value])
+
+const CYCLE_MS = 4500
+let timer: number | undefined
 let context: gsap.Context | undefined
+const paused = ref(false)
 
-const prefersReducedMotion = (): boolean =>
-  typeof window !== 'undefined' &&
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+const prefersReducedMotion = (): boolean => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-const startTypingEffect = (): void => {
-  if (typingIntervalId !== undefined) window.clearInterval(typingIntervalId)
-  const headline = fullHeadline.value
-
-  // Respect reduced-motion: show the full headline immediately, no typing.
-  if (prefersReducedMotion()) {
-    typedHeadline.value = headline
-    return
-  }
-
-  let index = 0
-  typingIntervalId = window.setInterval(() => {
-    typedHeadline.value = headline.slice(0, index)
-    index += 1
-    if (index > headline.length && typingIntervalId !== undefined) {
-      window.clearInterval(typingIntervalId)
-    }
-  }, 35)
+const stopCycle = (): void => {
+  if (timer !== undefined) window.clearInterval(timer)
+  timer = undefined
 }
 
-watch(locale, () => {
-  startTypingEffect()
-})
+const startCycle = (): void => {
+  stopCycle()
+  if (reel.length < 2 || prefersReducedMotion()) return
+  timer = window.setInterval(() => {
+    if (!paused.value && !document.hidden) reelIndex.value = (reelIndex.value + 1) % reel.length
+  }, CYCLE_MS)
+}
+
+const pick = (index: number): void => {
+  reelIndex.value = index
+  startCycle()
+}
 
 onMounted(() => {
+  startCycle()
+  if (magnetRef.value) attach(magnetRef.value)
   nextTick(() => {
-    startTypingEffect()
-
+    if (prefersReducedMotion()) return
+    // One page-load sequence: copy rises in, then the screen settles into place.
     context = gsap.context((self) => {
       if (!self.selector) return
-      
-      gsap.from(self.selector('[data-hero-item]'), {
-        y: 48,
-        opacity: 0,
-        stagger: 0.14,
-        duration: 1,
-        ease: 'power3.out',
-      })
-
-      gsap.to(self.selector('[data-hero-shell]'), {
-        y: 24,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: heroRoot.value,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 0.8,
-        },
-      })
+      const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
+      timeline
+        .from(self.selector('[data-hero-item]'), { y: 24, opacity: 0, stagger: 0.09, duration: 0.8 }, 0.35)
+        .from(
+          self.selector('[data-hero-screen]'),
+          { y: 60, opacity: 0, rotateY: -14, rotateX: 6, duration: 1.1, transformPerspective: 1400 },
+          0.1,
+        )
     }, heroRoot.value || undefined)
   })
 })
 
 onBeforeUnmount(() => {
   context?.revert()
-  if (typingIntervalId !== undefined) {
-    window.clearInterval(typingIntervalId)
-  }
+  stopCycle()
 })
 </script>
-
-<style scoped>
-/* Blinking caret as generated content so it never becomes indexable text. */
-.hero-type-cursor::after {
-  content: '|';
-  margin-left: 0.06em;
-  color: #67e8f9;
-  font-weight: 400;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hero-type-cursor::after {
-    animation: hero-caret-blink 1s steps(2, start) infinite;
-  }
-
-  .hero-cta-pulse {
-    animation: hero-cta-glow 2.4s ease-in-out infinite alternate;
-  }
-}
-
-@keyframes hero-caret-blink {
-  50% {
-    opacity: 0;
-  }
-}
-
-@keyframes hero-cta-glow {
-  from {
-    box-shadow: 0 0 12px rgba(34, 211, 238, 0.12);
-  }
-  to {
-    box-shadow: 0 0 28px rgba(34, 211, 238, 0.32);
-  }
-}
-</style>
 
 <template>
   <section
     id="hero"
     ref="heroRoot"
-    class="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-16 sm:snap-start sm:px-6"
+    class="relative mx-auto flex min-h-[calc(100svh-7rem)] w-full max-w-7xl items-center px-4 pb-20 pt-6 sm:px-6"
   >
-    <div class="mx-auto w-full max-w-6xl" data-hero-shell>
-      <div
-        class="max-w-3xl rounded-3xl border border-white/10 bg-slate-900/45 p-8 backdrop-blur-xl md:p-12"
-      >
-        <p
-          data-hero-item
-          class="mb-4 inline-flex rounded-full border border-cyan-300/30 bg-cyan-400/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300"
-        >
+    <div class="grid w-full items-center gap-12 lg:grid-cols-12 lg:gap-10">
+      <div class="min-w-0 lg:col-span-6">
+        <p data-hero-item class="mb-5 text-sm font-medium text-cyan-300 sm:text-base">
           {{ t('hero.title') }}
         </p>
         <h1
-          data-hero-item
-          :aria-label="fullHeadline"
-          class="mb-6 min-h-[4.5rem] text-balance text-3xl font-bold leading-tight text-white sm:min-h-[6rem] sm:text-4xl md:min-h-[8rem] md:text-6xl"
-        ><!--
-          The full headline lives in the DOM exactly once: the typed part is
-          visible (with a blinking CSS cursor), the remainder is rendered but
-          visually hidden. typed + remainder === fullHeadline.
-        --><span aria-hidden="true" class="hero-type-cursor">{{ typedHeadline }}</span><span aria-hidden="true" class="invisible">{{ remainingHeadline }}</span></h1>
-        <p
-          data-hero-item
-          class="mb-8 max-w-2xl text-base text-slate-300 sm:text-lg"
+          :key="locale"
+          :aria-label="headline"
+          class="text-balance text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl xl:text-6xl"
         >
+          <template v-for="(word, index) in headlineWords" :key="index">
+            <span class="hero-word" aria-hidden="true"><span class="hero-word__inner" :style="{ '--i': index }">{{ word }}</span></span>{{ ' ' }}
+          </template>
+        </h1>
+        <p data-hero-item class="mt-6 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">
           {{ t('hero.description') }}
         </p>
 
-        <div data-hero-item class="flex flex-wrap items-center gap-3 sm:gap-4">
-          <router-link
-            :to="to('contact')"
-            class="hero-cta-pulse rounded-full border border-cyan-300/60 bg-cyan-400/20 px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-cyan-200 transition hover:-translate-y-0.5 hover:bg-cyan-300/30 sm:px-7 sm:text-sm sm:tracking-[0.16em]"
-          >
-            {{ t('hero.quote') }}
-          </router-link>
-          <router-link
-            :to="to('services')"
-            class="rounded-full border border-white/20 px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-slate-200 transition hover:border-cyan-300/60 hover:text-cyan-200 sm:px-7 sm:text-sm sm:tracking-[0.16em]"
-          >
-            {{ t('hero.services') }}
+        <div data-hero-item class="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
+          <span ref="magnetRef" class="inline-block">
+            <router-link
+              :to="to('contact')"
+              class="btn-primary clickable px-7 py-3.5"
+              @click="trackEvent('Quote CTA', { source: 'hero' })"
+            >
+              {{ t('cta.quote') }}
+            </router-link>
+          </span>
+          <router-link :to="to('services')" class="hero-link clickable text-base font-medium text-slate-100">
+            {{ t('cta.allServices') }}
           </router-link>
           <a
             href="/VasileiosVarveroglouCV.pdf"
             target="_blank"
             rel="noopener noreferrer"
             download="VasileiosVarveroglouCV.pdf"
-            class="rounded-full border border-emerald-400/50 px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-300 transition hover:-translate-y-0.5 hover:border-emerald-300/70 hover:bg-emerald-400/15 sm:px-7 sm:text-sm sm:tracking-[0.16em]"
+            class="hero-link clickable text-base font-medium text-slate-400"
           >
-            {{ t('hero.downloadCv') }}
+            {{ t('hero.cv') }}
           </a>
+        </div>
+      </div>
+
+      <div
+        v-if="current"
+        class="min-w-0 lg:col-span-6"
+        @pointerenter="paused = true"
+        @pointerleave="paused = false"
+        @focusin="paused = true"
+        @focusout="paused = false"
+      >
+        <div data-hero-screen>
+          <BrowserFrame
+            :title="current.title"
+            :image-url="current.imageUrl"
+            :live-url="current.liveUrl"
+            :open-label="t('showcase.openNew')"
+            eager
+            build
+          />
+        </div>
+
+        <div data-hero-item class="mt-5 flex flex-wrap items-center justify-between gap-4">
+          <p class="text-sm text-slate-400">
+            {{ t('hero.nowShowing') }}:
+            <router-link
+              v-if="current.slug"
+              :to="to('project', { slug: current.slug })"
+              class="hero-link clickable font-medium text-slate-100"
+            >
+              {{ current.title }}
+            </router-link>
+            <span v-else class="font-medium text-slate-100">{{ current.title }}</span>
+          </p>
+          <div class="flex gap-2">
+            <button
+              v-for="(project, index) in reel"
+              :key="project.id"
+              type="button"
+              class="reel-dot clickable"
+              :class="{ 'is-current': index === reelIndex }"
+              :aria-label="t('hero.pick', { title: project.title })"
+              :aria-pressed="index === reelIndex"
+              @click="pick(index)"
+            />
+          </div>
         </div>
       </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+/* Each word sits in a clipped box and slides up into it. Padding keeps accents and descenders unclipped. */
+.hero-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding: 0.18em 0 0.14em;
+  margin: -0.18em 0 -0.14em;
+}
+
+.hero-word__inner {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-word__inner {
+    transform: translateY(115%);
+    animation: hero-word-up 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(var(--i) * 50ms + 80ms);
+  }
+}
+
+@keyframes hero-word-up {
+  to {
+    transform: translateY(0);
+  }
+}
+
+.hero-link {
+  text-decoration: underline;
+  text-decoration-color: rgba(148, 163, 184, 0.45);
+  text-underline-offset: 0.35em;
+  transition:
+    color 0.2s ease,
+    text-decoration-color 0.2s ease;
+}
+
+.hero-link:hover {
+  color: #67e8f9;
+  text-decoration-color: currentColor;
+}
+
+/* 24px hit area around a slim bar */
+.reel-dot {
+  position: relative;
+  width: 2rem;
+  height: 1.5rem;
+}
+
+.reel-dot::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 3px;
+  margin-top: -1.5px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.35);
+  transition: background-color 0.25s ease;
+}
+
+.reel-dot:hover::before {
+  background: rgba(148, 163, 184, 0.7);
+}
+
+.reel-dot.is-current::before {
+  background: #22d3ee;
+}
+</style>

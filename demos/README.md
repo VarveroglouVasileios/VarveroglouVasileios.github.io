@@ -26,9 +26,9 @@ Fictional businesses used as live examples for the portfolio. **Each demo lives 
 |---|---|---|---|---|
 | 1 | Elia Bay, boutique hotel in Thasos with booking system | `VarveroglouVasileios/HotelProject` | `/HotelProject/` | Built and live on GitHub Pages |
 | 2 | Taverna Meltemi, Kavala taverna with menu and table reservations | [VarveroglouVasileios/TavernaProject](https://github.com/VarveroglouVasileios/TavernaProject) | `/TavernaProject/` | Built and live on GitHub Pages |
-| 3 | Café / brunch | not started | | |
-| 4 | Local products e-shop | not started | | |
-| 5 | Appointments (beauty / physio) | not started | | |
-| 6 | Boat / scooter rental with booking | not started | | |
+| 3 | Almyra Café, order-ahead pickup with slot capacity | [VarveroglouVasileios/CafeProject](https://github.com/VarveroglouVasileios/CafeProject) | `/CafeProject/` | Built and live on GitHub Pages |
+| 4 | Eleon Pantry, local products e-shop with stock and cart | [VarveroglouVasileios/ShopProject](https://github.com/VarveroglouVasileios/ShopProject) | `/ShopProject/` | Built and live on GitHub Pages |
+| 5 | Kalypso Studio, appointments by service and specialist | [VarveroglouVasileios/SalonProject](https://github.com/VarveroglouVasileios/SalonProject) | `/SalonProject/` | Built and live on GitHub Pages |
+| 6 | Bluewake Rentals, boat and scooter rental with availability | [VarveroglouVasileios/RentalProject](https://github.com/VarveroglouVasileios/RentalProject) | `/RentalProject/` | Built and live on GitHub Pages |
 
 Design briefs and prompts: `briefs/`.

@@ -120,6 +120,74 @@
       }
     },
     {
+      "key": "project-almyra-cafe-demo",
+      "path": "projects/almyra-cafe-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: café με παραγγελία και ώρα παραλαβής",
+        "description": "Demo concept café με μενού, καλάθι, ώρες παραλαβής με όριο ανά ώρα και οθόνη κουζίνας. Δοκιμάστε το.",
+        "h1": "Almyra Café, παραγγελία και παραλαβή",
+        "summary": "Demo concept: café με παραγγελία και παραλαβή σε ώρες ανά 15 λεπτά, με όριο ανά ώρα και οθόνη κουζίνας."
+      },
+      "en": {
+        "title": "Demo: café with order-ahead pickup",
+        "description": "A demo concept café with a menu, cart, pickup slots with a per-slot limit and a kitchen board. Try it.",
+        "h1": "Almyra Café, order-ahead pickup",
+        "summary": "Demo concept: a café with order-ahead pickup in 15-minute slots, a per-slot limit and a kitchen board."
+      }
+    },
+    {
+      "key": "project-eleon-pantry-demo",
+      "path": "projects/eleon-pantry-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: e-shop τοπικών προϊόντων με απόθεμα και καλάθι",
+        "description": "Demo concept e-shop με απόθεμα, καλάθι, κανόνες αποστολής, κωδικό έκπτωσης και διαχείριση παραγγελιών. Δοκιμάστε το.",
+        "h1": "Eleon Pantry, e-shop τοπικών προϊόντων",
+        "summary": "Demo concept: e-shop με πραγματικό απόθεμα, καλάθι με κανόνες αποστολής και έκπτωσης και διαχείριση παραγγελιών."
+      },
+      "en": {
+        "title": "Demo: local products shop with stock and cart",
+        "description": "A demo concept online shop with stock, cart, shipping rules, a discount code and an orders admin. Try it.",
+        "h1": "Eleon Pantry, local products shop",
+        "summary": "Demo concept: an online shop with live stock, a cart with shipping and discount rules, and an orders admin."
+      }
+    },
+    {
+      "key": "project-kalypso-studio-demo",
+      "path": "projects/kalypso-studio-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: studio περιποίησης με online ραντεβού",
+        "description": "Demo concept studio με ραντεβού ανά υπηρεσία και ειδικό, ώρες που υπολογίζονται από διάρκειες και ημερολόγιο προσωπικού. Δοκιμάστε το.",
+        "h1": "Kalypso Studio, online ραντεβού",
+        "summary": "Demo concept: studio περιποίησης με online ραντεβού ανά υπηρεσία και ειδικό, και ημερολόγιο προσωπικού."
+      },
+      "en": {
+        "title": "Demo: beauty studio with online appointments",
+        "description": "A demo concept studio with booking by service and specialist, times based on durations and a staff calendar. Try it.",
+        "h1": "Kalypso Studio, online appointments",
+        "summary": "Demo concept: a beauty studio with online appointments by service and specialist, and a staff calendar."
+      }
+    },
+    {
+      "key": "project-bluewake-rentals-demo",
+      "path": "projects/bluewake-rentals-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: ενοικίαση σκαφών και scooter με διαθεσιμότητα",
+        "description": "Demo concept ενοικίασης με διαθεσιμότητα ανά όχημα, τιμολόγηση ανά διάρκεια, εγγύηση και διαχείριση στόλου. Δοκιμάστε το.",
+        "h1": "Bluewake Rentals, σκάφη και scooter",
+        "summary": "Demo concept: ενοικίαση σκαφών και scooter με διαθεσιμότητα ανά όχημα, τιμολόγηση ανά διάρκεια και διαχείριση στόλου."
+      },
+      "en": {
+        "title": "Demo: boat and scooter rentals with availability",
+        "description": "A demo concept rental business with per-vehicle availability, duration pricing, deposit and a fleet admin. Try it.",
+        "h1": "Bluewake Rentals, boats and scooters",
+        "summary": "Demo concept: boat and scooter rentals with per-vehicle availability, duration pricing and a fleet admin."
+      }
+    },
+    {
       "key": "project-vibebites",
       "path": "projects/vibebites",
       "priority": 0.6,

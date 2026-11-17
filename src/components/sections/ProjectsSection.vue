@@ -21,6 +21,10 @@ let context: gsap.Context | undefined
 // Map portfolio data IDs to i18n keys
 const getProjectData = (id: number) => {
   const mapping: Record<number, string> = {
+    7: 'cafedemo',
+    8: 'shopdemo',
+    9: 'salondemo',
+    10: 'rentaldemo',
     6: 'tavernademo',
     5: 'thasoshotel',
     4: 'shadowfirewall',

@@ -82,6 +82,7 @@ export const services: ServicePackage[] = [
       ],
     },
     priceFrom: null,
+    demoSlug: 'eleon-pantry-demo',
   },
   {
     id: 'booking',

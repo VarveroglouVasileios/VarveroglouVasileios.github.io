@@ -67,8 +67,10 @@ const runBuild = (): void => {
 }
 
 onMounted(() => {
+  // Tilt only on large, fine-pointer screens — small viewports clip / bleed with perspective.
   canTilt =
     window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+    window.matchMedia('(min-width: 1024px)').matches &&
     !window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   if (bodyRef.value) {
@@ -249,7 +251,14 @@ watch(
 
 <style scoped>
 .frame-perspective {
-  perspective: 1400px;
+  overflow: hidden;
+  perspective: none;
+}
+
+@media (min-width: 1024px) {
+  .frame-perspective {
+    perspective: 1400px;
+  }
 }
 
 .frame {
@@ -268,34 +277,56 @@ watch(
 
 .frame-body--phone {
   aspect-ratio: auto;
-  height: min(600px, calc(100svh - 19rem));
-  min-height: 22rem;
+  height: min(520px, calc(100svh - 22rem));
+  max-height: 50svh;
+  min-height: 16rem;
+}
+
+@media (min-width: 640px) {
+  .frame-body--phone {
+    height: min(600px, calc(100svh - 19rem));
+    max-height: none;
+    min-height: 22rem;
+  }
 }
 
 .frame-shot {
-  transform: scale(1.06) translate(var(--shift-x), var(--shift-y));
+  transform: scale(1.02) translate(var(--shift-x), var(--shift-y));
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 1024px) {
+  .frame-shot {
+    transform: scale(1.06) translate(var(--shift-x), var(--shift-y));
+  }
 }
 
 .wipe-enter-active {
   z-index: 2;
-  transition: clip-path 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+  transition:
+    clip-path 0.55s cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 0.55s ease;
 }
 
 .wipe-leave-active {
-  transition: opacity 0.6s step-end;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
 }
 
 .wipe-enter-from {
+  opacity: 0.4;
   clip-path: inset(0 0 0 100%);
 }
 
 .wipe-enter-to {
+  opacity: 1;
   clip-path: inset(0 0 0 0);
 }
 
 .wipe-leave-to {
   opacity: 0;
+  transform: scale(1.02);
 }
 
 /* While building, the screenshot waits for the wireframe to finish. */

@@ -46,15 +46,36 @@ const render = (page, locale) => {
   html = html.replace(/<meta property="og:title" content="[^"]*" ?\/?>/, `<meta property="og:title" content="${esc(meta.title)}" />`)
   html = html.replace(/<meta property="og:description" content="[^"]*" ?\/?>/, `<meta property="og:description" content="${esc(meta.description)}" />`)
   html = html.replace(/<meta property="og:locale" content="[^"]*" ?\/?>/, `<meta property="og:locale" content="${locale === 'el' ? 'el_GR' : 'en_US'}" />`)
+  html = html.replace(
+    /<meta property="og:locale:alternate" content="[^"]*" ?\/?>/,
+    `<meta property="og:locale:alternate" content="${locale === 'el' ? 'en_US' : 'el_GR'}" />`,
+  )
+  html = html.replace(/<meta property="og:image" content="[^"]*" ?\/?>/, `<meta property="og:image" content="${siteUrl}/og-image.png" />`)
   html = html.replace(/<meta name="twitter:title" content="[^"]*" ?\/?>/, `<meta name="twitter:title" content="${esc(meta.title)}" />`)
   html = html.replace(/<meta name="twitter:description" content="[^"]*" ?\/?>/, `<meta name="twitter:description" content="${esc(meta.description)}" />`)
+  html = html.replace(/<meta name="twitter:image" content="[^"]*" ?\/?>/, `<meta name="twitter:image" content="${siteUrl}/og-image.png" />`)
 
+  // Drop any static home hreflang from the shell, then inject page-specific ones.
+  html = html.replace(/\s*<link rel="alternate" hreflang="[^"]*" href="[^"]*"\s*\/?>/g, '')
   const alternates = [
     `<link rel="alternate" hreflang="el" href="${urlFor(page.path, 'el')}" />`,
     `<link rel="alternate" hreflang="en" href="${urlFor(page.path, 'en')}" />`,
     `<link rel="alternate" hreflang="x-default" href="${urlFor(page.path, 'el')}" />`,
   ].join('\n  ')
   html = html.replace('</head>', `  ${alternates}\n</head>`)
+
+  // Align Person / ProfessionalService "url" with the rendered locale home.
+  const homeUrl = urlFor('', locale)
+  html = html.replace(
+    /("url"\s*:\s*")https:\/\/varveroglouvasileios\.github\.io\/(")/g,
+    `$1${homeUrl}$2`,
+  )
+  if (locale === 'el') {
+    html = html.replace(
+      /("description"\s*:\s*")Websites, e-shops, booking systems, internal tools and website security audits for businesses\./,
+      '$1Ιστοσελίδες, e-shop, κρατήσεις, εσωτερικά εργαλεία και έλεγχος ασφάλειας για επιχειρήσεις.',
+    )
+  }
 
   const links = ['home', 'services', 'projects', 'security-audit', 'about', 'contact']
     .map((key) => {

@@ -19,6 +19,8 @@ interface PageEntry {
 
 const pages = pagesData.pages as PageEntry[]
 
+export const ogImageUrl = `${siteUrl}/og-image.png`
+
 export const getPage = (key: string): PageEntry | undefined => pages.find((p) => p.key === key)
 
 /** Absolute URL for a page in a locale. Greek lives at the root, English under /en. */
@@ -50,25 +52,63 @@ const setLink = (rel: string, href: string, hreflang?: string): void => {
   el.setAttribute('href', href)
 }
 
+const SERVICE_DESC: Record<Locale, string> = {
+  el: 'Ιστοσελίδες, e-shop, κρατήσεις, εσωτερικά εργαλεία και έλεγχος ασφάλειας για επιχειρήσεις.',
+  en: 'Websites, e-shops, booking systems, internal tools and website security audits for businesses.',
+}
+
+/** Keep home JSON-LD Person / ProfessionalService URLs aligned with the active locale. */
+const syncJsonLd = (locale: Locale): void => {
+  const home = pageUrl('', locale)
+  const scripts = document.head.querySelectorAll<HTMLScriptElement>('script[type="application/ld+json"]')
+  scripts.forEach((script) => {
+    try {
+      const data = JSON.parse(script.textContent || '') as Record<string, unknown>
+      if (data['@type'] === 'ProfessionalService' || data['@type'] === 'Person') {
+        data.url = home
+        if (data['@type'] === 'ProfessionalService') {
+          data.description = SERVICE_DESC[locale]
+        }
+        script.textContent = JSON.stringify(data)
+      }
+    } catch {
+      // Leave malformed blocks untouched.
+    }
+  })
+}
+
 /** Keeps <title>, description, canonical, hreflang and Open Graph in sync on client-side navigation. */
 export const applyPageHead = (key: string, locale: Locale): void => {
   const page = getPage(key)
   if (!page || typeof document === 'undefined') return
 
   const meta = page[locale]
+  const url = pageUrl(page.path, locale)
   document.title = meta.title
   document.documentElement.lang = locale
 
   setMeta('meta[name="description"]', 'name', 'description', meta.description)
+  setMeta('meta[property="og:type"]', 'property', 'og:type', 'website')
   setMeta('meta[property="og:title"]', 'property', 'og:title', meta.title)
   setMeta('meta[property="og:description"]', 'property', 'og:description', meta.description)
-  setMeta('meta[property="og:url"]', 'property', 'og:url', pageUrl(page.path, locale))
+  setMeta('meta[property="og:url"]', 'property', 'og:url', url)
   setMeta('meta[property="og:locale"]', 'property', 'og:locale', locale === 'el' ? 'el_GR' : 'en_US')
+  setMeta(
+    'meta[property="og:locale:alternate"]',
+    'property',
+    'og:locale:alternate',
+    locale === 'el' ? 'en_US' : 'el_GR',
+  )
+  setMeta('meta[property="og:image"]', 'property', 'og:image', ogImageUrl)
+  setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image')
   setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', meta.title)
   setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', meta.description)
+  setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', ogImageUrl)
 
-  setLink('canonical', pageUrl(page.path, locale))
+  setLink('canonical', url)
   setLink('alternate', pageUrl(page.path, 'el'), 'el')
   setLink('alternate', pageUrl(page.path, 'en'), 'en')
   setLink('alternate', pageUrl(page.path, 'el'), 'x-default')
+
+  syncJsonLd(locale)
 }

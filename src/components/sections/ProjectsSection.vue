@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ProjectStage from '@/components/showcase/ProjectStage.vue'
 import type { FrameMode } from '@/components/showcase/BrowserFrame.vue'
 import { projects } from '@/data/portfolio'
 import { caseStudies } from '@/data/caseStudies'
 import { useLocalePath } from '@/composables/useLocalePath'
 import type { Project } from '@/types/portfolio'
+
+gsap.registerPlugin(ScrollTrigger)
 
 defineProps<{ hideHeading?: boolean }>()
 
@@ -48,22 +52,47 @@ const stageMode = ref<FrameMode>('preview')
 const locked = computed(() => stageMode.value !== 'preview')
 
 const isDesktop = ref(false)
+const sectionRoot = ref<HTMLElement | null>(null)
+const stageShell = ref<HTMLElement | null>(null)
 const rowElements = new Map<number, HTMLElement>()
 let mediaQuery: MediaQueryList | undefined
 let frame = 0
+let scrollContext: gsap.Context | undefined
+let swapTween: gsap.core.Tween | undefined
+
+const prefersReducedMotion = (): boolean => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 const setRowRef = (id: number, element: unknown): void => {
   if (element instanceof HTMLElement) rowElements.set(id, element)
   else rowElements.delete(id)
 }
 
+/** Keep one mounted stage (sticky-safe) and play a clear fade/slide on each change. */
+const playStageSwap = (): void => {
+  const el = stageShell.value
+  if (!el || prefersReducedMotion()) return
+  swapTween?.kill()
+  swapTween = gsap.fromTo(
+    el,
+    { opacity: 0, y: 24, scale: 0.985 },
+    { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: 'power3.out', overwrite: true },
+  )
+}
+
+const setActive = (id: number): void => {
+  if (activeId.value === id) return
+  activeId.value = id
+  // Wait for ProjectStage / BrowserFrame to patch the new preview, then animate.
+  nextTick(() => playStageSwap())
+}
+
 const select = (id: number): void => {
   stageMode.value = 'preview'
-  activeId.value = id
+  setActive(id)
 }
 
 const hover = (id: number): void => {
-  if (isDesktop.value && !locked.value) activeId.value = id
+  if (isDesktop.value && !locked.value) setActive(id)
 }
 
 /** The row closest to the reading line becomes the one on stage. */
@@ -82,7 +111,7 @@ const syncToScroll = (): void => {
       bestId = id
     }
   })
-  activeId.value = bestId
+  setActive(bestId)
 }
 
 const onScroll = (): void => {
@@ -93,47 +122,100 @@ const onMediaChange = (event: MediaQueryListEvent): void => {
   isDesktop.value = event.matches
 }
 
+/** Fade/slide project rows in as they enter the viewport while scrolling. */
+const setupRowReveals = (): void => {
+  scrollContext?.revert()
+  scrollContext = undefined
+  if (prefersReducedMotion() || !sectionRoot.value) return
+
+  scrollContext = gsap.context(() => {
+    const rows = gsap.utils.toArray<HTMLElement>('.project-row')
+    rows.forEach((row) => {
+      gsap.fromTo(
+        row,
+        { opacity: 0.4, y: 32 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: row,
+            start: 'top 90%',
+            end: 'top 60%',
+            toggleActions: 'play none none reverse',
+          },
+        },
+      )
+    })
+  }, sectionRoot.value)
+}
+
 onMounted(() => {
   mediaQuery = window.matchMedia('(min-width: 1024px)')
   isDesktop.value = mediaQuery.matches
   mediaQuery.addEventListener('change', onMediaChange)
   window.addEventListener('scroll', onScroll, { passive: true })
+  nextTick(() => {
+    setupRowReveals()
+    ScrollTrigger.refresh()
+  })
 })
 
 onBeforeUnmount(() => {
   mediaQuery?.removeEventListener('change', onMediaChange)
   window.removeEventListener('scroll', onScroll)
   if (frame) cancelAnimationFrame(frame)
+  swapTween?.kill()
+  scrollContext?.revert()
+})
+
+watch(isDesktop, () => {
+  nextTick(() => {
+    setupRowReveals()
+    ScrollTrigger.refresh()
+  })
 })
 </script>
 
 <template>
-  <section id="projects" class="relative mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 md:py-28">
+  <section
+    id="projects"
+    ref="sectionRoot"
+    class="relative mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 md:py-28"
+  >
     <div v-if="!hideHeading" class="mb-12 max-w-2xl">
-      <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">{{ t('projects.title') }}</h2>
-      <p class="mt-4 text-base text-slate-300 sm:text-lg">{{ t('projectsPage.lead') }}</p>
+      <h2 class="section-title" data-reveal>{{ t('projects.title') }}</h2>
+      <p class="mt-4 text-base text-slate-300 sm:text-lg" data-reveal>{{ t('projectsPage.lead') }}</p>
     </div>
 
+    <!-- Shared stage on mobile/tablet -->
+    <div v-if="!isDesktop && activeItem" class="mb-8">
+      <div ref="stageShell" class="project-stage-shell">
+        <ProjectStage :project="activeItem" compact @mode="stageMode = $event" />
+      </div>
+    </div>
+
+    <!--
+      Do not put overflow-hidden on the stage column: it becomes a scrollport and
+      breaks position:sticky. Also keep a single mounted stage (no out-in Transition)
+      so sticky height never collapses during swaps.
+    -->
     <div class="lg:grid lg:grid-cols-12 lg:gap-12">
-      <!-- Project list -->
       <ol class="min-w-0 lg:col-span-5">
         <li
           v-for="item in items"
           :key="item.id"
           :ref="(element) => setRowRef(item.id, element)"
           class="project-row relative border-t border-white/10 py-8 last:border-b lg:py-10 lg:pl-6"
-          :class="{ 'is-active': isDesktop && item.id === activeId }"
+          :class="{ 'is-active': item.id === activeId }"
           @pointerenter="hover(item.id)"
         >
           <span class="project-row__marker" aria-hidden="true" />
 
-          <!-- On small screens every project carries its own stage -->
-          <ProjectStage v-if="!isDesktop" :project="item" compact class="mb-6" />
-
           <p v-if="item.kindLabel" class="mb-2 text-sm text-cyan-300">{{ item.kindLabel }}</p>
           <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
             <button
-              v-if="isDesktop"
               type="button"
               class="project-row__title clickable text-left"
               :aria-pressed="item.id === activeId"
@@ -143,10 +225,11 @@ onBeforeUnmount(() => {
             >
               {{ item.title }}
             </button>
-            <span v-else class="text-white">{{ item.title }}</span>
           </h3>
-          <p class="mt-3 max-w-prose text-[0.95rem] leading-relaxed text-slate-400">{{ item.description }}</p>
-          <p class="mt-3 text-sm text-slate-500">{{ item.stack.join(', ') }}</p>
+          <p class="mt-3 max-w-prose break-words text-[0.95rem] leading-relaxed text-slate-400">
+            {{ item.description }}
+          </p>
+          <p class="mt-3 break-words text-sm text-slate-500">{{ item.stack.join(', ') }}</p>
 
           <div class="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-medium">
             <router-link
@@ -176,10 +259,11 @@ onBeforeUnmount(() => {
         </li>
       </ol>
 
-      <!-- Stage: follows the active project while the list scrolls -->
       <div v-if="isDesktop && activeItem" class="min-w-0 lg:col-span-7">
-        <div class="sticky top-28">
-          <ProjectStage :project="activeItem" @mode="stageMode = $event" />
+        <div class="sticky top-28 z-[1]">
+          <div ref="stageShell" class="project-stage-shell">
+            <ProjectStage :project="activeItem" @mode="stageMode = $event" />
+          </div>
         </div>
       </div>
     </div>
@@ -187,6 +271,12 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+.project-stage-shell {
+  width: 100%;
+  will-change: transform, opacity;
+  transform-origin: center top;
+}
+
 .project-row__marker {
   position: absolute;
   left: 0;
@@ -196,19 +286,31 @@ onBeforeUnmount(() => {
   background: #22d3ee;
   transform: scaleY(0);
   transform-origin: top;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .project-row.is-active .project-row__marker {
   transform: scaleY(1);
 }
 
-.project-row__title {
-  color: #94a3b8;
-  transition: color 0.25s ease;
+@media (max-width: 1023px) {
+  .project-row__marker {
+    display: none;
+  }
 }
 
-.project-row.is-active .project-row__title,
+.project-row__title {
+  color: #94a3b8;
+  transition:
+    color 0.3s ease,
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-row.is-active .project-row__title {
+  color: #fff;
+  transform: translateX(6px);
+}
+
 .project-row__title:hover {
   color: #fff;
 }
@@ -231,6 +333,10 @@ onBeforeUnmount(() => {
   .project-row__marker,
   .project-row__title {
     transition: none;
+  }
+
+  .project-row.is-active .project-row__title {
+    transform: none;
   }
 }
 </style>

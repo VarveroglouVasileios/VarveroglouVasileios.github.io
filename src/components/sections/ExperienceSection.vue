@@ -75,7 +75,7 @@ onBeforeUnmount(() => {
 
 <template>
   <section id="experience" class="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28">
-    <h2 class="section-title mb-14">{{ t('experience.title') }}</h2>
+    <h2 class="section-title mb-14" data-reveal>{{ t('experience.title') }}</h2>
 
     <ol ref="listRef" class="timeline relative max-w-4xl">
       <li class="timeline__rail" aria-hidden="true">
@@ -86,13 +86,13 @@ onBeforeUnmount(() => {
         v-for="item in experience"
         :key="item.id"
         :data-entry="item.id"
-        class="timeline__entry relative pb-12 pl-8 last:pb-0 md:grid md:grid-cols-[13rem_1fr] md:pl-0"
+        class="timeline__entry relative pb-12 pl-8 last:pb-0 lg:grid lg:grid-cols-[minmax(9rem,13rem)_1fr] lg:pl-0"
         :class="{ 'is-reached': reached.has(item.id) }"
       >
         <span class="timeline__dot" aria-hidden="true" />
-        <p class="mb-2 text-sm text-slate-400 md:mb-0 md:pr-10 md:pt-1 md:text-right">{{ item.period }}</p>
-        <div class="md:pl-10">
-          <h3 class="timeline__title text-xl font-semibold tracking-tight md:text-2xl">{{ entry(item.id).title }}</h3>
+        <p class="mb-2 text-sm text-slate-400 lg:mb-0 lg:pr-10 lg:pt-1 lg:text-right">{{ item.period }}</p>
+        <div class="lg:pl-10">
+          <h3 class="timeline__title text-xl font-semibold tracking-tight lg:text-2xl">{{ entry(item.id).title }}</h3>
           <p class="mt-1 text-base text-cyan-300">{{ entry(item.id).organization }}</p>
           <p class="mt-3 max-w-prose leading-relaxed text-slate-400">{{ entry(item.id).description }}</p>
         </div>
@@ -106,7 +106,7 @@ onBeforeUnmount(() => {
   --rail-x: 0px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .timeline {
     --rail-x: 13rem;
   }

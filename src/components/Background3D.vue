@@ -37,6 +37,19 @@ const PALETTE: Record<
     gradTop: 'rgba(15,23,42,0.25)',
     gradBot: 'rgba(2,6,23,0.82)',
   },
+  // Slate + single cyan accent — keeps services distinct without extra purple.
+  services: {
+    light1: '#67e8f9',
+    light2: '#64748b',
+    particle: '#94a3b8',
+    emissive: '#22d3ee',
+    core: '#334155',
+    coreEm: '#0f172a',
+    baseBg: '#020617',
+    vignetteEdge: '#0f172a',
+    gradTop: 'rgba(30,41,59,0.35)',
+    gradBot: 'rgba(2,6,23,0.9)',
+  },
   about: {
     light1: '#c4b5fd',
     light2: '#6d28d9',

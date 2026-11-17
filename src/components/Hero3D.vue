@@ -56,17 +56,22 @@ onMounted(() => {
   if (magnetRef.value) attach(magnetRef.value)
   nextTick(() => {
     if (prefersReducedMotion()) return
+    const use3dEntrance = window.matchMedia('(min-width: 1024px)').matches
     // One page-load sequence: copy rises in, then the screen settles into place.
+    // 3D tilt only on large screens so mobile does not bleed past the viewport.
     context = gsap.context((self) => {
       if (!self.selector) return
       const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
-      timeline
-        .from(self.selector('[data-hero-item]'), { y: 24, opacity: 0, stagger: 0.09, duration: 0.8 }, 0.35)
-        .from(
+      timeline.from(self.selector('[data-hero-item]'), { y: 24, opacity: 0, stagger: 0.09, duration: 0.8 }, 0.35)
+      if (use3dEntrance) {
+        timeline.from(
           self.selector('[data-hero-screen]'),
           { y: 60, opacity: 0, rotateY: -14, rotateX: 6, duration: 1.1, transformPerspective: 1400 },
           0.1,
         )
+      } else {
+        timeline.from(self.selector('[data-hero-screen]'), { y: 28, opacity: 0, duration: 0.85 }, 0.15)
+      }
     }, heroRoot.value || undefined)
   })
 })
@@ -81,9 +86,9 @@ onBeforeUnmount(() => {
   <section
     id="hero"
     ref="heroRoot"
-    class="relative mx-auto flex min-h-[calc(100svh-7rem)] w-full max-w-7xl items-center px-4 pb-20 pt-6 sm:px-6"
+    class="relative mx-auto flex w-full max-w-7xl items-start px-4 pb-16 pt-6 sm:px-6 lg:min-h-[calc(100svh-7rem)] lg:items-center lg:pb-20"
   >
-    <div class="grid w-full items-center gap-12 lg:grid-cols-12 lg:gap-10">
+    <div class="grid w-full items-center gap-8 sm:gap-10 lg:grid-cols-12 lg:gap-10">
       <div class="min-w-0 lg:col-span-6">
         <p data-hero-item class="mb-5 text-sm font-medium text-cyan-300 sm:text-base">
           {{ t('hero.title') }}
@@ -91,7 +96,7 @@ onBeforeUnmount(() => {
         <h1
           :key="locale"
           :aria-label="headline"
-          class="text-balance text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl xl:text-6xl"
+          class="text-balance text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl md:text-5xl lg:text-6xl"
         >
           <template v-for="(word, index) in headlineWords" :key="index">
             <span class="hero-word" aria-hidden="true"><span class="hero-word__inner" :style="{ '--i': index }">{{ word }}</span></span>{{ ' ' }}
@@ -128,13 +133,13 @@ onBeforeUnmount(() => {
 
       <div
         v-if="current"
-        class="min-w-0 lg:col-span-6"
+        class="min-w-0 overflow-hidden lg:col-span-6"
         @pointerenter="paused = true"
         @pointerleave="paused = false"
         @focusin="paused = true"
         @focusout="paused = false"
       >
-        <div data-hero-screen>
+        <div data-hero-screen class="overflow-hidden">
           <BrowserFrame
             :title="current.title"
             :image-url="current.imageUrl"

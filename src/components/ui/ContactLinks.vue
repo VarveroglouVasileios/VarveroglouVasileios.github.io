@@ -17,7 +17,7 @@ const whatsappHref = computed(() => whatsappUrl(t('contact.whatsappMessage')))
     <li>
       <a
         :href="`mailto:${contactInfo.email}`"
-        class="btn-outline clickable"
+        class="btn-outline clickable max-w-full break-all sm:break-normal"
         @click="trackEvent('Contact click', { method: 'email', source })"
       >
         {{ contactInfo.email }}

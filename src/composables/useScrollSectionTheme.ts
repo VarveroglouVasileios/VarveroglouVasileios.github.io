@@ -2,6 +2,7 @@ import { onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
 
 export type BackgroundSectionKey =
   | 'hero'
+  | 'services'
   | 'about'
   | 'projects'
   | 'insights'
@@ -10,6 +11,7 @@ export type BackgroundSectionKey =
 
 const SECTION_IDS: BackgroundSectionKey[] = [
   'hero',
+  'services',
   'about',
   'projects',
   'insights',

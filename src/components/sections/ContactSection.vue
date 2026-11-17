@@ -78,9 +78,9 @@ const submitForm = async () => {
 <template>
   <section id="contact" class="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28">
     <div class="grid gap-14 lg:grid-cols-12 lg:gap-16">
-      <div class="lg:col-span-6">
-        <component :is="headingTag" class="section-title mb-6 text-balance">{{ t("contact.title") }}</component>
-        <p class="mb-10 max-w-xl text-lg leading-relaxed text-slate-300">
+      <div class="min-w-0 lg:col-span-6">
+        <component :is="headingTag" class="section-title mb-6 text-balance" data-reveal>{{ t("contact.title") }}</component>
+        <p class="mb-10 max-w-xl text-lg leading-relaxed text-slate-300" data-reveal>
           {{ t("contact.description") }}
         </p>
 

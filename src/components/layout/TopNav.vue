@@ -73,6 +73,7 @@ watch(
 
 <template>
   <nav
+    aria-label="Primary"
     class="fixed left-0 right-0 top-0 z-[100] border-b transition-all duration-300 pt-[env(safe-area-inset-top,0px)]"
     :class="[
       isScrolled
@@ -81,17 +82,18 @@ watch(
     ]"
   >
     <div
-      class="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6"
+      class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 sm:px-6"
     >
-      <router-link :to="to('home')" class="group flex items-center gap-2">
-        <span class="text-lg font-semibold tracking-tight text-white transition-colors group-hover:text-cyan-300 sm:text-xl">
-          Vasileios Varveroglou
+      <router-link :to="to('home')" class="group min-w-0 flex-1 items-center gap-2 sm:flex-none">
+        <span class="block truncate text-lg font-semibold tracking-tight text-white transition-colors group-hover:text-cyan-300 sm:text-xl">
+          <span class="sm:hidden">V. Varveroglou</span>
+          <span class="hidden sm:inline">Vasileios Varveroglou</span>
         </span>
       </router-link>
 
-      <!-- Desktop Nav -->
-      <div class="hidden items-center gap-8 md:flex">
-        <div class="flex items-center gap-6">
+      <!-- Desktop Nav (lg+ to avoid overflow on tablets) -->
+      <div class="hidden items-center gap-6 lg:flex xl:gap-8">
+        <div class="flex items-center gap-5 xl:gap-6">
           <router-link
             v-for="link in navLinks"
             :key="link.name"
@@ -120,9 +122,9 @@ watch(
         </div>
       </div>
 
-      <!-- Mobile Toggle -->
+      <!-- Mobile / tablet Toggle -->
       <button
-        class="flex h-12 w-12 flex-col items-center justify-center gap-1.5 md:hidden"
+        class="flex h-12 w-12 shrink-0 flex-col items-center justify-center gap-1.5 lg:hidden"
         :aria-label="t('nav.menu')"
         :aria-expanded="isMobileMenuOpen"
         @click="isMobileMenuOpen = !isMobileMenuOpen"
@@ -161,7 +163,7 @@ watch(
     >
       <div
         v-if="isMobileMenuOpen"
-        class="absolute left-0 right-0 top-full bg-slate-900/95 p-6 backdrop-blur-xl md:hidden"
+        class="absolute left-0 right-0 top-full bg-slate-900/95 p-6 backdrop-blur-xl lg:hidden"
       >
         <div class="flex flex-col gap-6">
           <router-link

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import gsap from 'gsap'
 import ProjectStage from '@/components/showcase/ProjectStage.vue'
 import type { FrameMode } from '@/components/showcase/BrowserFrame.vue'
 import { projects } from '@/data/portfolio'
@@ -48,6 +49,7 @@ const stageMode = ref<FrameMode>('preview')
 const locked = computed(() => stageMode.value !== 'preview')
 
 const isDesktop = ref(false)
+const stageShell = ref<HTMLElement | null>(null)
 const rowElements = new Map<number, HTMLElement>()
 let mediaQuery: MediaQueryList | undefined
 let frame = 0
@@ -93,6 +95,18 @@ const onMediaChange = (event: MediaQueryListEvent): void => {
   isDesktop.value = event.matches
 }
 
+const prefersReducedMotion = (): boolean => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+/** Soft crossfade when the sticky/shared stage swaps projects. */
+watch(activeId, async () => {
+  const el = stageShell.value
+  if (!el || prefersReducedMotion()) return
+  gsap.killTweensOf(el)
+  gsap.set(el, { opacity: 0.35 })
+  await nextTick()
+  gsap.to(el, { opacity: 1, duration: 0.22, ease: 'power2.out' })
+})
+
 onMounted(() => {
   mediaQuery = window.matchMedia('(min-width: 1024px)')
   isDesktop.value = mediaQuery.matches
@@ -104,14 +118,22 @@ onBeforeUnmount(() => {
   mediaQuery?.removeEventListener('change', onMediaChange)
   window.removeEventListener('scroll', onScroll)
   if (frame) cancelAnimationFrame(frame)
+  if (stageShell.value) gsap.killTweensOf(stageShell.value)
 })
 </script>
 
 <template>
   <section id="projects" class="relative mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 md:py-28">
     <div v-if="!hideHeading" class="mb-12 max-w-2xl">
-      <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">{{ t('projects.title') }}</h2>
-      <p class="mt-4 text-base text-slate-300 sm:text-lg">{{ t('projectsPage.lead') }}</p>
+      <h2 class="section-title" data-reveal>{{ t('projects.title') }}</h2>
+      <p class="mt-4 text-base text-slate-300 sm:text-lg" data-reveal>{{ t('projectsPage.lead') }}</p>
+    </div>
+
+    <!-- Shared stage on mobile/tablet: one frame for the active project -->
+    <div v-if="!isDesktop && activeItem" class="mb-8 overflow-hidden">
+      <div ref="stageShell">
+        <ProjectStage :project="activeItem" compact @mode="stageMode = $event" />
+      </div>
     </div>
 
     <div class="lg:grid lg:grid-cols-12 lg:gap-12">
@@ -122,18 +144,14 @@ onBeforeUnmount(() => {
           :key="item.id"
           :ref="(element) => setRowRef(item.id, element)"
           class="project-row relative border-t border-white/10 py-8 last:border-b lg:py-10 lg:pl-6"
-          :class="{ 'is-active': isDesktop && item.id === activeId }"
+          :class="{ 'is-active': item.id === activeId }"
           @pointerenter="hover(item.id)"
         >
           <span class="project-row__marker" aria-hidden="true" />
 
-          <!-- On small screens every project carries its own stage -->
-          <ProjectStage v-if="!isDesktop" :project="item" compact class="mb-6" />
-
           <p v-if="item.kindLabel" class="mb-2 text-sm text-cyan-300">{{ item.kindLabel }}</p>
           <h3 class="text-2xl font-semibold tracking-tight sm:text-3xl">
             <button
-              v-if="isDesktop"
               type="button"
               class="project-row__title clickable text-left"
               :aria-pressed="item.id === activeId"
@@ -143,10 +161,11 @@ onBeforeUnmount(() => {
             >
               {{ item.title }}
             </button>
-            <span v-else class="text-white">{{ item.title }}</span>
           </h3>
-          <p class="mt-3 max-w-prose text-[0.95rem] leading-relaxed text-slate-400">{{ item.description }}</p>
-          <p class="mt-3 text-sm text-slate-500">{{ item.stack.join(', ') }}</p>
+          <p class="mt-3 max-w-prose break-words text-[0.95rem] leading-relaxed text-slate-400">
+            {{ item.description }}
+          </p>
+          <p class="mt-3 break-words text-sm text-slate-500">{{ item.stack.join(', ') }}</p>
 
           <div class="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-medium">
             <router-link
@@ -176,10 +195,12 @@ onBeforeUnmount(() => {
         </li>
       </ol>
 
-      <!-- Stage: follows the active project while the list scrolls -->
-      <div v-if="isDesktop && activeItem" class="min-w-0 lg:col-span-7">
+      <!-- Stage: follows the active project while the list scrolls (desktop) -->
+      <div v-if="isDesktop && activeItem" class="min-w-0 overflow-hidden lg:col-span-7">
         <div class="sticky top-28">
-          <ProjectStage :project="activeItem" @mode="stageMode = $event" />
+          <div ref="stageShell">
+            <ProjectStage :project="activeItem" @mode="stageMode = $event" />
+          </div>
         </div>
       </div>
     </div>
@@ -201,6 +222,12 @@ onBeforeUnmount(() => {
 
 .project-row.is-active .project-row__marker {
   transform: scaleY(1);
+}
+
+@media (max-width: 1023px) {
+  .project-row__marker {
+    display: none;
+  }
 }
 
 .project-row__title {

@@ -6,6 +6,7 @@ const DOC_CLASS = 'custom-cursor-desktop'
 
 const cursor = ref<HTMLElement | null>(null)
 const follower = ref<HTMLElement | null>(null)
+const enabled = ref(false)
 
 const moveCursor = (e: MouseEvent): void => {
   gsap.to(cursor.value, {
@@ -23,6 +24,7 @@ const moveCursor = (e: MouseEvent): void => {
 }
 
 const onMouseMove = (e: MouseEvent): void => {
+  if (!enabled.value) return
   const target = e.target as HTMLElement
   const large = target.closest('[data-cursor="lg"]')
   const clickable = target.closest(
@@ -59,13 +61,21 @@ let removeMqListener: (() => void) | undefined
 
 onMounted(() => {
   const mq = window.matchMedia('(min-width: 768px)')
-  const syncHideNative = (): void => {
-    document.documentElement.classList.toggle(DOC_CLASS, mq.matches)
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+  const sync = (): void => {
+    enabled.value = mq.matches && !reduced.matches
+    document.documentElement.classList.toggle(DOC_CLASS, enabled.value)
   }
-  syncHideNative()
-  mq.addEventListener('change', syncHideNative)
+
+  sync()
+  mq.addEventListener('change', sync)
+  reduced.addEventListener('change', sync)
   window.addEventListener('mousemove', onMouseMove)
-  removeMqListener = () => mq.removeEventListener('change', syncHideNative)
+  removeMqListener = () => {
+    mq.removeEventListener('change', sync)
+    reduced.removeEventListener('change', sync)
+  }
 })
 
 onBeforeUnmount(() => {
@@ -77,7 +87,7 @@ onBeforeUnmount(() => {
 
 <template>
   <!-- Above SecurityTerminal (z-10000) and project breakdown dialog (z-20000); keep native cursor hidden site-wide. -->
-  <div class="pointer-events-none fixed inset-0 z-[30000] hidden md:block">
+  <div v-if="enabled" class="pointer-events-none fixed inset-0 z-[30000] hidden md:block">
     <div
       ref="cursor"
       class="fixed left-0 top-0 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)]"

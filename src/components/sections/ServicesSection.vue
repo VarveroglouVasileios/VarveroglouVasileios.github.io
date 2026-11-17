@@ -28,7 +28,7 @@ const hideHighlight = (): void => {
 <template>
   <section id="services" class="relative mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 md:py-28">
     <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
-      <h2 class="section-title">{{ t('servicesPage.teaserTitle') }}</h2>
+      <h2 class="section-title" data-reveal>{{ t('servicesPage.teaserTitle') }}</h2>
       <router-link :to="to('services')" class="text-link text-base font-medium text-slate-200">
         {{ t('cta.allServices') }}
       </router-link>

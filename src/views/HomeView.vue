@@ -13,9 +13,42 @@ const ExperienceSection = defineAsyncComponent(() => import('@/components/sectio
 const InsightsSection = defineAsyncComponent(() => import('@/components/sections/InsightsSection.vue'))
 const ContactSection = defineAsyncComponent(() => import('@/components/sections/ContactSection.vue'))
 
+let revealContext: gsap.Context | undefined
+
+const prefersReducedMotion = (): boolean =>
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+/** Light once-reveals for section titles / leads marked with [data-reveal]. */
+const setupReveals = (): void => {
+  revealContext?.revert()
+  revealContext = undefined
+  if (prefersReducedMotion()) return
+
+  revealContext = gsap.context(() => {
+    const targets = gsap.utils.toArray<HTMLElement>('[data-reveal]')
+    if (!targets.length) return
+    gsap.set(targets, { opacity: 0, y: 12 })
+    ScrollTrigger.batch(targets, {
+      start: 'top 88%',
+      once: true,
+      onEnter: (batch) => {
+        gsap.to(batch, {
+          opacity: 1,
+          y: 0,
+          duration: 0.55,
+          stagger: 0.08,
+          ease: 'power2.out',
+          overwrite: true,
+        })
+      },
+    })
+  })
+}
+
 const refreshScroll = (): void => {
   nextTick(() => {
     setTimeout(() => {
+      setupReveals()
       ScrollTrigger.refresh()
       if (!window.location.hash) window.scrollTo(0, 0)
     }, 400)
@@ -30,6 +63,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('load', refreshScroll)
+  revealContext?.revert()
 })
 </script>
 

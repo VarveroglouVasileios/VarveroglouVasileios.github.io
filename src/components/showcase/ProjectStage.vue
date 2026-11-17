@@ -55,7 +55,11 @@ watch(
       :open-label="t('showcase.openNew')"
     >
       <template #how>
-        <dl v-if="project.breakdown" class="grid gap-5 text-sm leading-relaxed text-slate-300 sm:grid-cols-3">
+        <dl
+          v-if="project.breakdown"
+          class="grid gap-5 text-sm leading-relaxed text-slate-300"
+          :class="compact ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-3'"
+        >
           <div>
             <dt class="mb-1.5 font-semibold text-cyan-300">{{ t('projects.breakdown.architecture') }}</dt>
             <dd>{{ project.breakdown.architecture }}</dd>
@@ -72,13 +76,16 @@ watch(
       </template>
     </BrowserFrame>
 
-    <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex flex-wrap gap-1 rounded-full border border-white/10 bg-slate-900/70 p-1" role="group">
+    <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+      <div
+        class="flex w-full flex-wrap gap-1 rounded-full border border-white/10 bg-slate-900/70 p-1 sm:w-auto"
+        role="group"
+      >
         <button
           v-for="tab in tabs"
           :key="tab.id"
           type="button"
-          class="clickable rounded-full px-3 py-2 text-sm font-medium transition sm:px-4"
+          class="clickable min-w-0 flex-1 rounded-full px-3 py-2 text-sm font-medium transition sm:flex-none sm:px-4"
           :class="
             mode === tab.id
               ? 'bg-cyan-400 text-slate-950'
@@ -93,7 +100,7 @@ watch(
 
       <div
         v-if="mode === 'live'"
-        class="flex gap-1 rounded-full border border-white/10 bg-slate-900/70 p-1"
+        class="flex w-full gap-1 rounded-full border border-white/10 bg-slate-900/70 p-1 sm:w-auto"
         role="group"
         :aria-label="t('showcase.device')"
       >
@@ -101,7 +108,7 @@ watch(
           v-for="option in (['desktop', 'mobile'] as const)"
           :key="option"
           type="button"
-          class="clickable rounded-full px-3 py-2 text-sm font-medium transition"
+          class="clickable flex-1 rounded-full px-3 py-2 text-sm font-medium transition sm:flex-none"
           :class="device === option ? 'bg-white/15 text-white' : 'text-slate-400 hover:text-white'"
           :aria-pressed="device === option"
           @click="device = option"

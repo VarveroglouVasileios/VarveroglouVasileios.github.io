@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import gsap from 'gsap'
 import ProjectStage from '@/components/showcase/ProjectStage.vue'
@@ -97,14 +97,16 @@ const onMediaChange = (event: MediaQueryListEvent): void => {
 
 const prefersReducedMotion = (): boolean => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-/** Soft crossfade when the sticky/shared stage swaps projects. */
-watch(activeId, async () => {
+/** Noticeable swap when scroll/hover/click changes the active project. */
+watch(activeId, () => {
   const el = stageShell.value
   if (!el || prefersReducedMotion()) return
   gsap.killTweensOf(el)
-  gsap.set(el, { opacity: 0.35 })
-  await nextTick()
-  gsap.to(el, { opacity: 1, duration: 0.22, ease: 'power2.out' })
+  gsap.fromTo(
+    el,
+    { opacity: 0, y: 18 },
+    { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out', overwrite: true },
+  )
 })
 
 onMounted(() => {
@@ -130,12 +132,16 @@ onBeforeUnmount(() => {
     </div>
 
     <!-- Shared stage on mobile/tablet: one frame for the active project -->
-    <div v-if="!isDesktop && activeItem" class="mb-8 overflow-hidden">
-      <div ref="stageShell">
+    <div v-if="!isDesktop && activeItem" class="mb-8">
+      <div ref="stageShell" class="project-stage-shell">
         <ProjectStage :project="activeItem" compact @mode="stageMode = $event" />
       </div>
     </div>
 
+    <!--
+      Do not put overflow-hidden on the stage column: it becomes a scrollport and
+      breaks position:sticky, so the frame scrolls away after ~2 projects.
+    -->
     <div class="lg:grid lg:grid-cols-12 lg:gap-12">
       <!-- Project list -->
       <ol class="min-w-0 lg:col-span-5">
@@ -195,10 +201,10 @@ onBeforeUnmount(() => {
         </li>
       </ol>
 
-      <!-- Stage: follows the active project while the list scrolls (desktop) -->
-      <div v-if="isDesktop && activeItem" class="min-w-0 overflow-hidden lg:col-span-7">
-        <div class="sticky top-28">
-          <div ref="stageShell">
+      <!-- Stage: sticks for the full height of the list while projects sync to scroll -->
+      <div v-if="isDesktop && activeItem" class="min-w-0 lg:col-span-7">
+        <div class="sticky top-28 z-[1]">
+          <div ref="stageShell" class="project-stage-shell">
             <ProjectStage :project="activeItem" @mode="stageMode = $event" />
           </div>
         </div>
@@ -208,6 +214,10 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+.project-stage-shell {
+  will-change: transform, opacity;
+}
+
 .project-row__marker {
   position: absolute;
   left: 0;
@@ -217,7 +227,7 @@ onBeforeUnmount(() => {
   background: #22d3ee;
   transform: scaleY(0);
   transform-origin: top;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .project-row.is-active .project-row__marker {
@@ -232,10 +242,16 @@ onBeforeUnmount(() => {
 
 .project-row__title {
   color: #94a3b8;
-  transition: color 0.25s ease;
+  transition:
+    color 0.3s ease,
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.project-row.is-active .project-row__title,
+.project-row.is-active .project-row__title {
+  color: #fff;
+  transform: translateX(4px);
+}
+
 .project-row__title:hover {
   color: #fff;
 }

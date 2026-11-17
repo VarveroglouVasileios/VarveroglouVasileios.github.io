@@ -185,6 +185,11 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.25.12.tgz#9bdad8176be7811ad148d1f8772359041f46c6c5"
   integrity sha512-alJC0uCZpTFrSL0CCDjcgleBXPnCrEAhTBILpeAp7M/OFgoqtAetfBzX0xM00MUsVVPpVjlPuMbREqnZCXaTnA==
 
+"@fontsource-variable/commissioner@^5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/commissioner/-/commissioner-5.3.0.tgz#5cdd05825d471578fdc5ee8bacca5f3308b4ba63"
+  integrity sha512-0IEvi8SO1slc5Pc9tA4OtA01I8UiCcEq/uh12oNjfHuABU9Lnz61l2V8o2cMPUUo3BAo5MbISVK2I/DSpBRw7Q==
+
 "@intlify/core-base@11.3.0":
   version "11.3.0"
   resolved "https://registry.npmjs.org/@intlify/core-base/-/core-base-11.3.0.tgz"

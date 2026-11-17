@@ -37,24 +37,12 @@ const iconFill = computed(() => `#${icon.value.hex}`)
 </script>
 
 <template>
-  <div
-    class="flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-800/35 px-3 py-2.5 sm:px-4 sm:py-3"
-  >
-    <div
-      class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-white shadow-inner shadow-slate-900/15 sm:size-10"
-      role="presentation"
-    >
-      <svg
-        class="m-auto h-5 w-5 sm:h-6 sm:w-6"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-      >
+  <div class="flex items-center gap-3">
+    <div class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-white" role="presentation">
+      <svg class="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path :d="icon.path" :fill="iconFill" />
       </svg>
     </div>
-    <span class="min-w-0 text-xs font-medium leading-snug text-slate-100 sm:text-sm">
-      {{ skill.name }}
-    </span>
+    <span class="min-w-0 text-sm font-medium leading-snug text-slate-200">{{ skill.name }}</span>
   </div>
 </template>

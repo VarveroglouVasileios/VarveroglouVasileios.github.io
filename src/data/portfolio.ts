@@ -68,6 +68,7 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/varveroglouvasileios',
     liveUrl: 'https://chromewebstore.google.com/detail/dobaajjnlgpbfkhlfldikmlfihnilajp',
     liveLabelKey: 'projects.chromeStore',
+    embeddable: false,
     breakdown: {
       architecture:
         'Service worker and content coordination intercept outgoing fetch/XHR bodies on declared origins, walk JSON and embedded strings, and replace matches with stable placeholders. An in-memory mapping supports local restoration where the page renders responses.',

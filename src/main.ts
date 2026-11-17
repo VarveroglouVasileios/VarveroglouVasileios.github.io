@@ -4,6 +4,7 @@ import App from './App.vue'
 import router from './router'
 import { i18n } from './i18n'
 import { initAnalytics } from './lib/analytics'
+import '@fontsource-variable/commissioner'
 import './style.css'
 
 if ('scrollRestoration' in history) {

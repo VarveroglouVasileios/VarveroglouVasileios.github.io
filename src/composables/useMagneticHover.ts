@@ -9,6 +9,14 @@ export const useMagneticHover = (strength = 24) => {
   }> = []
 
   const attach = (element: HTMLElement): void => {
+    // Only for real pointers, and never when motion is unwanted.
+    if (
+      !window.matchMedia('(hover: hover) and (pointer: fine)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return
+    }
+
     const onMove = (event: MouseEvent): void => {
       const bounds = element.getBoundingClientRect()
       const offsetX = event.clientX - bounds.left - bounds.width / 2

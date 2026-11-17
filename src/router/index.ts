@@ -33,7 +33,7 @@ const router = createRouter({
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
   async scrollBehavior(to) {
-    const navOffset = window.innerWidth < 640 ? 180 : 140
+    const navOffset = 96
 
     if (to.hash) {
       await new Promise((resolve) => {

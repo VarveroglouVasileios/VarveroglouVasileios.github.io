@@ -32,11 +32,13 @@ const content = {
 
 <template>
   <div>
-    <PageHeader :tag="lang() === 'el' ? 'ΑΠΟΡΡΗΤΟ' : 'PRIVACY'" :title="h1()" />
-    <section class="mx-auto max-w-3xl space-y-8 px-4 pb-16 sm:px-6">
-      <div v-for="[title, text] in content[lang()]" :key="title">
-        <h2 class="mb-2 text-lg font-bold text-white">{{ title }}</h2>
-        <p class="text-slate-300">{{ text }}</p>
+    <PageHeader :title="h1()" />
+    <section class="mx-auto max-w-7xl px-4 pb-16 sm:px-6">
+      <div class="max-w-3xl space-y-8">
+        <div v-for="[title, text] in content[lang()]" :key="title">
+          <h2 class="mb-2 text-xl font-semibold text-white">{{ title }}</h2>
+          <p class="leading-relaxed text-slate-300">{{ text }}</p>
+        </div>
       </div>
     </section>
   </div>

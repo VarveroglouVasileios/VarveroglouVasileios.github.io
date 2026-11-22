@@ -141,6 +141,258 @@ export const projects: Project[] = [
     },
   },
   {
+    id: 11,
+    slug: 'vivliario-service-book-demo',
+    title: 'Vivliario, digital service book demo',
+    description:
+      'Demo concept: a workshop service book with the work history, MOT and oil-change reminders computed from the data, and appointment booking.',
+    stack: ['Vue 3', 'TypeScript', 'Vitest'],
+    imageLabel: 'Vivliario demo',
+    imageUrl: '/vivliario-service-book-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/VivliarioProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/VivliarioProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'Dates, reminders, plate normalisation, validation and appointment slots live in pure, tested functions. The UI is Vue 3 with hash routing so it runs on static hosting.',
+      security:
+        'Every form is validated on blur and submit, with Greek plate and mobile formats. Data is kept in sessionStorage only and the page ships a strict Content-Security-Policy.',
+      challenges:
+        'Reminders must stay correct across month and leap-day boundaries, and a half-filled form must never lose what the user typed.',
+    },
+  },
+  {
+    id: 12,
+    slug: 'room-360-demo',
+    title: 'Room 360, interactive room viewer demo',
+    description:
+      'Demo concept: a hotel room you can drag around, with numbered hotspots that explain the bed, terrace and fittings before booking.',
+    stack: ['Vue 3', 'TypeScript', 'Vitest'],
+    imageLabel: 'Room 360 demo',
+    imageUrl: '/room-360-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/DwmatioProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/DwmatioProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'Pan limits, zoom and hotspot placement are pure, tested functions. Pointer events handle dragging and a ResizeObserver keeps the layout correct on any screen.',
+      security:
+        'There is no backend and nothing is stored. The external link to the booking demo uses rel=noopener and the page ships a strict Content-Security-Policy.',
+      challenges:
+        'A hotspot must stay glued to the right object while the photo moves and the window resizes, and the photo must never reveal an empty edge.',
+    },
+  },
+  {
+    id: 13,
+    slug: 'metrisi-renovation-estimate-demo',
+    title: 'Metrisi, renovation estimate demo',
+    description:
+      'Demo concept: four questions give an instant cost range for a renovation, split into materials, labour and extras, before asking for a visit.',
+    stack: ['Vue 3', 'TypeScript', 'Vitest'],
+    imageLabel: 'Metrisi demo',
+    imageUrl: '/metrisi-renovation-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/MetrisiProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/MetrisiProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'All pricing is a pure function from the answers to a breakdown and range, so it is easy to test and to replace with a real price list.',
+      security:
+        'Area is clamped and inputs are validated before use. Phone numbers are checked against Greek formats and nothing is sent anywhere.',
+      challenges:
+        'The range has to stay ordered for every combination of room, level and extras, and the number a customer sees must match the breakdown to the euro.',
+    },
+  },
+  {
+    id: 14,
+    slug: 'rythmos-class-waitlist-demo',
+    title: 'Rythmos, class booking with a waitlist demo',
+    description:
+      'Demo concept: a studio timetable with limited places, a waitlist, and a 15-minute offer that passes to the next person if it is not accepted.',
+    stack: ['Vue 3', 'TypeScript', 'Vitest'],
+    imageLabel: 'Rythmos demo',
+    imageUrl: '/rythmos-classes-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/RythmosProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/RythmosProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'Capacity, waitlist and offers are pure functions over plain data that return a new state, which makes every rule testable without a clock or a database.',
+      security:
+        'Inputs are validated, the class start time is checked on every action, and an expired offer can never be confirmed. A real build repeats these rules on the server.',
+      challenges:
+        'A held seat must not be taken by a newcomer, an expired offer must pass to the next person exactly once, and no offer may be made in the last minutes of a class.',
+    },
+  },
+  {
+    id: 15,
+    slug: 'noumero-queue-demo',
+    title: 'Noumero, digital queue demo',
+    description:
+      'Demo concept: customers take a number from their phone and watch their place move live, while the shop presses Next. Includes a QR code.',
+    stack: ['Vue 3', 'TypeScript', 'QR code', 'Vitest'],
+    imageLabel: 'Noumero demo',
+    imageUrl: '/noumero-queue-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/NoumeroProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/NoumeroProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'Queue rules are pure functions that return a new state. Tabs share versioned state over a BroadcastChannel, and a late tab asks the others for the current queue.',
+      security:
+        'No personal data is required (the name is optional and capped at 40 characters), the QR is generated locally and the page ships a strict Content-Security-Policy.',
+      challenges:
+        'Numbers must never be reused, an estimate must learn from actual times, and tabs must converge without echoing each other\'s updates forever.',
+    },
+  },
+  {
+    id: 16,
+    slug: 'peripatos-walk-demo',
+    title: 'Peripatos, self-guided walk demo',
+    description:
+      'Demo concept: a five-stop walking tour of Kavala with a map, optional location, and an offline mode that works without a signal.',
+    stack: ['Vue 3', 'TypeScript', 'Service Worker', 'Vitest'],
+    imageLabel: 'Peripatos demo',
+    imageUrl: '/peripatos-walk-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/PeripatosProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/PeripatosProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'Geometry (haversine distance, bearing, projection) is pure and tested. A small service worker caches the app and the views are bundled together so every page works offline.',
+      security:
+        'The location permission is requested only when the visitor asks for it, and the position stays on the device. The worker only caches same-origin files.',
+      challenges:
+        'Offline mode must include every route of the app, not only the home page, and the cache must still answer when the browser sends a different Vary header.',
+    },
+  },
+  {
+    id: 17,
+    slug: 'ktima-seating-planner-demo',
+    title: 'Ktima Dafni, event seating planner demo',
+    description:
+      'Demo concept: an event venue where the couple drags guests onto tables, sees overfull warnings, and downloads the final list for the venue.',
+    stack: ['Vue 3', 'TypeScript', 'SVG', 'Vitest'],
+    imageLabel: 'Ktima Dafni demo',
+    imageUrl: '/ktima-seating-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/KtimaProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/KtimaProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'Seating rules are pure functions over a plan that is never mutated. The floor is SVG, with drag and drop plus an accessible click-to-assign path.',
+      security:
+        'CSV cells that start with =, +, - or @ are neutralised so a guest name cannot become a spreadsheet formula, and all text is rendered as text.',
+      challenges:
+        'Auto-seating has to relieve overfull tables first and keep groups together without ever exceeding capacity, and drag and drop must have a keyboard alternative.',
+    },
+  },
+  {
+    id: 18,
+    slug: 'karpos-olive-oil-passport-demo',
+    title: 'Karpos, olive oil batch passport demo',
+    description:
+      'Demo concept: a QR code on the bottle opens the journey of the batch, from harvest and pressing to the lab analysis and bottling.',
+    stack: ['Vue 3', 'TypeScript', 'QR code', 'Vitest'],
+    imageLabel: 'Karpos demo',
+    imageUrl: '/karpos-olive-oil-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/KarposProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/KarposProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'The batch is encoded into the link itself (compact JSON plus a Fletcher-16 checksum), so the customer page needs no backend. Category rules are pure and tested.',
+      security:
+        'Decoded data is re-validated before display, so a hand-edited link cannot show invalid values, and nothing is inserted as HTML.',
+      challenges:
+        'A mistyped, truncated or edited link must be detected and explained instead of showing wrong data, and the QR must stay small enough to scan on a label.',
+    },
+  },
+  {
+    id: 19,
+    slug: 'ena-ical-calendar-demo',
+    title: 'ENA, unified booking calendar demo',
+    description:
+      'Demo concept: calendars from different booking channels (iCal) merged per property, with overlaps flagged before the guest arrives.',
+    stack: ['Vue 3', 'TypeScript', 'iCalendar', 'Vitest'],
+    imageLabel: 'ENA demo',
+    imageUrl: '/ena-calendar-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/EnaProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/EnaProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'The iCal reader and writer, overlap detection and booking checks are pure functions. The check-out day is exclusive, so a same-day turnover is never a false alarm.',
+      security:
+        'Calendar text is only parsed as text, never executed or inserted as HTML, and exported text is escaped and folded as the format requires.',
+      challenges:
+        'Real feeds have folded lines, date-only and date-time values and cancelled events, and an overlap must be reported exactly once per pair of bookings.',
+    },
+  },
+  {
+    id: 20,
+    slug: 'diafaneia-site-audit-demo',
+    title: 'Diafaneia, website audit report demo',
+    description:
+      'Demo concept: paste a page\'s HTML and headers and get a report on third-party calls, likely cookies, missing security headers and basic SEO, with a plain sentence for the client.',
+    stack: ['Vue 3', 'TypeScript', 'Vitest'],
+    imageLabel: 'Diafaneia demo',
+    imageUrl: '/diafaneia-audit-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/DiafaneiaProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/DiafaneiaProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'The audit is a pure function from HTML and header text to a report. Markup is scanned with a small tokenizer, never rendered, so pasted pages cannot run.',
+      security:
+        'Pasted code is parsed only as text and displayed with escaping. Size is capped and nothing leaves the device. An automated check does not replace legal advice and the page says so.',
+      challenges:
+        'Commented-out tags and script bodies must not be mistaken for real resources, and one noisy kind of finding must not zero the score.',
+    },
+  },
+  {
+    id: 21,
+    slug: 'deltio-greek-id-validation-demo',
+    title: 'Deltio, Greek identifier validation library demo',
+    description:
+      'Demo concept: a small TypeScript library that checks Greek tax numbers, social security numbers, IBANs, mobiles and postcodes locally, with a playground.',
+    stack: ['TypeScript', 'Vue 3', 'Vitest'],
+    imageLabel: 'Deltio demo',
+    imageUrl: '/deltio-validation-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/DeltioProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/DeltioProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'A dependency-free module of pure functions that each return a result with a reason and, for check-digit schemes, the expected and found digit.',
+      security:
+        'Nothing is logged, stored or transmitted, and test data is fictional. IBAN checks use arithmetic without BigInt so they work on long strings everywhere.',
+      challenges:
+        'The IBAN checksum has to be computed without large-number types, and dates in a social security number must be valid in either century.',
+    },
+  },
+  {
+    id: 22,
+    slug: 'slotlock-booking-api-demo',
+    title: 'Slotlock, double-booking-proof booking API demo',
+    description:
+      'Demo concept: a booking API where two simultaneous requests for the same slot can never both succeed, because the database itself holds the lock. Runs on Render with PostgreSQL on Neon.',
+    stack: ['Node.js', 'Express', 'TypeScript', 'Sequelize', 'PostgreSQL', 'Vue 3', 'Vitest'],
+    imageLabel: 'Slotlock demo',
+    imageUrl: '/slotlock-api-preview.webp',
+    githubUrl: 'https://github.com/VarveroglouVasileios/SlotlockProject',
+    liveUrl: 'https://varveroglouvasileios.github.io/SlotlockProject/',
+    liveLabelKey: 'projects.tryDemo',
+    breakdown: {
+      architecture:
+        'A pure rules module (slots, validation, alternatives) plus an Express API on Sequelize. The primary key on the slot table is the lock, so correctness does not depend on application code or on how many server instances run.',
+      security:
+        'Input is validated on the server, JSON size is capped, CORS allows only the portfolio origin, requests are rate limited, no cookies are used and no personal data is collected.',
+      challenges:
+        'Concurrent transactions, retried requests and partially overlapping windows all had to give exactly one winner, and the same rules had to behave the same in SQLite for tests and PostgreSQL in production.',
+    },
+  },
+  {
     id: 4,
     slug: 'shadow-ai-firewall',
     title: 'Shadow AI Firewall',

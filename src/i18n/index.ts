@@ -63,6 +63,54 @@ const baseMessages = {
           title: 'Bluewake Rentals, boat and scooter booking demo',
           description: 'Demo concept: a rental business with per-vehicle availability, duration pricing, deposit and licence rules, and a fleet admin.'
         },
+        vivliariodemo: {
+          title: 'Vivliario, digital service book demo',
+          description: 'Demo concept: a workshop service book with the work history, MOT and oil-change reminders computed from the data, and appointment booking.'
+        },
+        room360demo: {
+          title: 'Room 360, interactive room viewer demo',
+          description: 'Demo concept: a hotel room you can drag around, with numbered hotspots that explain the bed, terrace and fittings before booking.'
+        },
+        metrisidemo: {
+          title: 'Metrisi, renovation estimate demo',
+          description: 'Demo concept: four questions give an instant cost range for a renovation, split into materials, labour and extras, before asking for a visit.'
+        },
+        rythmosdemo: {
+          title: 'Rythmos, class booking with a waitlist demo',
+          description: 'Demo concept: a studio timetable with limited places, a waitlist, and a 15-minute offer that passes to the next person if it is not accepted.'
+        },
+        noumerodemo: {
+          title: 'Noumero, digital queue demo',
+          description: 'Demo concept: customers take a number from their phone and watch their place move live, while the shop presses Next. Includes a QR code.'
+        },
+        peripatosdemo: {
+          title: 'Peripatos, self-guided walk demo',
+          description: 'Demo concept: a five-stop walking tour of Kavala with a map, optional location, and an offline mode that works without a signal.'
+        },
+        ktimademo: {
+          title: 'Ktima Dafni, event seating planner demo',
+          description: 'Demo concept: an event venue where the couple drags guests onto tables, sees overfull warnings, and downloads the final list for the venue.'
+        },
+        karposdemo: {
+          title: 'Karpos, olive oil batch passport demo',
+          description: 'Demo concept: a QR code on the bottle opens the journey of the batch, from harvest and pressing to the lab analysis and bottling.'
+        },
+        enademo: {
+          title: 'ENA, unified booking calendar demo',
+          description: 'Demo concept: calendars from different booking channels (iCal) merged per property, with overlaps flagged before the guest arrives.'
+        },
+        diafaneiademo: {
+          title: 'Diafaneia, website audit report demo',
+          description: 'Demo concept: paste a page\'s HTML and headers and get a report on third-party calls, likely cookies, missing security headers and basic SEO, with a plain sentence for the client.'
+        },
+        deltiodemo: {
+          title: 'Deltio, Greek identifier validation library demo',
+          description: 'Demo concept: a small TypeScript library that checks Greek tax numbers, social security numbers, IBANs, mobiles and postcodes locally, with a playground.'
+        },
+        slotlockdemo: {
+          title: 'Slotlock, double-booking-proof booking API demo',
+          description: 'Demo concept: a booking API where two simultaneous requests for the same slot can never both succeed, because the database itself holds the lock. Runs on Render with PostgreSQL on Neon.'
+        },
         tavernademo: {
           title: 'Taverna Meltemi, menu and table booking demo',
           description: 'Demo concept: a taverna website with a bilingual menu, photo gallery and table reservations that check seat capacity. Includes an admin dashboard.'
@@ -198,6 +246,54 @@ const baseMessages = {
         rentaldemo: {
           title: 'Bluewake Rentals, demo κρατήσεων σκαφών και scooter',
           description: 'Demo concept: επιχείρηση ενοικίασης με διαθεσιμότητα ανά όχημα, τιμολόγηση ανά διάρκεια, εγγύηση, κανόνα διπλώματος και διαχείριση στόλου.'
+        },
+        vivliariodemo: {
+          title: 'Βιβλιάριο, demo ψηφιακού βιβλιαρίου service',
+          description: 'Demo concept: ψηφιακό βιβλιάριο service με ιστορικό εργασιών, υπενθυμίσεις ΚΤΕΟ και λαδιών που υπολογίζονται από τα δεδομένα, και κράτηση ραντεβού.'
+        },
+        room360demo: {
+          title: 'Δωμάτιο 360, demo διαδραστικής προβολής δωματίου',
+          description: 'Demo concept: δωμάτιο ξενοδοχείου που σέρνεται με το ποντίκι ή το δάχτυλο, με αριθμημένα σημεία που εξηγούν κρεβάτι, βεράντα και εξοπλισμό πριν την κράτηση.'
+        },
+        metrisidemo: {
+          title: 'Μέτρημα, demo εκτίμησης κόστους ανακαίνισης',
+          description: 'Demo concept: τέσσερις ερωτήσεις δίνουν αμέσως εύρος κόστους ανακαίνισης, χωρισμένο σε υλικά, εργασία και έξτρα, πριν ζητηθεί επίσκεψη.'
+        },
+        rythmosdemo: {
+          title: 'Ρυθμός, demo κράτησης μαθημάτων με λίστα αναμονής',
+          description: 'Demo concept: πρόγραμμα studio με περιορισμένες θέσεις, λίστα αναμονής και προσφορά θέσης 15 λεπτών που περνά στον επόμενο αν δεν γίνει αποδεκτή.'
+        },
+        noumerodemo: {
+          title: 'Νούμερο, demo ψηφιακής σειράς προτεραιότητας',
+          description: 'Demo concept: ο πελάτης παίρνει νούμερο από το κινητό και βλέπει τη θέση του να κινείται ζωντανά, ενώ το κατάστημα πατά «Επόμενος». Με κωδικό QR.'
+        },
+        peripatosdemo: {
+          title: 'Περίπατος, demo αυτοξενάγησης',
+          description: 'Demo concept: περίπατος πέντε στάσεων στην Καβάλα με χάρτη, προαιρετική τοποθεσία και λειτουργία χωρίς σύνδεση.'
+        },
+        ktimademo: {
+          title: 'Κτήμα Δάφνη, demo σχεδιασμού διάταξης αίθουσας',
+          description: 'Demo concept: χώρος εκδηλώσεων όπου το ζευγάρι σέρνει καλεσμένους σε τραπέζια, βλέπει προειδοποιήσεις υπερπληρότητας και κατεβάζει την τελική λίστα για το κτήμα.'
+        },
+        karposdemo: {
+          title: 'Καρπός, demo ταυτότητας παρτίδας ελαιολάδου',
+          description: 'Demo concept: ένα QR στο μπουκάλι ανοίγει τη διαδρομή της παρτίδας, από τη συγκομιδή και την πίεση ως την ανάλυση και την εμφιάλωση.'
+        },
+        enademo: {
+          title: 'ΕΝΑ, demo ενιαίου ημερολογίου κρατήσεων',
+          description: 'Demo concept: ημερολόγια από διαφορετικά κανάλια κρατήσεων (iCal) συγχωνευμένα ανά κατάλυμα, με επισήμανση επικαλύψεων πριν φτάσει ο επισκέπτης.'
+        },
+        diafaneiademo: {
+          title: 'Διαφάνεια, demo αναφοράς ελέγχου ιστοσελίδας',
+          description: 'Demo concept: επικολλάτε τον κώδικα και τις κεφαλίδες μιας σελίδας και παίρνετε αναφορά για κλήσεις σε τρίτους, πιθανά cookies, κεφαλίδες ασφαλείας και βασικά SEO, με μια απλή πρόταση για τον πελάτη.'
+        },
+        deltiodemo: {
+          title: 'Δελτίο, demo βιβλιοθήκης ελέγχου ελληνικών στοιχείων',
+          description: 'Demo concept: μικρή βιβλιοθήκη TypeScript που ελέγχει ΑΦΜ, ΑΜΚΑ, ΙΒΑΝ, κινητά και ΤΚ τοπικά, με playground.'
+        },
+        slotlockdemo: {
+          title: 'Slotlock, demo API κρατήσεων χωρίς διπλοκράτηση',
+          description: 'Demo concept: API κρατήσεων όπου δύο ταυτόχρονα αιτήματα για την ίδια ώρα δεν μπορούν ποτέ να πετύχουν και τα δύο, επειδή το κλείδωμα το κρατά η ίδια η βάση. Τρέχει στο Render με PostgreSQL στη Neon.'
         },
         tavernademo: {
           title: 'Taverna Meltemi, demo μενού και κρατήσεων',

@@ -188,6 +188,210 @@
       }
     },
     {
+      "key": "project-vivliario-service-book-demo",
+      "path": "projects/vivliario-service-book-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: ψηφιακό βιβλιάριο service και υπενθυμίσεις ΚΤΕΟ",
+        "description": "Demo concept συνεργείου με ιστορικό εργασιών, υπενθυμίσεις ΚΤΕΟ και λαδιών και ραντεβού. Δοκιμάστε το.",
+        "h1": "Βιβλιάριο, ψηφιακό service book",
+        "summary": "Demo concept: ψηφιακό βιβλιάριο service για συνεργείο, με υπενθυμίσεις και ραντεβού."
+      },
+      "en": {
+        "title": "Demo: digital car service book with MOT reminders",
+        "description": "A demo concept workshop with a service history, MOT and oil reminders and appointments. Try it.",
+        "h1": "Vivliario, a digital service book",
+        "summary": "Demo concept: a digital service book for a car workshop, with reminders and appointments."
+      }
+    },
+    {
+      "key": "project-room-360-demo",
+      "path": "projects/room-360-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: διαδραστική προβολή δωματίου ξενοδοχείου",
+        "description": "Demo concept προβολής δωματίου με σύρσιμο και σημεία που εξηγούν τον εξοπλισμό. Δοκιμάστε το.",
+        "h1": "Δωμάτιο 360, δείτε το δωμάτιο πριν το κλείσετε",
+        "summary": "Demo concept: δείτε το δωμάτιο, σημείο προς σημείο, πριν το κλείσετε."
+      },
+      "en": {
+        "title": "Demo: interactive hotel room viewer",
+        "description": "A demo concept room viewer you can drag, with hotspots that explain the fittings. Try it.",
+        "h1": "Room 360, look around before you book",
+        "summary": "Demo concept: look around a room, point by point, before you book it."
+      }
+    },
+    {
+      "key": "project-metrisi-renovation-estimate-demo",
+      "path": "projects/metrisi-renovation-estimate-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: υπολογιστής κόστους ανακαίνισης",
+        "description": "Demo concept εκτίμησης ανακαίνισης σε τέσσερις ερωτήσεις, με ανάλυση υλικών, εργασίας και έξτρα. Δοκιμάστε το.",
+        "h1": "Μέτρημα, πόσο κάνει η ανακαίνιση",
+        "summary": "Demo concept: άμεση εκτίμηση ανακαίνισης σε τέσσερις ερωτήσεις."
+      },
+      "en": {
+        "title": "Demo: renovation cost estimator",
+        "description": "A demo concept estimator that gives a renovation cost range in four questions, split into materials, labour and extras. Try it.",
+        "h1": "Metrisi, what does the renovation cost",
+        "summary": "Demo concept: an instant renovation estimate in four questions."
+      }
+    },
+    {
+      "key": "project-rythmos-class-waitlist-demo",
+      "path": "projects/rythmos-class-waitlist-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: κράτηση μαθημάτων με λίστα αναμονής",
+        "description": "Demo concept προγράμματος μαθημάτων με περιορισμένες θέσεις και λίστα αναμονής που ανεβαίνει μόνη της. Δοκιμάστε το.",
+        "h1": "Ρυθμός, κλείσε θέση ή μπες στη λίστα",
+        "summary": "Demo concept: κλείστε θέση ή μπείτε σε λίστα αναμονής που ανεβαίνει μόνη της."
+      },
+      "en": {
+        "title": "Demo: class booking with a waitlist",
+        "description": "A demo concept class timetable with limited places and a waitlist that moves up by itself. Try it.",
+        "h1": "Rythmos, book a place or join the waitlist",
+        "summary": "Demo concept: book a place, or join a waitlist that moves up by itself."
+      }
+    },
+    {
+      "key": "project-noumero-queue-demo",
+      "path": "projects/noumero-queue-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: ψηφιακή σειρά προτεραιότητας με QR",
+        "description": "Demo concept ψηφιακής σειράς: νούμερο από το κινητό, ζωντανή θέση και οθόνη καταστήματος. Δοκιμάστε το.",
+        "h1": "Νούμερο, πάρτε νούμερο από το κινητό",
+        "summary": "Demo concept: πάρτε νούμερο από το κινητό και περιμένετε όπου θέλετε."
+      },
+      "en": {
+        "title": "Demo: digital queue with a QR code",
+        "description": "A demo concept digital queue: take a number on your phone, see your place live, and a shop screen to call the next person. Try it.",
+        "h1": "Noumero, take a number on your phone",
+        "summary": "Demo concept: take a number on your phone and wait wherever you like."
+      }
+    },
+    {
+      "key": "project-peripatos-walk-demo",
+      "path": "projects/peripatos-walk-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: αυτοξενάγηση με χάρτη και λειτουργία χωρίς δίκτυο",
+        "description": "Demo concept περιπάτου πέντε στάσεων με χάρτη, προαιρετική τοποθεσία και χρήση χωρίς σύνδεση. Δοκιμάστε το.",
+        "h1": "Περίπατος, αυτοξενάγηση στην Καβάλα",
+        "summary": "Demo concept: περπατήστε την πόλη στάση προς στάση, ακόμα και χωρίς σήμα."
+      },
+      "en": {
+        "title": "Demo: self-guided walk with a map and offline mode",
+        "description": "A demo concept five-stop walking tour with a map, optional location and offline use. Try it.",
+        "h1": "Peripatos, a self-guided walk in Kavala",
+        "summary": "Demo concept: walk the town stop by stop, even without a signal."
+      }
+    },
+    {
+      "key": "project-ktima-seating-planner-demo",
+      "path": "projects/ktima-seating-planner-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: σχεδιαστής διάταξης τραπεζιών για εκδηλώσεις",
+        "description": "Demo concept σχεδιασμού αίθουσας: καλεσμένοι σε τραπέζια, προειδοποιήσεις υπερπληρότητας και τελική λίστα. Δοκιμάστε το.",
+        "h1": "Κτήμα Δάφνη, διάταξη τραπεζιών",
+        "summary": "Demo concept: σχεδιάστε την αίθουσα τραπέζι το τραπέζι και στείλτε την τελική λίστα."
+      },
+      "en": {
+        "title": "Demo: event seating planner",
+        "description": "A demo concept room planner: guests on tables, overfull warnings and a final list for the venue. Try it.",
+        "h1": "Ktima Dafni, seating planner",
+        "summary": "Demo concept: plan the room table by table and send the final list."
+      }
+    },
+    {
+      "key": "project-karpos-olive-oil-passport-demo",
+      "path": "projects/karpos-olive-oil-passport-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: ταυτότητα παρτίδας ελαιολάδου με QR",
+        "description": "Demo concept ταυτότητας παρτίδας ελαιολάδου: QR στο μπουκάλι με συγκομιδή, πίεση, ανάλυση και εμφιάλωση. Δοκιμάστε το.",
+        "h1": "Καρπός, ταυτότητα παρτίδας ελαιολάδου",
+        "summary": "Demo concept: ξέρετε από πού έρχεται κάθε σταγόνα."
+      },
+      "en": {
+        "title": "Demo: olive oil batch passport with a QR code",
+        "description": "A demo concept olive oil batch passport: a QR on the bottle shows harvest, pressing, analysis and bottling. Try it.",
+        "h1": "Karpos, an olive oil batch passport",
+        "summary": "Demo concept: know where every drop comes from."
+      }
+    },
+    {
+      "key": "project-ena-ical-calendar-demo",
+      "path": "projects/ena-ical-calendar-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: ενιαίο ημερολόγιο κρατήσεων από iCal",
+        "description": "Demo concept ενιαίου ημερολογίου: κανάλια κρατήσεων σε ένα, με επισήμανση επικαλύψεων. Δοκιμάστε το.",
+        "h1": "ΕΝΑ, ένα ημερολόγιο χωρίς διπλοκράτηση",
+        "summary": "Demo concept: ένα ημερολόγιο, καμία διπλοκράτηση."
+      },
+      "en": {
+        "title": "Demo: unified booking calendar from iCal feeds",
+        "description": "A demo concept unified calendar: booking channels merged into one, with overlaps flagged. Try it.",
+        "h1": "ENA, one calendar and no double bookings",
+        "summary": "Demo concept: one calendar, no double bookings."
+      }
+    },
+    {
+      "key": "project-diafaneia-site-audit-demo",
+      "path": "projects/diafaneia-site-audit-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: έλεγχος ιστοσελίδας για απόρρητο, cookies και ασφάλεια",
+        "description": "Demo concept αναφοράς ελέγχου ιστοσελίδας: υπηρεσίες τρίτων, cookies, κεφαλίδες ασφαλείας και SEO. Δοκιμάστε το.",
+        "h1": "Διαφάνεια, τι κάνει πραγματικά η σελίδα σας",
+        "summary": "Demo concept: τι κάνει πραγματικά η σελίδα σας;"
+      },
+      "en": {
+        "title": "Demo: website audit for privacy, cookies and security",
+        "description": "A demo concept website audit report: third-party services, cookies, security headers and SEO. Try it.",
+        "h1": "Diafaneia, what does your website really do",
+        "summary": "Demo concept: what does your website really do?"
+      }
+    },
+    {
+      "key": "project-deltio-greek-id-validation-demo",
+      "path": "projects/deltio-greek-id-validation-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: βιβλιοθήκη ελέγχου ΑΦΜ, ΑΜΚΑ, ΙΒΑΝ",
+        "description": "Demo concept βιβλιοθήκης TypeScript για έλεγχο ΑΦΜ, ΑΜΚΑ, ΙΒΑΝ, κινητών και ΤΚ, με playground. Δοκιμάστε το.",
+        "h1": "Δελτίο, έλεγχος ελληνικών στοιχείων",
+        "summary": "Demo concept: έλεγχος ελληνικών στοιχείων χωρίς να στέλνονται πουθενά."
+      },
+      "en": {
+        "title": "Demo: Greek tax number, AMKA and IBAN validation library",
+        "description": "A demo concept TypeScript library that validates Greek tax numbers, AMKA, IBANs, mobiles and postcodes, with a playground. Try it.",
+        "h1": "Deltio, Greek identifier validation",
+        "summary": "Demo concept: check Greek identifiers without sending them anywhere."
+      }
+    },
+    {
+      "key": "project-slotlock-booking-api-demo",
+      "path": "projects/slotlock-booking-api-demo",
+      "priority": 0.6,
+      "el": {
+        "title": "Demo: API κρατήσεων χωρίς διπλοκράτηση (Node, PostgreSQL)",
+        "description": "Demo concept API κρατήσεων με Node, Express και PostgreSQL όπου το κλείδωμα γίνεται στη βάση. Δοκιμάστε το.",
+        "h1": "Slotlock, κρατήσεις χωρίς διπλοκράτηση",
+        "summary": "Demo concept: δύο άνθρωποι πατούν «Κράτηση» ταυτόχρονα και κερδίζει ακριβώς ένας."
+      },
+      "en": {
+        "title": "Demo: booking API without double bookings (Node, PostgreSQL)",
+        "description": "A demo concept booking API with Node, Express and PostgreSQL where the lock is held by the database. Try it.",
+        "h1": "Slotlock, bookings without double bookings",
+        "summary": "Demo concept: two people press Book at once, and exactly one wins."
+      }
+    },
+    {
       "key": "project-vibebites",
       "path": "projects/vibebites",
       "priority": 0.6,

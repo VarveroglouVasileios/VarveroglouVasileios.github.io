@@ -30,5 +30,17 @@ Fictional businesses used as live examples for the portfolio. **Each demo lives 
 | 4 | Eleon Pantry, local products e-shop with stock and cart | [VarveroglouVasileios/ShopProject](https://github.com/VarveroglouVasileios/ShopProject) | `/ShopProject/` | Built and live on GitHub Pages |
 | 5 | Kalypso Studio, appointments by service and specialist | [VarveroglouVasileios/SalonProject](https://github.com/VarveroglouVasileios/SalonProject) | `/SalonProject/` | Built and live on GitHub Pages |
 | 6 | Bluewake Rentals, boat and scooter rental with availability | [VarveroglouVasileios/RentalProject](https://github.com/VarveroglouVasileios/RentalProject) | `/RentalProject/` | Built and live on GitHub Pages |
+| 7 | Vivliario, digital service book demo | [VarveroglouVasileios/VivliarioProject](https://github.com/VarveroglouVasileios/VivliarioProject) | `/VivliarioProject/` | Built and live on GitHub Pages |
+| 8 | Room 360, interactive room viewer demo | [VarveroglouVasileios/DwmatioProject](https://github.com/VarveroglouVasileios/DwmatioProject) | `/DwmatioProject/` | Built and live on GitHub Pages |
+| 9 | Metrisi, renovation estimate demo | [VarveroglouVasileios/MetrisiProject](https://github.com/VarveroglouVasileios/MetrisiProject) | `/MetrisiProject/` | Built and live on GitHub Pages |
+| 10 | Rythmos, class booking with a waitlist demo | [VarveroglouVasileios/RythmosProject](https://github.com/VarveroglouVasileios/RythmosProject) | `/RythmosProject/` | Built and live on GitHub Pages |
+| 11 | Noumero, digital queue demo | [VarveroglouVasileios/NoumeroProject](https://github.com/VarveroglouVasileios/NoumeroProject) | `/NoumeroProject/` | Built and live on GitHub Pages |
+| 12 | Peripatos, self-guided walk demo | [VarveroglouVasileios/PeripatosProject](https://github.com/VarveroglouVasileios/PeripatosProject) | `/PeripatosProject/` | Built and live on GitHub Pages |
+| 13 | Ktima Dafni, event seating planner demo | [VarveroglouVasileios/KtimaProject](https://github.com/VarveroglouVasileios/KtimaProject) | `/KtimaProject/` | Built and live on GitHub Pages |
+| 14 | Karpos, olive oil batch passport demo | [VarveroglouVasileios/KarposProject](https://github.com/VarveroglouVasileios/KarposProject) | `/KarposProject/` | Built and live on GitHub Pages |
+| 15 | ENA, unified booking calendar demo | [VarveroglouVasileios/EnaProject](https://github.com/VarveroglouVasileios/EnaProject) | `/EnaProject/` | Built and live on GitHub Pages |
+| 16 | Diafaneia, website audit report demo | [VarveroglouVasileios/DiafaneiaProject](https://github.com/VarveroglouVasileios/DiafaneiaProject) | `/DiafaneiaProject/` | Built and live on GitHub Pages |
+| 17 | Deltio, Greek identifier validation library demo | [VarveroglouVasileios/DeltioProject](https://github.com/VarveroglouVasileios/DeltioProject) | `/DeltioProject/` | Built and live on GitHub Pages |
+| 18 | Slotlock, double-booking-proof booking API demo | [VarveroglouVasileios/SlotlockProject](https://github.com/VarveroglouVasileios/SlotlockProject) | `/SlotlockProject/` | Built and live on GitHub Pages |
 
 Design briefs and prompts: `briefs/`.

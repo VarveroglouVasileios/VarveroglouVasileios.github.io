@@ -5,13 +5,13 @@
       "path": "",
       "priority": 1.0,
       "el": {
-        "title": "Κατασκευή ιστοσελίδων & e-shop στην Καβάλα | Β. Βαρβέρογλου",
+        "title": "Κατασκευή ιστοσελίδων & e-shop στην Καβάλα | Βασίλειος Βαρβέρογλου",
         "description": "Full Stack Developer στην Καβάλα με 4+ χρόνια εμπειρίας. Ιστοσελίδες, e-shop, κρατήσεις, εσωτερικά εργαλεία και έλεγχος ασφάλειας για επιχειρήσεις.",
         "h1": "Ιστοσελίδες, e-shop και εργαλεία για επιχειρήσεις, ασφαλή από τον σχεδιασμό",
         "summary": "Είμαι Full Stack Developer στην Καβάλα και φτιάχνω ιστοσελίδες, e-shop, συστήματα κρατήσεων και εσωτερικά εργαλεία για επιχειρήσεις της Ανατολικής Μακεδονίας και όλης της Ελλάδας."
       },
       "en": {
-        "title": "Web development & security, Kavala, Greece | V. Varveroglou",
+        "title": "Web development & security, Kavala, Greece | Vasileios Varveroglou",
         "description": "Full Stack Developer in Kavala, Greece with 4+ years of experience. Websites, e-shops, booking systems, internal tools and security audits for businesses.",
         "h1": "Websites, e-shops and tools for businesses, secure by design",
         "summary": "I am a Full Stack Developer based in Kavala, Greece. I build websites, e-shops, booking systems and internal tools for businesses in Eastern Macedonia and across Greece."
@@ -430,16 +430,16 @@
       "path": "about",
       "priority": 0.7,
       "el": {
-        "title": "Σχετικά: Full Stack Developer στην Καβάλα",
-        "description": "Full Stack Developer από την Καβάλα, με εμπειρία σε FactSet, MSc Κυβερνοασφάλειας και δουλειά για επιχειρήσεις στη Θάσο και την Ανατολική Μακεδονία.",
-        "h1": "Σχετικά με εμένα",
-        "summary": "Full Stack Developer από την Καβάλα. Δουλεύω στη FactSet, κάνω MSc Κυβερνοασφάλειας και βοηθώ επιχειρήσεις της Ανατολικής Μακεδονίας με ασφαλείς ιστοσελίδες και εργαλεία."
+        "title": "Βασίλειος Βαρβέρογλου, Full Stack Developer στην Καβάλα",
+        "description": "Βασίλειος Βαρβέρογλου, Full Stack Developer από την Καβάλα, με εμπειρία σε FactSet, MSc Κυβερνοασφάλειας και δουλειά για επιχειρήσεις στη Θάσο και την Ανατολική Μακεδονία.",
+        "h1": "Βασίλειος Βαρβέρογλου",
+        "summary": "Είμαι ο Βασίλειος Βαρβέρογλου, Full Stack Developer από την Καβάλα. Δουλεύω στη FactSet, κάνω MSc Κυβερνοασφάλειας και βοηθώ επιχειρήσεις της Ανατολικής Μακεδονίας με ασφαλείς ιστοσελίδες και εργαλεία."
       },
       "en": {
-        "title": "About: Full Stack Developer in Kavala, Greece",
-        "description": "Full Stack Developer from Kavala, Greece with FactSet experience and an MSc in Cybersecurity, working with businesses in Thasos and Eastern Macedonia.",
-        "h1": "About me",
-        "summary": "Full Stack Developer from Kavala, Greece. I work at FactSet, I am completing an MSc in Cybersecurity and I help businesses in Eastern Macedonia with secure websites and tools."
+        "title": "Vasileios Varveroglou, Full Stack Developer in Kavala, Greece",
+        "description": "Vasileios Varveroglou, Full Stack Developer from Kavala, Greece with FactSet experience and an MSc in Cybersecurity, working with businesses in Thasos and Eastern Macedonia.",
+        "h1": "Vasileios Varveroglou",
+        "summary": "I am Vasileios Varveroglou, a Full Stack Developer from Kavala, Greece. I work at FactSet, I am completing an MSc in Cybersecurity and I help businesses in Eastern Macedonia with secure websites and tools."
       }
     },
     {

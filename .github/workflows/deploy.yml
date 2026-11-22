@@ -34,6 +34,7 @@ jobs:
           VITE_BASE: '/'
           VITE_FORMSPREE_ID: ${{ vars.VITE_FORMSPREE_ID || secrets.VITE_FORMSPREE_ID }}
           VITE_PLAUSIBLE_DOMAIN: ${{ vars.VITE_PLAUSIBLE_DOMAIN }}
+          VITE_GA_ID: ${{ vars.VITE_GA_ID }}
           VITE_SITE_URL: ${{ vars.VITE_SITE_URL }}
 
       - uses: actions/upload-artifact@v4

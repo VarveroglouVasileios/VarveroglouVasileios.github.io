@@ -72,7 +72,7 @@ Deploy the `dist` folder. No base path needed for custom domains.
 - `src/data/site.ts`: `phone` and `whatsapp` (they render only when set), `yearsOfExperience`.
 - `src/data/services.ts`: `priceFrom` per package (`null` shows "Quote on request").
 - `src/data/caseStudies.ts`: add real numbers (installs, users, load time) when available.
-- `VITE_PLAUSIBLE_DOMAIN` / `VITE_SITE_URL` (repo variables) for analytics and a custom domain.
+- `VITE_PLAUSIBLE_DOMAIN` / `VITE_GA_ID` / `VITE_SITE_URL` (repo variables) for cookieless analytics, Google Analytics 4 (consent banner appears only when `VITE_GA_ID` is set) and a custom domain.
 
 Greek is the default language (`/services`), English lives under `/en/`. `yarn build` also
 prerenders per-page HTML (title, description, canonical, hreflang) and `sitemap.xml`

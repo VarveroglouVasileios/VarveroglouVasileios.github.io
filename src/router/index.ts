@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { i18n } from '@/i18n'
 import { applyPageHead } from '@/seo/head'
 import { trackPageview } from '@/lib/analytics'
+import { scrollBehavior } from '@/lib/scrollBehavior'
 import type { Locale } from '@/lib/l10n'
 
 /**
@@ -29,6 +30,7 @@ const router = createRouter({
       component: () => import('@/views/CaseStudyView.vue'),
     },
     { path: `${L}/privacy`, name: 'privacy', component: () => import('@/views/PrivacyView.vue'), meta: { page: 'privacy' } },
+    { path: `${L}/accessibility`, name: 'accessibility', component: () => import('@/views/AccessibilityView.vue'), meta: { page: 'accessibility' } },
     { path: `${L}/contact`, name: 'contact', component: () => import('@/views/ContactView.vue'), meta: { page: 'contact' } },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
@@ -43,7 +45,7 @@ const router = createRouter({
       return {
         el: to.hash,
         top: navOffset,
-        behavior: 'smooth',
+        behavior: scrollBehavior(),
       }
     }
 

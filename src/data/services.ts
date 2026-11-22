@@ -180,8 +180,8 @@ export const services: ServicePackage[] = [
     id: 'security',
     title: { el: 'Έλεγχος ασφάλειας', en: 'Security audit' },
     summary: {
-      el: 'Τεχνικός έλεγχος της ιστοσελίδας ή του e-shop σας: ευπάθειες, HTTPS, headers, φόρμες και βασικά ΓΚΠΔ.',
-      en: 'A technical review of your website or shop: vulnerabilities, HTTPS, headers, forms and GDPR basics.',
+      el: 'Τεχνικός έλεγχος της ιστοσελίδας ή του e-shop σας: ευπάθειες, HTTPS, headers, φόρμες, βασικά ΓΚΠΔ και προσβασιμότητα.',
+      en: 'A technical review of your website or shop: vulnerabilities, HTTPS, headers, forms, GDPR basics and accessibility.',
     },
     idealFor: {
       el: 'Επιχειρήσεις με υπάρχον site ή e-shop που θέλουν να ξέρουν πού είναι εκτεθειμένες.',
@@ -192,6 +192,7 @@ export const services: ServicePackage[] = [
         'Έλεγχος HTTPS/TLS και security headers',
         'Έλεγχος φορμών και εισόδων (XSS, injection, spam)',
         'Έλεγχος cookies και βασικών απαιτήσεων ΓΚΠΔ',
+        'Έλεγχος προσβασιμότητας: πληκτρολόγιο, αντίθεση, ετικέτες φορμών',
         'Γραπτή αναφορά με σοβαρότητα και προτεινόμενες διορθώσεις',
         'Προαιρετικά: υλοποίηση των διορθώσεων',
       ],
@@ -199,11 +200,13 @@ export const services: ServicePackage[] = [
         'HTTPS/TLS and security headers check',
         'Forms and inputs review (XSS, injection, spam)',
         'Cookies and basic GDPR requirements check',
+        'Accessibility check: keyboard, contrast, form labels',
         'Written report with severity and recommended fixes',
         'Optional: implementation of the fixes',
       ],
     },
     priceFrom: null,
     page: 'security-audit',
+    demoSlug: 'diafaneia-site-audit-demo',
   },
 ]

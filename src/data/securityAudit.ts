@@ -41,6 +41,13 @@ export const auditChecks: AuditCheck[] = [
       en: 'Cookies and trackers before consent, privacy policy, where form data ends up, third-party providers. A technical check, not legal advice.',
     },
   },
+  {
+    title: { el: 'Προσβασιμότητα (WCAG)', en: 'Accessibility (WCAG)' },
+    description: {
+      el: 'Αυτόματος έλεγχος με axe-core και χειροκίνητος έλεγχος των βασικών ροών: πληκτρολόγιο και ορατή εστίαση, αντίθεση χρωμάτων, εναλλακτικά κείμενα εικόνων, ετικέτες και μηνύματα σφάλματος στις φόρμες, δομή τίτλων. Τεχνικός έλεγχος, όχι πιστοποίηση συμμόρφωσης ούτε νομική συμβουλή.',
+      en: 'An automated check with axe-core and a manual check of the main flows: keyboard use and visible focus, colour contrast, image alternatives, form labels and error messages, heading structure. A technical check, not a compliance certificate or legal advice.',
+    },
+  },
 ]
 
 export const auditSteps: AuditCheck[] = [

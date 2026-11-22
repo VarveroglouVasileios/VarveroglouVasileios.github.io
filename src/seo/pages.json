@@ -460,6 +460,23 @@
       }
     },
     {
+      "key": "accessibility",
+      "path": "accessibility",
+      "priority": 0.3,
+      "el": {
+        "title": "Δήλωση προσβασιμότητας | Βασίλειος Βαρβέρογλου",
+        "description": "Τι έχει ελεγχθεί για την προσβασιμότητα αυτού του site, με ποιο τρόπο, τι δεν έχει ελεγχθεί ακόμα και πώς να αναφέρετε ένα εμπόδιο.",
+        "h1": "Δήλωση προσβασιμότητας",
+        "summary": "Στόχος είναι το WCAG 2.2 επίπεδο AA. Εδώ γράφω τι έχω ελέγξει, τι όχι, και πώς να μου αναφέρετε ένα εμπόδιο."
+      },
+      "en": {
+        "title": "Accessibility statement | Vasileios Varveroglou",
+        "description": "What has been checked for accessibility on this site, how, what has not been checked yet and how to report a barrier.",
+        "h1": "Accessibility statement",
+        "summary": "The target is WCAG 2.2 level AA. Here I write what I have checked, what I have not, and how to report a barrier to me."
+      }
+    },
+    {
       "key": "contact",
       "path": "contact",
       "priority": 0.8,

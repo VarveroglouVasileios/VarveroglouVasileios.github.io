@@ -4,6 +4,7 @@ import gsap from 'gsap'
 
 const DOC_CLASS = 'custom-cursor-desktop'
 
+const active = ref(false)
 const cursor = ref<HTMLElement | null>(null)
 const follower = ref<HTMLElement | null>(null)
 
@@ -58,8 +59,10 @@ const onMouseMove = (e: MouseEvent): void => {
 let removeMqListener: (() => void) | undefined
 
 onMounted(() => {
-  const mq = window.matchMedia('(min-width: 768px)')
+  // Only replace the system cursor for a mouse-like pointer and when the visitor has not asked for less motion.
+  const mq = window.matchMedia('(min-width: 768px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)')
   const syncHideNative = (): void => {
+    active.value = mq.matches
     document.documentElement.classList.toggle(DOC_CLASS, mq.matches)
   }
   syncHideNative()
@@ -77,7 +80,7 @@ onBeforeUnmount(() => {
 
 <template>
   <!-- Above SecurityTerminal (z-10000) and project breakdown dialog (z-20000); keep native cursor hidden site-wide. -->
-  <div class="pointer-events-none fixed inset-0 z-[30000] hidden md:block">
+  <div v-show="active" class="pointer-events-none fixed inset-0 z-[30000] hidden md:block" aria-hidden="true">
     <div
       ref="cursor"
       class="fixed left-0 top-0 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)]"

@@ -117,6 +117,10 @@ export const pageMessages = {
       about: 'About',
       contact: 'Contact',
       privacy: 'Privacy',
+      accessibility: 'Accessibility',
+    },
+    a11y: {
+      skip: 'Skip to main content',
     },
     hero: {
       services: 'SERVICES',
@@ -256,6 +260,10 @@ export const pageMessages = {
       about: 'Σχετικά',
       contact: 'Επικοινωνία',
       privacy: 'Απόρρητο',
+      accessibility: 'Προσβασιμότητα',
+    },
+    a11y: {
+      skip: 'Μετάβαση στο περιεχόμενο',
     },
     hero: {
       services: 'ΥΠΗΡΕΣΙΕΣ',

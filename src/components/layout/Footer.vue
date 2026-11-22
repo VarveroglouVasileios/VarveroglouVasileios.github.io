@@ -2,6 +2,7 @@
 import { useI18n } from 'vue-i18n'
 import { useLocalePath } from '@/composables/useLocalePath'
 import { contactInfo } from '@/data/site'
+import { scrollBehavior } from '@/lib/scrollBehavior'
 
 const { t } = useI18n()
 const { to } = useLocalePath()
@@ -13,10 +14,11 @@ const footerLinks = [
   { key: 'footer.about', route: 'about' },
   { key: 'footer.contact', route: 'contact' },
   { key: 'footer.privacy', route: 'privacy' },
+  { key: 'footer.accessibility', route: 'accessibility' },
 ]
 
 const scrollToTop = (): void => {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+  window.scrollTo({ top: 0, behavior: scrollBehavior() })
 }
 </script>
 

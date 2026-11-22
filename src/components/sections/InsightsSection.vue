@@ -14,7 +14,7 @@ const { t } = useI18n()
         <p class="mb-3 text-sm text-cyan-300">{{ item.category }}</p>
         <h3 class="mb-3 text-xl font-semibold tracking-tight text-white">{{ item.title }}</h3>
         <p class="mb-4 leading-relaxed text-slate-400">{{ item.content }}</p>
-        <time class="text-sm text-slate-500">{{ item.date }}</time>
+        <time class="text-sm text-slate-400">{{ item.date }}</time>
       </article>
     </div>
   </section>

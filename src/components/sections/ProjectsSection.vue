@@ -162,7 +162,7 @@ onBeforeUnmount(() => {
             <span v-else class="text-white">{{ item.title }}</span>
           </h3>
           <p class="mt-3 max-w-prose text-[0.95rem] leading-relaxed text-slate-400">{{ item.description }}</p>
-          <p class="mt-3 text-sm text-slate-500">{{ item.stack.join(', ') }}</p>
+          <p class="mt-3 text-sm text-slate-400">{{ item.stack.join(', ') }}</p>
 
           <div class="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-medium">
             <router-link

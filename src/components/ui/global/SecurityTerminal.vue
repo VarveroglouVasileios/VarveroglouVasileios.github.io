@@ -140,7 +140,7 @@ onBeforeUnmount(() => {
             <div class="h-3 w-3 rounded-full bg-green-500/50" />
             <span class="ml-2 text-xs font-mono text-slate-400">root@orbitfolio: ~</span>
           </div>
-          <button @click="isOpen = false" class="text-slate-500 hover:text-white">✕</button>
+          <button @click="isOpen = false" class="text-slate-400 hover:text-white">✕</button>
         </div>
 
         <!-- Content -->

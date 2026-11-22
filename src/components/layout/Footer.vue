@@ -3,8 +3,9 @@ import { useI18n } from 'vue-i18n'
 import { useLocalePath } from '@/composables/useLocalePath'
 import { contactInfo } from '@/data/site'
 import { scrollBehavior } from '@/lib/scrollBehavior'
+import { gaEnabled } from '@/lib/analytics'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const { to } = useLocalePath()
 
 const footerLinks = [
@@ -16,6 +17,10 @@ const footerLinks = [
   { key: 'footer.privacy', route: 'privacy' },
   { key: 'footer.accessibility', route: 'accessibility' },
 ]
+
+const openConsentSettings = (): void => {
+  window.dispatchEvent(new Event('open-consent-settings'))
+}
 
 const scrollToTop = (): void => {
   window.scrollTo({ top: 0, behavior: scrollBehavior() })
@@ -43,6 +48,14 @@ const scrollToTop = (): void => {
           >
             {{ t(link.key) }}
           </router-link>
+          <button
+            v-if="gaEnabled"
+            type="button"
+            class="text-sm text-slate-400 transition hover:text-white"
+            @click="openConsentSettings"
+          >
+            {{ locale === 'en' ? 'Cookie settings' : 'Ρυθμίσεις cookies' }}
+          </button>
           <a :href="`mailto:${contactInfo.email}`" class="text-sm text-slate-400 transition hover:text-white">
             {{ contactInfo.email }}
           </a>

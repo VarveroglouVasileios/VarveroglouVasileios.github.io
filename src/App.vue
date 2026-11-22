@@ -6,6 +6,7 @@ import Footer from '@/components/layout/Footer.vue'
 import TopNav from '@/components/layout/TopNav.vue'
 import CustomCursor from '@/components/ui/global/CustomCursor.vue'
 import SecurityTerminal from '@/components/ui/global/SecurityTerminal.vue'
+import ConsentBanner from '@/components/ui/ConsentBanner.vue'
 
 const { locale, t } = useI18n()
 
@@ -48,6 +49,7 @@ onMounted(() => {
       </RouterView>
     </main>
     <Footer />
+    <ConsentBanner />
   </div>
 </template>
 
